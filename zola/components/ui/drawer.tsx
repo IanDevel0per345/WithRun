@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils"
 import * as React from "react"
-import { Drawer as DrawerPrimitive } from "vaul"
+import { Drawer as DrawerPrimitive } from "@animate-ui/react/primitives/radix-ui/drawer"
 
 function Drawer({
   ...props
@@ -36,7 +36,7 @@ function DrawerOverlay({
     <DrawerPrimitive.Overlay
       data-slot="drawer-overlay"
       className={cn(
-        "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 bg-background/50 fixed inset-0 z-50 backdrop-blur-sm",
+        "bg-background/50 fixed inset-0 z-50 backdrop-blur-sm",
         className
       )}
       {...props}

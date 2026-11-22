@@ -24,7 +24,7 @@ const TRANSITION = {
   ease: "easeInOut",
   repeat: Number.POSITIVE_INFINITY,
   repeatType: "loop" as const,
-}
+} as const
 
 export function Loader() {
   return (
