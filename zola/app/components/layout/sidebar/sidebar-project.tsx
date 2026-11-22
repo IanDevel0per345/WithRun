@@ -1,6 +1,6 @@
 "use client"
 
-import { MaterialIcon } from "@/components/ui/material-icon"
+import { SheetIcon } from "@/components/ui/sheet-icon"
 import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
 import { DialogCreateProject } from "./dialog-create-project"
@@ -37,7 +37,7 @@ export function SidebarProject() {
         onClick={() => setIsDialogOpen(true)}
       >
         <div className="flex items-center gap-2.5">
-          <MaterialIcon name="create_new_folder" className="text-foreground/80" />
+          <SheetIcon name="folderplus" size={21} />
           New project
         </div>
       </button>

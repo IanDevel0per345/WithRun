@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/sidebar"
 import { useChats } from "@/lib/chat-store/chats/provider"
 import { useUser } from "@/lib/user-store/provider"
-import { MaterialIcon } from "@/components/ui/material-icon"
+import { SheetIcon } from "@/components/ui/sheet-icon"
 import { Pin } from "lucide-react"
 import { useParams, useRouter } from "next/navigation"
 import { useMemo, useState } from "react"
@@ -61,7 +61,7 @@ export function AppSidebar() {
           <span className="truncate text-sm font-semibold tracking-tight">
             Abstraction
           </span>
-          <MaterialIcon name="expand_more" size={18} className="text-foreground/80 shrink-0" />
+          <SheetIcon name="chevron" size={16} className="shrink-0" />
         </button>
         <div className="flex items-center">
           {isMobile && (
@@ -71,7 +71,7 @@ export function AppSidebar() {
               aria-label="Close sidebar"
               className="text-muted-foreground hover:text-foreground hover:bg-accent/70 inline-flex size-7 items-center justify-center rounded-md transition-colors"
             >
-              <MaterialIcon name="close" size={18} className="text-foreground/80" />
+              <SheetIcon name="close" size={18} />
             </button>
           )}
           <button
@@ -81,7 +81,7 @@ export function AppSidebar() {
             title="New chat (⌘⇧U)"
             className="text-muted-foreground hover:text-foreground hover:bg-accent/70 inline-flex size-7 items-center justify-center rounded-md transition-colors"
           >
-            <MaterialIcon name="edit_square" className="text-foreground/80" />
+            <SheetIcon name="newchat" size={21} />
           </button>
         </div>
       </SidebarHeader>
@@ -93,7 +93,7 @@ export function AppSidebar() {
             onClick={() => router.push("/")}
             className={`${rowClass} ${!currentChatId ? "bg-accent text-foreground" : ""}`}
           >
-            <MaterialIcon name="home" className="text-foreground/80" />
+            <SheetIcon name="home" size={21} />
             Home
           </button>
         </div>
@@ -129,7 +129,7 @@ export function AppSidebar() {
               <SectionLabel>Chats</SectionLabel>
               <div className="flex flex-col items-center px-4 py-10">
                 <div className="bg-muted mb-2.5 flex size-9 items-center justify-center rounded-lg">
-                  <MaterialIcon name="chat_bubble" size={20} className="text-foreground/80" />
+                  <SheetIcon name="chat" size={22} />
                 </div>
                 <p className="text-[13px] font-medium">No chats yet</p>
                 <p className="text-muted-foreground mt-0.5 text-center text-xs">
@@ -147,7 +147,7 @@ export function AppSidebar() {
           onClick={() => setSettingsOpen(true)}
           className={rowClass}
         >
-          <MaterialIcon name="settings" className="text-foreground/80" />
+          <SheetIcon name="settings" size={21} />
           Settings
         </button>
         <div className="mt-1 flex items-center gap-2 px-1 pt-2">
@@ -162,7 +162,7 @@ export function AppSidebar() {
             aria-label="Help"
             className="text-muted-foreground hover:text-foreground ml-auto"
           >
-            <MaterialIcon name="help" size={18} className="text-foreground/80" />
+            <SheetIcon name="help" size={20} />
           </button>
         </div>
       </SidebarFooter>
