@@ -72,7 +72,7 @@ export function AppSidebar() {
           <span className="truncate text-sm font-semibold tracking-tight">
             Abstraction
           </span>
-          <CaretDown size={12} className="text-muted-foreground shrink-0" />
+          <CaretDown size={12} weight="bold" className="text-foreground shrink-0" />
         </button>
         <div className="flex items-center">
           {isMobile && (
@@ -82,7 +82,7 @@ export function AppSidebar() {
               aria-label="Close sidebar"
               className="text-muted-foreground hover:text-foreground hover:bg-accent/70 inline-flex size-7 items-center justify-center rounded-md transition-colors"
             >
-              <X size={16} />
+              <X size={16} weight="bold" className="text-foreground" />
             </button>
           )}
           <button
@@ -92,7 +92,7 @@ export function AppSidebar() {
             title="New chat (⌘⇧U)"
             className="text-muted-foreground hover:text-foreground hover:bg-accent/70 inline-flex size-7 items-center justify-center rounded-md transition-colors"
           >
-            <NotePencilIcon size={17} />
+            <NotePencilIcon size={19} weight="fill" className="text-foreground" />
           </button>
         </div>
       </SidebarHeader>
@@ -102,7 +102,7 @@ export function AppSidebar() {
           <HistoryTrigger
             hasSidebar={false}
             classNameTrigger={`${rowClass} group/search`}
-            icon={<MagnifyingGlass size={18} />}
+            icon={<MagnifyingGlass size={19} weight="fill" className="text-foreground" />}
             label={
               <span className="flex w-full items-center gap-2.5">
                 Search
@@ -118,7 +118,7 @@ export function AppSidebar() {
             onClick={() => router.push("/")}
             className={`${rowClass} ${!currentChatId ? "bg-accent text-foreground" : ""}`}
           >
-            <House size={18} weight={!currentChatId ? "fill" : "regular"} />
+            <House size={19} weight="fill" className="text-foreground" />
             Home
           </button>
         </div>
@@ -155,8 +155,9 @@ export function AppSidebar() {
               <div className="flex flex-col items-center px-4 py-10">
                 <div className="bg-muted mb-2.5 flex size-9 items-center justify-center rounded-lg">
                   <ChatTeardropText
-                    size={18}
-                    className="text-muted-foreground"
+                    size={20}
+                    weight="fill"
+                    className="text-foreground"
                   />
                 </div>
                 <p className="text-[13px] font-medium">No chats yet</p>
@@ -175,11 +176,11 @@ export function AppSidebar() {
           onClick={() => setSettingsOpen(true)}
           className={rowClass}
         >
-          <GearSix size={18} />
+          <GearSix size={19} weight="fill" className="text-foreground" />
           Settings
         </button>
         <button type="button" className={rowClass}>
-          <Lightning size={18} />
+          <Lightning size={19} weight="fill" className="text-foreground" />
           Upgrade to Pro
           <span className="bg-foreground text-background ml-auto rounded px-1.5 py-px text-[10px] font-semibold">
             New
@@ -197,7 +198,7 @@ export function AppSidebar() {
             aria-label="Help"
             className="text-muted-foreground hover:text-foreground ml-auto"
           >
-            <Question size={16} />
+            <Question size={17} weight="fill" className="text-foreground" />
           </button>
         </div>
       </SidebarFooter>

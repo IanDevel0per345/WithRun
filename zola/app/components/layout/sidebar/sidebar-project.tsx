@@ -37,7 +37,7 @@ export function SidebarProject() {
         onClick={() => setIsDialogOpen(true)}
       >
         <div className="flex items-center gap-2.5">
-          <FolderPlusIcon size={18} />
+          <FolderPlusIcon size={19} weight="fill" className="text-foreground" />
           New project
         </div>
       </button>
