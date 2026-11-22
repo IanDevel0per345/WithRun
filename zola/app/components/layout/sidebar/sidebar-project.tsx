@@ -23,19 +23,21 @@ export function SidebarProject() {
       if (!response.ok) {
         throw new Error("Failed to fetch projects")
       }
-      return response.json()
+      const data = await response.json()
+      return Array.isArray(data) ? data : []
     },
+    retry: false,
   })
 
   return (
     <div className="mb-5">
       <button
-        className="hover:bg-accent/80 hover:text-foreground text-primary group/new-chat relative inline-flex w-full items-center rounded-md bg-transparent px-2 py-2 text-sm transition-colors"
+        className="text-muted-foreground hover:bg-accent/70 hover:text-foreground relative inline-flex h-8 w-full items-center rounded-md bg-transparent px-2 text-[13.5px] font-medium transition-colors"
         type="button"
         onClick={() => setIsDialogOpen(true)}
       >
-        <div className="flex items-center gap-2">
-          <FolderPlusIcon size={20} />
+        <div className="flex items-center gap-2.5">
+          <FolderPlusIcon size={18} />
           New project
         </div>
       </button>

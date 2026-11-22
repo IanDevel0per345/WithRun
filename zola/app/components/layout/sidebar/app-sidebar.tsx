@@ -1,7 +1,14 @@
 "use client"
 
 import { groupChatsByDate } from "@/app/components/history/utils"
+import { SettingsContent } from "@/app/components/layout/settings/settings-content"
 import { useBreakpoint } from "@/app/hooks/use-breakpoint"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import {
   Sidebar,
@@ -11,33 +18,41 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import { useChats } from "@/lib/chat-store/chats/provider"
+import { useUser } from "@/lib/user-store/provider"
 import {
+  CaretDown,
   ChatTeardropText,
-  GithubLogo,
+  GearSix,
+  House,
+  Lightning,
   MagnifyingGlass,
   NotePencilIcon,
+  Question,
   X,
 } from "@phosphor-icons/react"
 import { Pin } from "lucide-react"
 import { useParams, useRouter } from "next/navigation"
-import { useMemo } from "react"
+import { useMemo, useState } from "react"
 import { HistoryTrigger } from "../../history/history-trigger"
 import { SidebarList } from "./sidebar-list"
 import { SidebarProject } from "./sidebar-project"
+
+const rowClass =
+  "text-muted-foreground hover:bg-accent/70 hover:text-foreground flex h-8 w-full items-center gap-2.5 rounded-md px-2 text-[13.5px] font-medium transition-colors"
 
 export function AppSidebar() {
   const isMobile = useBreakpoint(768)
   const { setOpenMobile } = useSidebar()
   const { chats, pinnedChats, isLoading } = useChats()
+  const { user } = useUser()
   const params = useParams<{ chatId: string }>()
   const currentChatId = params.chatId
-
-  const groupedChats = useMemo(() => {
-    const result = groupChatsByDate(chats, "")
-    return result
-  }, [chats])
-  const hasChats = chats.length > 0
   const router = useRouter()
+  const [settingsOpen, setSettingsOpen] = useState(false)
+
+  const groupedChats = useMemo(() => groupChatsByDate(chats, ""), [chats])
+  const hasChats = chats.length > 0
+  const name = user?.display_name || "Guest"
 
   return (
     <Sidebar
@@ -45,67 +60,85 @@ export function AppSidebar() {
       variant="sidebar"
       className="border-border/40 border-r bg-transparent"
     >
-      <SidebarHeader className="h-14 pl-3">
-        <div className="flex justify-between">
-          {isMobile ? (
+      <SidebarHeader className="flex h-12 flex-row items-center justify-between gap-1 px-2.5">
+        <button
+          type="button"
+          className="hover:bg-accent/70 flex min-w-0 items-center gap-2 rounded-md py-1 pr-1.5 pl-1 transition-colors"
+          aria-label="Workspace: Abstraction"
+        >
+          <span className="bg-foreground text-background flex size-6 shrink-0 items-center justify-center rounded-md">
+            <MeteorMark />
+          </span>
+          <span className="truncate text-sm font-semibold tracking-tight">
+            Abstraction
+          </span>
+          <CaretDown size={12} className="text-muted-foreground shrink-0" />
+        </button>
+        <div className="flex items-center">
+          {isMobile && (
             <button
               type="button"
               onClick={() => setOpenMobile(false)}
-              className="text-muted-foreground hover:text-foreground hover:bg-muted inline-flex size-9 items-center justify-center rounded-md bg-transparent transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+              aria-label="Close sidebar"
+              className="text-muted-foreground hover:text-foreground hover:bg-accent/70 inline-flex size-7 items-center justify-center rounded-md transition-colors"
             >
-              <X size={24} />
+              <X size={16} />
             </button>
-          ) : (
-            <div className="h-full" />
           )}
+          <button
+            type="button"
+            onClick={() => router.push("/")}
+            aria-label="New chat"
+            title="New chat (⌘⇧U)"
+            className="text-muted-foreground hover:text-foreground hover:bg-accent/70 inline-flex size-7 items-center justify-center rounded-md transition-colors"
+          >
+            <NotePencilIcon size={17} />
+          </button>
         </div>
       </SidebarHeader>
-      <SidebarContent className="border-border/40 border-t">
-        <ScrollArea className="flex h-full px-3 [&>div>div]:!block">
-          <div className="mt-3 mb-5 flex w-full flex-col items-start gap-0">
-            <button
-              className="hover:bg-accent/80 hover:text-foreground text-primary group/new-chat relative inline-flex w-full items-center rounded-md bg-transparent px-2 py-2 text-sm transition-colors"
-              type="button"
-              onClick={() => router.push("/")}
-            >
-              <div className="flex items-center gap-2">
-                <NotePencilIcon size={20} />
-                New Chat
-              </div>
-              <div className="text-muted-foreground ml-auto text-xs opacity-0 duration-150 group-hover/new-chat:opacity-100">
-                ⌘⇧U
-              </div>
-            </button>
-            <HistoryTrigger
-              hasSidebar={false}
-              classNameTrigger="bg-transparent hover:bg-accent/80 hover:text-foreground text-primary relative inline-flex w-full items-center rounded-md px-2 py-2 text-sm transition-colors group/search"
-              icon={<MagnifyingGlass size={24} className="mr-2" />}
-              label={
-                <div className="flex w-full items-center gap-2">
-                  <span>Search</span>
-                  <div className="text-muted-foreground ml-auto text-xs opacity-0 duration-150 group-hover/search:opacity-100">
-                    ⌘+K
-                  </div>
-                </div>
-              }
-              hasPopover={false}
-            />
-          </div>
+
+      <SidebarContent>
+        <div className="space-y-0.5 px-2.5 pt-1 pb-2">
+          <HistoryTrigger
+            hasSidebar={false}
+            classNameTrigger={`${rowClass} group/search`}
+            icon={<MagnifyingGlass size={18} />}
+            label={
+              <span className="flex w-full items-center gap-2.5">
+                Search
+                <span className="text-muted-foreground/70 ml-auto text-[11px] opacity-0 transition-opacity group-hover/search:opacity-100">
+                  ⌘K
+                </span>
+              </span>
+            }
+            hasPopover={false}
+          />
+          <button
+            type="button"
+            onClick={() => router.push("/")}
+            className={`${rowClass} ${!currentChatId ? "bg-accent text-foreground" : ""}`}
+          >
+            <House size={18} weight={!currentChatId ? "fill" : "regular"} />
+            Home
+          </button>
+        </div>
+
+        <ScrollArea className="flex h-full px-2.5 [&>div>div]:!block">
+          <SectionLabel>Projects</SectionLabel>
           <SidebarProject />
+
           {isLoading ? (
             <div className="h-full" />
           ) : hasChats ? (
-            <div className="space-y-5">
+            <div className="space-y-1 pb-4">
               {pinnedChats.length > 0 && (
-                <div className="space-y-5">
-                  <SidebarList
-                    key="pinned"
-                    title="Pinned"
-                    icon={<Pin className="size-3" />}
-                    items={pinnedChats}
-                    currentChatId={currentChatId}
-                  />
-                </div>
+                <SidebarList
+                  key="pinned"
+                  title="Pinned"
+                  icon={<Pin className="size-3" />}
+                  items={pinnedChats}
+                  currentChatId={currentChatId}
+                />
               )}
               {groupedChats?.map((group) => (
                 <SidebarList
@@ -117,39 +150,88 @@ export function AppSidebar() {
               ))}
             </div>
           ) : (
-            <div className="flex h-[calc(100vh-160px)] flex-col items-center justify-center">
-              <ChatTeardropText
-                size={24}
-                className="text-muted-foreground mb-1 opacity-40"
-              />
-              <div className="text-muted-foreground text-center">
-                <p className="mb-1 text-base font-medium">No chats yet</p>
-                <p className="text-sm opacity-70">Start a new conversation</p>
+            <>
+              <SectionLabel>Chats</SectionLabel>
+              <div className="flex flex-col items-center px-4 py-10">
+                <div className="bg-muted mb-2.5 flex size-9 items-center justify-center rounded-lg">
+                  <ChatTeardropText
+                    size={18}
+                    className="text-muted-foreground"
+                  />
+                </div>
+                <p className="text-[13px] font-medium">No chats yet</p>
+                <p className="text-muted-foreground mt-0.5 text-center text-xs">
+                  Your conversations with Meteor show up here.
+                </p>
               </div>
-            </div>
+            </>
           )}
         </ScrollArea>
       </SidebarContent>
-      <SidebarFooter className="border-border/40 mb-2 border-t p-3">
-        <a
-          href="https://github.com/ibelick/zola"
-          className="hover:bg-muted flex items-center gap-2 rounded-md p-2"
-          target="_blank"
-          aria-label="Star the repo on GitHub"
+
+      <SidebarFooter className="border-border/40 gap-0.5 border-t px-2.5 py-2">
+        <button
+          type="button"
+          onClick={() => setSettingsOpen(true)}
+          className={rowClass}
         >
-          <div className="rounded-full border p-1">
-            <GithubLogo className="size-4" />
+          <GearSix size={18} />
+          Settings
+        </button>
+        <button type="button" className={rowClass}>
+          <Lightning size={18} />
+          Upgrade to Pro
+          <span className="bg-foreground text-background ml-auto rounded px-1.5 py-px text-[10px] font-semibold">
+            New
+          </span>
+        </button>
+        <div className="mt-1 flex items-center gap-2 px-1 pt-2">
+          <div className="bg-muted text-foreground flex size-6 items-center justify-center rounded-full text-[11px] font-semibold">
+            {name.charAt(0).toUpperCase()}
           </div>
-          <div className="flex flex-col">
-            <div className="text-sidebar-foreground text-sm font-medium">
-              Zola is open source
-            </div>
-            <div className="text-sidebar-foreground/70 text-xs">
-              Star the repo on GitHub!
-            </div>
-          </div>
-        </a>
+          <span className="text-muted-foreground min-w-0 truncate text-xs">
+            {name} · Free
+          </span>
+          <button
+            type="button"
+            aria-label="Help"
+            className="text-muted-foreground hover:text-foreground ml-auto"
+          >
+            <Question size={16} />
+          </button>
+        </div>
       </SidebarFooter>
+
+      <Dialog open={settingsOpen} onOpenChange={setSettingsOpen}>
+        <DialogContent className="flex h-[80%] min-h-[480px] w-full flex-col gap-0 p-0 sm:max-w-[768px]">
+          <DialogHeader className="border-border border-b px-6 py-5">
+            <DialogTitle>Settings</DialogTitle>
+          </DialogHeader>
+          <SettingsContent />
+        </DialogContent>
+      </Dialog>
     </Sidebar>
+  )
+}
+
+function SectionLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <h3 className="text-muted-foreground/80 px-2 pt-3 pb-1 text-xs font-medium">
+      {children}
+    </h3>
+  )
+}
+
+function MeteorMark() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <circle cx="16" cy="16" r="5" fill="currentColor" />
+      <path
+        d="M12 12 3 3M10 17 4 23M17 10 23 4"
+        stroke="currentColor"
+        strokeWidth="2.4"
+        strokeLinecap="round"
+      />
+    </svg>
   )
 }
