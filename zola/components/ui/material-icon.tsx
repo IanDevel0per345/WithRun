@@ -12,8 +12,8 @@ type MaterialIconProps = {
 export function MaterialIcon({
   name,
   size = 20,
-  filled = true,
-  weight = 500,
+  filled = false,
+  weight = 400,
   className,
 }: MaterialIconProps) {
   return (

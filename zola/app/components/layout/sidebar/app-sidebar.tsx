@@ -62,7 +62,7 @@ export function AppSidebar() {
           <span className="truncate text-sm font-semibold tracking-tight">
             Abstraction
           </span>
-          <MaterialIcon name="expand_more" size={18} className="text-foreground shrink-0" />
+          <MaterialIcon name="expand_more" size={18} className="text-foreground/80 shrink-0" />
         </button>
         <div className="flex items-center">
           {isMobile && (
@@ -72,7 +72,7 @@ export function AppSidebar() {
               aria-label="Close sidebar"
               className="text-muted-foreground hover:text-foreground hover:bg-accent/70 inline-flex size-7 items-center justify-center rounded-md transition-colors"
             >
-              <MaterialIcon name="close" size={18} className="text-foreground" />
+              <MaterialIcon name="close" size={18} className="text-foreground/80" />
             </button>
           )}
           <button
@@ -82,7 +82,7 @@ export function AppSidebar() {
             title="New chat (⌘⇧U)"
             className="text-muted-foreground hover:text-foreground hover:bg-accent/70 inline-flex size-7 items-center justify-center rounded-md transition-colors"
           >
-            <MaterialIcon name="edit_square" className="text-foreground" />
+            <MaterialIcon name="edit_square" className="text-foreground/80" />
           </button>
         </div>
       </SidebarHeader>
@@ -92,7 +92,7 @@ export function AppSidebar() {
           <HistoryTrigger
             hasSidebar={false}
             classNameTrigger={`${rowClass} group/search`}
-            icon={<MaterialIcon name="search" className="text-foreground" />}
+            icon={<MaterialIcon name="search" className="text-foreground/80" />}
             label={
               <span className="flex w-full items-center gap-2.5">
                 Search
@@ -108,7 +108,7 @@ export function AppSidebar() {
             onClick={() => router.push("/")}
             className={`${rowClass} ${!currentChatId ? "bg-accent text-foreground" : ""}`}
           >
-            <MaterialIcon name="home" className="text-foreground" />
+            <MaterialIcon name="home" className="text-foreground/80" />
             Home
           </button>
         </div>
@@ -144,7 +144,7 @@ export function AppSidebar() {
               <SectionLabel>Chats</SectionLabel>
               <div className="flex flex-col items-center px-4 py-10">
                 <div className="bg-muted mb-2.5 flex size-9 items-center justify-center rounded-lg">
-                  <MaterialIcon name="chat_bubble" size={20} className="text-foreground" />
+                  <MaterialIcon name="chat_bubble" size={20} className="text-foreground/80" />
                 </div>
                 <p className="text-[13px] font-medium">No chats yet</p>
                 <p className="text-muted-foreground mt-0.5 text-center text-xs">
@@ -162,11 +162,11 @@ export function AppSidebar() {
           onClick={() => setSettingsOpen(true)}
           className={rowClass}
         >
-          <MaterialIcon name="settings" className="text-foreground" />
+          <MaterialIcon name="settings" className="text-foreground/80" />
           Settings
         </button>
         <button type="button" className={rowClass}>
-          <MaterialIcon name="bolt" className="text-foreground" />
+          <MaterialIcon name="bolt" className="text-foreground/80" />
           Upgrade to Pro
           <span className="bg-foreground text-background ml-auto rounded px-1.5 py-px text-[10px] font-semibold">
             New
@@ -184,7 +184,7 @@ export function AppSidebar() {
             aria-label="Help"
             className="text-muted-foreground hover:text-foreground ml-auto"
           >
-            <MaterialIcon name="help" size={18} className="text-foreground" />
+            <MaterialIcon name="help" size={18} className="text-foreground/80" />
           </button>
         </div>
       </SidebarFooter>
