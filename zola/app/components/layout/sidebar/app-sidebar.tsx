@@ -23,7 +23,6 @@ import { MaterialIcon } from "@/components/ui/material-icon"
 import { Pin } from "lucide-react"
 import { useParams, useRouter } from "next/navigation"
 import { useMemo, useState } from "react"
-import { HistoryTrigger } from "../../history/history-trigger"
 import { SidebarList } from "./sidebar-list"
 import { SidebarProject } from "./sidebar-project"
 
@@ -89,20 +88,6 @@ export function AppSidebar() {
 
       <SidebarContent>
         <div className="space-y-0.5 px-2.5 pt-1 pb-2">
-          <HistoryTrigger
-            hasSidebar={false}
-            classNameTrigger={`${rowClass} group/search`}
-            icon={<MaterialIcon name="search" className="text-foreground/80" />}
-            label={
-              <span className="flex w-full items-center gap-2.5">
-                Search
-                <span className="text-muted-foreground/70 ml-auto text-[11px] opacity-0 transition-opacity group-hover/search:opacity-100">
-                  ⌘K
-                </span>
-              </span>
-            }
-            hasPopover={false}
-          />
           <button
             type="button"
             onClick={() => router.push("/")}
@@ -164,13 +149,6 @@ export function AppSidebar() {
         >
           <MaterialIcon name="settings" className="text-foreground/80" />
           Settings
-        </button>
-        <button type="button" className={rowClass}>
-          <MaterialIcon name="bolt" className="text-foreground/80" />
-          Upgrade to Pro
-          <span className="bg-foreground text-background ml-auto rounded px-1.5 py-px text-[10px] font-semibold">
-            New
-          </span>
         </button>
         <div className="mt-1 flex items-center gap-2 px-1 pt-2">
           <div className="bg-muted text-foreground flex size-6 items-center justify-center rounded-full text-[11px] font-semibold">
