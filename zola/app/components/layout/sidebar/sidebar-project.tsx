@@ -1,6 +1,6 @@
 "use client"
 
-import { FolderPlusIcon } from "@phosphor-icons/react"
+import { MaterialIcon } from "@/components/ui/material-icon"
 import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
 import { DialogCreateProject } from "./dialog-create-project"
@@ -37,7 +37,7 @@ export function SidebarProject() {
         onClick={() => setIsDialogOpen(true)}
       >
         <div className="flex items-center gap-2.5">
-          <FolderPlusIcon size={19} weight="fill" className="text-foreground" />
+          <MaterialIcon name="create_new_folder" className="text-foreground" />
           New project
         </div>
       </button>

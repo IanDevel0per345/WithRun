@@ -19,17 +19,7 @@ import {
 } from "@/components/ui/sidebar"
 import { useChats } from "@/lib/chat-store/chats/provider"
 import { useUser } from "@/lib/user-store/provider"
-import {
-  CaretDown,
-  ChatTeardropText,
-  GearSix,
-  House,
-  Lightning,
-  MagnifyingGlass,
-  NotePencilIcon,
-  Question,
-  X,
-} from "@phosphor-icons/react"
+import { MaterialIcon } from "@/components/ui/material-icon"
 import { Pin } from "lucide-react"
 import { useParams, useRouter } from "next/navigation"
 import { useMemo, useState } from "react"
@@ -72,7 +62,7 @@ export function AppSidebar() {
           <span className="truncate text-sm font-semibold tracking-tight">
             Abstraction
           </span>
-          <CaretDown size={12} weight="bold" className="text-foreground shrink-0" />
+          <MaterialIcon name="expand_more" size={18} className="text-foreground shrink-0" />
         </button>
         <div className="flex items-center">
           {isMobile && (
@@ -82,7 +72,7 @@ export function AppSidebar() {
               aria-label="Close sidebar"
               className="text-muted-foreground hover:text-foreground hover:bg-accent/70 inline-flex size-7 items-center justify-center rounded-md transition-colors"
             >
-              <X size={16} weight="bold" className="text-foreground" />
+              <MaterialIcon name="close" size={18} className="text-foreground" />
             </button>
           )}
           <button
@@ -92,7 +82,7 @@ export function AppSidebar() {
             title="New chat (⌘⇧U)"
             className="text-muted-foreground hover:text-foreground hover:bg-accent/70 inline-flex size-7 items-center justify-center rounded-md transition-colors"
           >
-            <NotePencilIcon size={19} weight="fill" className="text-foreground" />
+            <MaterialIcon name="edit_square" className="text-foreground" />
           </button>
         </div>
       </SidebarHeader>
@@ -102,7 +92,7 @@ export function AppSidebar() {
           <HistoryTrigger
             hasSidebar={false}
             classNameTrigger={`${rowClass} group/search`}
-            icon={<MagnifyingGlass size={19} weight="fill" className="text-foreground" />}
+            icon={<MaterialIcon name="search" className="text-foreground" />}
             label={
               <span className="flex w-full items-center gap-2.5">
                 Search
@@ -118,7 +108,7 @@ export function AppSidebar() {
             onClick={() => router.push("/")}
             className={`${rowClass} ${!currentChatId ? "bg-accent text-foreground" : ""}`}
           >
-            <House size={19} weight="fill" className="text-foreground" />
+            <MaterialIcon name="home" className="text-foreground" />
             Home
           </button>
         </div>
@@ -154,11 +144,7 @@ export function AppSidebar() {
               <SectionLabel>Chats</SectionLabel>
               <div className="flex flex-col items-center px-4 py-10">
                 <div className="bg-muted mb-2.5 flex size-9 items-center justify-center rounded-lg">
-                  <ChatTeardropText
-                    size={20}
-                    weight="fill"
-                    className="text-foreground"
-                  />
+                  <MaterialIcon name="chat_bubble" size={20} className="text-foreground" />
                 </div>
                 <p className="text-[13px] font-medium">No chats yet</p>
                 <p className="text-muted-foreground mt-0.5 text-center text-xs">
@@ -176,11 +162,11 @@ export function AppSidebar() {
           onClick={() => setSettingsOpen(true)}
           className={rowClass}
         >
-          <GearSix size={19} weight="fill" className="text-foreground" />
+          <MaterialIcon name="settings" className="text-foreground" />
           Settings
         </button>
         <button type="button" className={rowClass}>
-          <Lightning size={19} weight="fill" className="text-foreground" />
+          <MaterialIcon name="bolt" className="text-foreground" />
           Upgrade to Pro
           <span className="bg-foreground text-background ml-auto rounded px-1.5 py-px text-[10px] font-semibold">
             New
@@ -198,7 +184,7 @@ export function AppSidebar() {
             aria-label="Help"
             className="text-muted-foreground hover:text-foreground ml-auto"
           >
-            <Question size={17} weight="fill" className="text-foreground" />
+            <MaterialIcon name="help" size={18} className="text-foreground" />
           </button>
         </div>
       </SidebarFooter>
