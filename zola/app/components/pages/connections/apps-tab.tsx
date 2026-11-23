@@ -5,19 +5,27 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Input } from "@/components/ui/input"
 import { SheetIcon } from "@/components/ui/sheet-icon"
 import { APP_CATALOG, APP_CATEGORIES, type AppDef } from "@/lib/connections/catalog"
+import { BRAND_PATHS } from "@/lib/connections/brand-paths"
 import { cn } from "@/lib/utils"
 import { motion } from "motion/react"
 import { useMemo, useState } from "react"
 import { EmptyState } from "../page-shell"
 
 function AppTile({ app, size = 44 }: { app: AppDef; size?: number }) {
+  const path = BRAND_PATHS[app.id]
   return (
     <span
-      className="flex shrink-0 items-center justify-center rounded-xl font-semibold text-white"
-      style={{ width: size, height: size, background: app.color, fontSize: size * 0.42 }}
+      className="bg-muted text-foreground flex shrink-0 items-center justify-center rounded-xl"
+      style={{ width: size, height: size }}
       aria-hidden
     >
-      {app.name.charAt(0)}
+      {path ? (
+        <svg viewBox="0 0 24 24" width={size * 0.55} height={size * 0.55} fill="currentColor">
+          <path d={path} />
+        </svg>
+      ) : (
+        app.name.charAt(0)
+      )}
     </span>
   )
 }
