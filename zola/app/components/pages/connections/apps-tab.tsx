@@ -5,26 +5,27 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Input } from "@/components/ui/input"
 import { SheetIcon } from "@/components/ui/sheet-icon"
 import { APP_CATALOG, APP_CATEGORIES, type AppDef } from "@/lib/connections/catalog"
-import { BRAND_PATHS } from "@/lib/connections/brand-paths"
 import { cn } from "@/lib/utils"
 import { motion } from "motion/react"
 import { useMemo, useState } from "react"
 import { EmptyState } from "../page-shell"
 
 function AppTile({ app, size = 44 }: { app: AppDef; size?: number }) {
-  const path = BRAND_PATHS[app.id]
+  const logo = size * 0.58
+  const img = "object-contain"
   return (
     <span
-      className="bg-muted text-foreground flex shrink-0 items-center justify-center rounded-xl"
+      className="border-border/70 flex shrink-0 items-center justify-center rounded-xl border bg-white dark:bg-black"
       style={{ width: size, height: size }}
       aria-hidden
     >
-      {path ? (
-        <svg viewBox="0 0 24 24" width={size * 0.55} height={size * 0.55} fill="currentColor">
-          <path d={path} />
-        </svg>
+      {app.id === "github" ? (
+        <>
+          <img src="/logos/github.svg" alt="" width={logo} height={logo} className={`${img} dark:hidden`} />
+          <img src="/logos/github-dark.svg" alt="" width={logo} height={logo} className={`${img} hidden dark:block`} />
+        </>
       ) : (
-        app.name.charAt(0)
+        <img src={`/logos/${app.id}.svg`} alt="" width={logo} height={logo} className={img} />
       )}
     </span>
   )
