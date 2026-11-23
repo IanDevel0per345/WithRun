@@ -4,11 +4,9 @@ import Image from "next/image"
 export type SheetIconName =
   | "home"
   | "newchat"
-  | "chevron"
-  | "close"
-  | "help"
   | "chat"
-  | "folderplus"
+  | "close"
+  | "folder"
   | "settings"
 
 type SheetIconProps = {

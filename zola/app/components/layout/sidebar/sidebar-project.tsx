@@ -37,7 +37,7 @@ export function SidebarProject() {
         onClick={() => setIsDialogOpen(true)}
       >
         <div className="flex items-center gap-2.5">
-          <SheetIcon name="folderplus" size={21} />
+          <SheetIcon name="folder" size={21} />
           New project
         </div>
       </button>

@@ -61,7 +61,6 @@ export function AppSidebar() {
           <span className="truncate text-sm font-semibold tracking-tight">
             Abstraction
           </span>
-          <SheetIcon name="chevron" size={16} className="shrink-0" />
         </button>
         <div className="flex items-center">
           {isMobile && (
@@ -157,13 +156,6 @@ export function AppSidebar() {
           <span className="text-muted-foreground min-w-0 truncate text-xs">
             {name} · Free
           </span>
-          <button
-            type="button"
-            aria-label="Help"
-            className="text-muted-foreground hover:text-foreground ml-auto"
-          >
-            <SheetIcon name="help" size={20} />
-          </button>
         </div>
       </SidebarFooter>
 
