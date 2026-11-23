@@ -47,6 +47,9 @@ export async function POST(req: Request) {
       )
     }
 
+    // Temporary chats (id "temp-…") are answered but never stored.
+    const isTemporary = chatId.startsWith("temp-")
+
     const supabase = await validateAndTrackUsage({
       userId,
       model,
@@ -61,7 +64,7 @@ export async function POST(req: Request) {
     const userMessage = messages[messages.length - 1]
 
     // If editing, delete messages from cutoff BEFORE saving the new user message
-    if (supabase && editCutoffTimestamp) {
+    if (supabase && !isTemporary && editCutoffTimestamp) {
       try {
         await supabase
           .from("messages")
@@ -73,7 +76,7 @@ export async function POST(req: Request) {
       }
     }
 
-    if (supabase && userMessage?.role === "user") {
+    if (supabase && !isTemporary && userMessage?.role === "user") {
       await logUserMessage({
         supabase,
         userId,
@@ -116,7 +119,7 @@ export async function POST(req: Request) {
       },
 
       onFinish: async ({ response }) => {
-        if (supabase) {
+        if (supabase && !isTemporary) {
           await storeAssistantMessage({
             supabase,
             chatId,

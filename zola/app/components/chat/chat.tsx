@@ -17,6 +17,7 @@ import { AnimatePresence, motion } from "motion/react"
 import dynamic from "next/dynamic"
 import { redirect } from "next/navigation"
 import { useCallback, useEffect, useMemo, useState } from "react"
+import { useTemporaryChat } from "@/lib/temporary-chat/provider"
 import { useChatCore } from "./use-chat-core"
 import { useChatOperations } from "./use-chat-operations"
 import { useFileUpload } from "./use-file-upload"
@@ -136,6 +137,7 @@ export function Chat() {
 
   // Scheduled tasks: when a schedule fires, a new empty chat starts it by itself.
   const { mode, setMode } = useMode()
+  const { setTemporary } = useTemporaryChat()
   const [runTick, setRunTick] = useState(0)
   const [runToStart, setRunToStart] = useState<PendingRun | null>(null)
 
@@ -150,6 +152,7 @@ export function Chat() {
     const run = takePendingRun()
     if (!run) return
     if (run.mode !== mode) setMode(run.mode)
+    setTemporary(false)
     setRunToStart(run)
   }, [chatId, messages.length, isSubmitting, runToStart, runTick, mode, setMode])
 

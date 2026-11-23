@@ -59,6 +59,7 @@ export type SheetIconName =
   | "external"
   | "lock"
   | "mail"
+  | "eyeoff"
 
 type SheetIconProps = {
   name: SheetIconName

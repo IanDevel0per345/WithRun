@@ -10,6 +10,7 @@ import { SidebarDefaultEffect } from "@/app/components/layout/sidebar-default-ef
 import { AssistantProvider } from "@/lib/assistant-store/provider"
 import { ModeProvider } from "@/lib/mode-store/provider"
 import { ScheduleProvider } from "@/lib/schedule-store/provider"
+import { TemporaryChatProvider } from "@/lib/temporary-chat/provider"
 import { WorkspaceProvider } from "@/lib/workspace-store/provider"
 import { SettingsProvider } from "@/lib/settings-store/provider"
 import { ModelProvider } from "@/lib/model-store/provider"
@@ -82,11 +83,13 @@ export default async function RootLayout({
                             <AssistantProvider>
                               <WorkspaceProvider>
                                 <ScheduleProvider>
+                                  <TemporaryChatProvider>
                                   <SidebarProvider defaultOpen>
                                     <SidebarDefaultEffect />
                                     <Toaster position="top-center" />
                                     {children}
                                   </SidebarProvider>
+                                  </TemporaryChatProvider>
                                 </ScheduleProvider>
                               </WorkspaceProvider>
                             </AssistantProvider>

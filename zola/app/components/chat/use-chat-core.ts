@@ -10,6 +10,7 @@ import { API_ROUTE_CHAT } from "@/lib/routes"
 import type { UserProfile } from "@/lib/user/types"
 import type { Message } from "@ai-sdk/react"
 import { useChat } from "@ai-sdk/react"
+import { useTemporaryChat } from "@/lib/temporary-chat/provider"
 import { useSearchParams } from "next/navigation"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 
@@ -39,7 +40,7 @@ type UseChatCoreProps = {
 export function useChatCore({
   initialMessages,
   draftValue,
-  cacheAndAddMessage,
+  cacheAndAddMessage: cacheAndAddMessageSaved,
   chatId,
   user,
   files,
@@ -51,8 +52,22 @@ export function useChatCore({
   handleFileUploads,
   selectedModel,
   clearDraft,
-  bumpChat,
+  bumpChat: bumpChatSaved,
 }: UseChatCoreProps) {
+  const { temporary } = useTemporaryChat()
+  // Temporary chats leave no trace: nothing is cached and the history is untouched.
+  const cacheAndAddMessage = useCallback(
+    (m: Message) => {
+      if (!temporary) cacheAndAddMessageSaved(m)
+    },
+    [temporary, cacheAndAddMessageSaved]
+  )
+  const bumpChat = useCallback(
+    (id: string) => {
+      if (!temporary) bumpChatSaved(id)
+    },
+    [temporary, bumpChatSaved]
+  )
   // State management
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [hasDialogAuth, setHasDialogAuth] = useState(false)
@@ -105,6 +120,7 @@ export function useChatCore({
     initialInput: draftValue,
     onFinish: async (m) => {
       cacheAndAddMessage(m)
+      if (temporary) return
       try {
         const effectiveChatId =
           chatId ||
@@ -121,6 +137,16 @@ export function useChatCore({
     },
     onError: handleError,
   })
+
+  // Starting or ending a temporary chat always begins from a clean screen.
+  const prevTemporaryRef = useRef(temporary)
+  useEffect(() => {
+    if (prevTemporaryRef.current !== temporary) {
+      prevTemporaryRef.current = temporary
+      setMessages([])
+      setInput("")
+    }
+  }, [temporary, setMessages, setInput])
 
   // Handle search params on mount
   useEffect(() => {

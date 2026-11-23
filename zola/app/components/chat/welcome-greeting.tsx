@@ -3,6 +3,8 @@
 import { useMode } from "@/lib/mode-store/provider"
 import { useSettings } from "@/lib/settings-store/provider"
 import { useUser } from "@/lib/user-store/provider"
+import { useTemporaryChat } from "@/lib/temporary-chat/provider"
+import { SheetIcon } from "@/components/ui/sheet-icon"
 import {
   fillWelcomeTemplate,
   pickWelcomeTemplate,
@@ -19,6 +21,7 @@ export function WelcomeGreeting() {
   const { user } = useUser()
   const { mode } = useMode()
   const { settings } = useSettings()
+  const { temporary } = useTemporaryChat()
   const [template, setTemplate] = useState<string | null>(null)
 
   useEffect(() => {
@@ -30,6 +33,29 @@ export function WelcomeGreeting() {
     settings.nickname.trim() ||
     (isGuest ? undefined : user?.display_name?.trim().split(/\s+/)[0]) ||
     undefined
+
+  if (temporary) {
+    return (
+      <motion.div
+        key="temporary"
+        initial={{ opacity: 0, y: 10, filter: "blur(6px)" }}
+        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+        transition={{ duration: 0.35, ease: [0.32, 0.72, 0, 1] }}
+        className="mb-6 flex flex-col items-center gap-3 px-4 text-center"
+      >
+        <span className="bg-muted flex size-12 items-center justify-center rounded-full">
+          <SheetIcon name="eyeoff" size={26} />
+        </span>
+        <h1 className="text-2xl font-medium tracking-tight text-balance sm:text-3xl">
+          Chat temporário
+        </h1>
+        <p className="text-muted-foreground max-w-sm text-sm text-balance">
+          Esta conversa não será salva, não aparece no histórico e some quando
+          você sair.
+        </p>
+      </motion.div>
+    )
+  }
 
   if (!settings.showGreeting) return null
 

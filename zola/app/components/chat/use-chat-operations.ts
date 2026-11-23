@@ -3,6 +3,7 @@ import { checkRateLimits } from "@/lib/api"
 import type { Chats } from "@/lib/chat-store/types"
 import { REMAINING_QUERY_ALERT_THRESHOLD } from "@/lib/config"
 import { Message } from "@ai-sdk/react"
+import { useTemporaryChat } from "@/lib/temporary-chat/provider"
 import { useCallback } from "react"
 
 type UseChatOperationsProps = {
@@ -70,8 +71,12 @@ export function useChatOperations({
     }
   }
 
+  const { temporary, tempChatId } = useTemporaryChat()
+
   const ensureChatExists = async (userId: string, input: string) => {
     if (chatId) return chatId
+    // Temporary chats are never created in the history nor in the database.
+    if (temporary && tempChatId) return tempChatId
 
     if (!isAuthenticated) {
       const storedGuestChatId = localStorage.getItem("guestChatId")
