@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils"
+import { Button as AstryxButton } from "@astryxdesign/core/Button"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
 import * as React from "react"
@@ -33,24 +34,84 @@ const buttonVariants = cva(
   }
 )
 
+const VARIANT_MAP = {
+  default: "primary",
+  destructive: "destructive",
+  outline: "secondary",
+  secondary: "secondary",
+  ghost: "ghost",
+  link: "ghost",
+} as const
+
+const SIZE_MAP = { default: "md", sm: "sm", lg: "lg", icon: "md" } as const
+
+/** Plain text of the children, used as the accessible label. */
+function textOf(node: React.ReactNode): string {
+  if (node == null || typeof node === "boolean") return ""
+  if (typeof node === "string" || typeof node === "number") return String(node)
+  if (Array.isArray(node)) return node.map(textOf).join("")
+  if (React.isValidElement(node)) {
+    return textOf((node.props as { children?: React.ReactNode }).children)
+  }
+  return ""
+}
+
+/**
+ * Buttons are Astryx buttons. `asChild` keeps the plain styled element, because
+ * Astryx renders its own element.
+ */
 function Button({
   className,
   variant,
   size,
   asChild = false,
+  children,
+  disabled,
+  type,
   ...props
 }: React.ComponentProps<"button"> &
   VariantProps<typeof buttonVariants> & {
     asChild?: boolean
   }) {
-  const Comp = asChild ? Slot : "button"
+  if (asChild) {
+    return (
+      <Slot
+        data-slot="button"
+        className={cn(buttonVariants({ variant, size, className }))}
+        {...props}
+      >
+        {children}
+      </Slot>
+    )
+  }
+
+  const v = variant ?? "default"
+  const label =
+    (props["aria-label"] as string | undefined) || textOf(children) || "Botão"
 
   return (
-    <Comp
+    <AstryxButton
       data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }))}
-      {...props}
-    />
+      label={label}
+      variant={VARIANT_MAP[v]}
+      size={SIZE_MAP[size ?? "default"]}
+      type={type}
+      isDisabled={disabled}
+      className={cn(
+        // keep the accent chosen in the settings on primary buttons
+        v === "default" &&
+          "bg-primary text-primary-foreground hover:bg-primary/90",
+        size === "icon" && "size-9 p-0",
+        className
+      )}
+      {...(props as object)}
+    >
+      {Array.isArray(children) ? (
+        <span className="inline-flex items-center gap-2">{children}</span>
+      ) : (
+        children
+      )}
+    </AstryxButton>
   )
 }
 
