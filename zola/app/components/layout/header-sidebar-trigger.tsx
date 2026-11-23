@@ -1,5 +1,6 @@
 "use client"
 
+import { SheetIcon } from "@/components/ui/sheet-icon"
 import { useSidebar } from "@/components/ui/sidebar"
 import {
   Tooltip,
@@ -7,7 +8,6 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils"
-import { SidebarSimpleIcon } from "@phosphor-icons/react"
 
 type HeaderSidebarTriggerProps = React.HTMLAttributes<HTMLButtonElement>
 
@@ -15,7 +15,8 @@ export function HeaderSidebarTrigger({
   className,
   ...props
 }: HeaderSidebarTriggerProps) {
-  const { toggleSidebar, open } = useSidebar()
+  const { toggleSidebar, open, openMobile, isMobile } = useSidebar()
+  const isOpen = isMobile ? openMobile : open
 
   return (
     <Tooltip>
@@ -31,11 +32,13 @@ export function HeaderSidebarTrigger({
           )}
           {...props}
         >
-          <SidebarSimpleIcon size={20} />
-          <span className="sr-only">Toggle sidebar</span>
+          <SheetIcon name="sidebar" size={22} />
+          <span className="sr-only">
+            {isOpen ? "Close sidebar" : "Open sidebar"}
+          </span>
         </button>
       </TooltipTrigger>
-      <TooltipContent>{open ? "Close sidebar" : "Open sidebar"}</TooltipContent>
+      <TooltipContent>{isOpen ? "Close sidebar" : "Open sidebar"}</TooltipContent>
     </Tooltip>
   )
 }

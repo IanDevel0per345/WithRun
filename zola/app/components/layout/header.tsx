@@ -6,6 +6,7 @@ import { ButtonNewChat } from "@/app/components/layout/button-new-chat"
 import { UserMenu } from "@/app/components/layout/user-menu"
 import { useBreakpoint } from "@/app/hooks/use-breakpoint"
 import { BrandLogo } from "@/components/ui/brand-logo"
+import { useSidebar } from "@/components/ui/sidebar"
 import { Button } from "@/components/ui/button"
 import { APP_NAME } from "@/lib/config"
 import { useUserPreferences } from "@/lib/user-preference-store/provider"
@@ -17,6 +18,8 @@ import { HeaderSidebarTrigger } from "./header-sidebar-trigger"
 
 export function Header({ hasSidebar }: { hasSidebar: boolean }) {
   const isMobile = useBreakpoint(768)
+  const { state } = useSidebar()
+  const sidebarCollapsed = hasSidebar && state === "collapsed"
   const { user } = useUser()
   const { preferences } = useUserPreferences()
   const isMultiModelEnabled = preferences.multiModelEnabled
@@ -29,7 +32,10 @@ export function Header({ hasSidebar }: { hasSidebar: boolean }) {
         <div className="flex flex-1 items-center justify-between">
           <div className="-ml-0.5 flex flex-1 items-center gap-2 lg:-ml-2.5">
             <div className="flex flex-1 items-center gap-2">
-              {(!hasSidebar || isMobile) && (
+              {hasSidebar && (isMobile || sidebarCollapsed) && (
+                <HeaderSidebarTrigger />
+              )}
+              {(!hasSidebar || isMobile || sidebarCollapsed) && (
                 <Link
                   href="/"
                   className="pointer-events-auto inline-flex items-center text-xl font-medium tracking-tight"
@@ -38,7 +44,6 @@ export function Header({ hasSidebar }: { hasSidebar: boolean }) {
                   {APP_NAME}
                 </Link>
               )}
-              {hasSidebar && isMobile && <HeaderSidebarTrigger />}
             </div>
           </div>
           <div />
