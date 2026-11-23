@@ -32,7 +32,7 @@ export function HeaderSidebarTrigger({
           )}
           {...props}
         >
-          <SheetIcon name="sidebar" size={22} />
+          <SheetIcon name="sidebar" size={18} />
           <span className="sr-only">
             {isOpen ? "Close sidebar" : "Open sidebar"}
           </span>
