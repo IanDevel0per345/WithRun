@@ -18,6 +18,8 @@ import dynamic from "next/dynamic"
 import { redirect } from "next/navigation"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { useTemporaryChat } from "@/lib/temporary-chat/provider"
+import { ProjectPicker } from "./project-picker"
+import { useProjects } from "@/lib/project-store/provider"
 import { useChatCore } from "./use-chat-core"
 import { useChatOperations } from "./use-chat-operations"
 import { useFileUpload } from "./use-file-upload"
@@ -138,6 +140,14 @@ export function Chat() {
   // Scheduled tasks: when a schedule fires, a new empty chat starts it by itself.
   const { mode, setMode } = useMode()
   const { setTemporary } = useTemporaryChat()
+  const { chatProjects, setActive, loaded: projectsLoaded } = useProjects()
+
+  // Opening an existing chat puts you back in the project it belongs to.
+  useEffect(() => {
+    if (!chatId || !projectsLoaded) return
+    setActive(chatProjects[chatId] ?? null)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chatId, projectsLoaded])
   const [runTick, setRunTick] = useState(0)
   const [runToStart, setRunToStart] = useState<PendingRun | null>(null)
 
@@ -290,6 +300,7 @@ export function Chat() {
           },
         }}
       >
+        {showOnboarding && <ProjectPicker className="mb-2 px-4 sm:px-2" />}
         <ChatInput {...chatInputProps} />
       </motion.div>
 

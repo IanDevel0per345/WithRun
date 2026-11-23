@@ -1,5 +1,6 @@
 "use client"
 
+import { buildProjectBlock, useProjects } from "@/lib/project-store/provider"
 import { SYSTEM_PROMPT_DEFAULT } from "@/lib/config"
 import { buildAssistantBlock, useAssistant } from "@/lib/assistant-store/provider"
 import { useSettings, type Settings } from "@/lib/settings-store/provider"
@@ -107,6 +108,7 @@ export function useSystemPrompt(userPrompt?: string | null) {
   const { settings } = useSettings()
   const assistant = useAssistant()
   const now = useMinuteClock(assistant.abilities.schedule)
+  const { activeProject } = useProjects()
   return useMemo(() => {
     const base =
       mode === "code"
@@ -116,6 +118,7 @@ export function useSystemPrompt(userPrompt?: string | null) {
       ? buildPreferenceBlock(settings)
       : ""
     const extras = buildAssistantBlock(assistant, now)
-    return [base, prefs, extras].filter(Boolean).join("\n\n")
-  }, [mode, userPrompt, settings, assistant, now])
+    const project = buildProjectBlock(activeProject)
+    return [base, prefs, project, extras].filter(Boolean).join("\n\n")
+  }, [mode, userPrompt, settings, assistant, now, activeProject])
 }

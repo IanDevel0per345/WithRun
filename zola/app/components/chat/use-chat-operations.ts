@@ -3,6 +3,7 @@ import { checkRateLimits } from "@/lib/api"
 import type { Chats } from "@/lib/chat-store/types"
 import { REMAINING_QUERY_ALERT_THRESHOLD } from "@/lib/config"
 import { Message } from "@ai-sdk/react"
+import { useProjects } from "@/lib/project-store/provider"
 import { useTemporaryChat } from "@/lib/temporary-chat/provider"
 import { useCallback } from "react"
 
@@ -72,6 +73,7 @@ export function useChatOperations({
   }
 
   const { temporary, tempChatId } = useTemporaryChat()
+  const { activeId, tagChat } = useProjects()
 
   const ensureChatExists = async (userId: string, input: string) => {
     if (chatId) return chatId
@@ -93,6 +95,8 @@ export function useChatOperations({
       )
 
       if (!newChat) return null
+      // Chats started while a project is selected belong to that project.
+      if (activeId) tagChat(newChat.id, activeId)
       if (isAuthenticated) {
         window.history.pushState(null, "", `/c/${newChat.id}`)
       } else {
