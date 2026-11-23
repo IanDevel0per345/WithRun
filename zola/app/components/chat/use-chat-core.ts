@@ -10,6 +10,7 @@ import { API_ROUTE_CHAT } from "@/lib/routes"
 import type { UserProfile } from "@/lib/user/types"
 import type { Message } from "@ai-sdk/react"
 import { useChat } from "@ai-sdk/react"
+import { useUsage } from "@/lib/usage-store/provider"
 import { useTemporaryChat } from "@/lib/temporary-chat/provider"
 import { useSearchParams } from "next/navigation"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
@@ -55,6 +56,7 @@ export function useChatCore({
   bumpChat: bumpChatSaved,
 }: UseChatCoreProps) {
   const { temporary } = useTemporaryChat()
+  const { record: recordUsage } = useUsage()
   // Temporary chats leave no trace: nothing is cached and the history is untouched.
   const cacheAndAddMessage = useCallback(
     (m: Message) => {
@@ -119,6 +121,7 @@ export function useChatCore({
     initialMessages,
     initialInput: draftValue,
     onFinish: async (m) => {
+      recordUsage()
       cacheAndAddMessage(m)
       if (temporary) return
       try {

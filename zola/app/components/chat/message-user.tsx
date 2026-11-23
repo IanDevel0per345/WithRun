@@ -29,8 +29,20 @@ import Image from "next/image"
 import React, { useEffect, useRef, useState } from "react"
 
 const getTextFromDataUrl = (dataUrl: string) => {
-  const base64 = dataUrl.split(",")[1]
-  return base64
+  const [meta, payload = ""] = dataUrl.split(",")
+  if (!meta.includes(";base64")) {
+    try {
+      return decodeURIComponent(payload)
+    } catch {
+      return payload
+    }
+  }
+  try {
+    const bytes = Uint8Array.from(atob(payload), (c) => c.charCodeAt(0))
+    return new TextDecoder().decode(bytes)
+  } catch {
+    return ""
+  }
 }
 
 export type MessageUserProps = {
@@ -151,7 +163,11 @@ export function MessageUser({
             <div className="text-primary mb-3 h-24 w-40 overflow-hidden rounded-md border p-2 text-xs">
               {getTextFromDataUrl(attachment.url)}
             </div>
-          ) : null}
+          ) : (
+            <div className="text-primary mb-3 flex max-w-[16rem] items-center gap-2 rounded-md border px-3 py-2 text-xs">
+              <span className="truncate">{attachment.name || "Arquivo"}</span>
+            </div>
+          )}
         </div>
       ))}
       {isEditing ? (

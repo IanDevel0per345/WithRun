@@ -16,6 +16,10 @@ const ALLOWED_FILE_TYPES = [
   "text/markdown",
   "application/json",
   "text/csv",
+  "image/webp",
+  "video/mp4",
+  "video/webm",
+  "video/quicktime",
   "application/vnd.ms-excel",
   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
 ]
@@ -40,6 +44,17 @@ export async function validateFile(
   const type = await fileType.fileTypeFromBuffer(
     Buffer.from(buffer.slice(0, 4100))
   )
+
+  // Plain-text formats have no magic bytes, so trust the declared type or extension.
+  const TEXT_EXT = ["txt", "md", "json", "csv"]
+  const ext = file.name.split(".").pop()?.toLowerCase() ?? ""
+  const isPlainText =
+    !type &&
+    (["text/plain", "text/markdown", "application/json", "text/csv"].includes(
+      file.type
+    ) ||
+      TEXT_EXT.includes(ext))
+  if (isPlainText) return { isValid: true }
 
   if (!type || !ALLOWED_FILE_TYPES.includes(type.mime)) {
     return {
@@ -74,6 +89,15 @@ export async function uploadFile(
   return publicUrl
 }
 
+function readAsDataUrl(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = () => resolve(String(reader.result))
+    reader.onerror = () => reject(reader.error)
+    reader.readAsDataURL(file)
+  })
+}
+
 export function createAttachment(file: File, url: string): Attachment {
   return {
     name: file.name,
@@ -103,9 +127,10 @@ export async function processFiles(
     }
 
     try {
+      // Without storage the file travels inside the message as a data URL.
       const url = supabase
         ? await uploadFile(supabase, file)
-        : URL.createObjectURL(file)
+        : await readAsDataUrl(file)
 
       if (supabase) {
         const { error } = await supabase.from("chat_attachments").insert({

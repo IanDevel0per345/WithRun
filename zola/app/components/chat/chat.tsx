@@ -196,6 +196,15 @@ export function Chat() {
     ]
   )
 
+  // Rough size of the conversation for the "context" meter (about 4 characters per token).
+  const contextTokens = useMemo(() => {
+    const chars =
+      systemPrompt.length +
+      input.length +
+      messages.reduce((n, m) => n + (typeof m.content === "string" ? m.content.length : 0), 0)
+    return Math.ceil(chars / 4)
+  }, [systemPrompt, input, messages])
+
   // Memoize the chat input props
   const chatInputProps = useMemo(
     () => ({
@@ -217,8 +226,10 @@ export function Chat() {
       setEnableSearch,
       enableSearch,
       quotedText,
+      contextTokens,
     }),
     [
+      contextTokens,
       input,
       handleSuggestion,
       handleInputChange,

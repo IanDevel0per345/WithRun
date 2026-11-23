@@ -18,6 +18,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
+import { SheetIcon } from "@/components/ui/sheet-icon"
 import { Popover, PopoverTrigger } from "@/components/ui/popover"
 import {
   Tooltip,
@@ -268,19 +269,20 @@ export function ModelSelector({
           </TooltipTrigger>
           <TooltipContent>Switch model ⌘⇧P</TooltipContent>
           <DropdownMenuContent
-            className="flex h-[320px] w-[300px] flex-col space-y-0.5 overflow-visible p-0"
+            className="flex h-[300px] w-[320px] flex-col space-y-0.5 overflow-visible rounded-2xl p-0 shadow-xl"
             align="start"
-            sideOffset={4}
+            sideOffset={8}
+            collisionPadding={12}
             forceMount
-            side="top"
+            side="bottom"
           >
-            <div className="bg-background sticky top-0 z-10 rounded-t-md border-b px-0 pt-0 pb-0">
+            <div className="bg-popover sticky top-0 z-10 rounded-t-2xl border-b px-2 pt-2 pb-2">
               <div className="relative">
-                <MagnifyingGlassIcon className="text-muted-foreground absolute top-2.5 left-2.5 h-4 w-4" />
+                <MagnifyingGlassIcon className="text-muted-foreground absolute top-2.5 left-3 h-4 w-4" />
                 <Input
                   ref={searchInputRef}
-                  placeholder="Search models..."
-                  className="dark:bg-popover rounded-b-none border border-none pl-8 shadow-none focus-visible:ring-0"
+                  placeholder="Buscar modelos..."
+                  className="bg-muted/60 dark:bg-muted/60 rounded-xl border-none pl-9 shadow-none focus-visible:ring-0"
                   value={searchQuery}
                   onChange={handleSearchChange}
                   onClick={(e) => e.stopPropagation()}
@@ -289,11 +291,11 @@ export function ModelSelector({
                 />
               </div>
             </div>
-            <div className="flex h-full flex-col space-y-0 overflow-y-auto px-1 pt-0 pb-0">
+            <div className="flex h-full flex-col space-y-0.5 overflow-y-auto p-1.5">
               {isLoadingModels ? (
                 <div className="flex h-full flex-col items-center justify-center p-6 text-center">
                   <p className="text-muted-foreground mb-2 text-sm">
-                    Loading models...
+                    Carregando modelos...
                   </p>
                 </div>
               ) : filteredModels.length > 0 ? (
@@ -307,7 +309,7 @@ export function ModelSelector({
                     <DropdownMenuItem
                       key={model.id}
                       className={cn(
-                        "flex w-full items-center justify-between px-3 py-2",
+                        "flex w-full items-center justify-between rounded-xl px-2.5 py-2",
                         selectedModelId === model.id && "bg-accent"
                       )}
                       onSelect={() => {
@@ -337,10 +339,14 @@ export function ModelSelector({
                           <span className="text-sm">{model.name}</span>
                         </div>
                       </div>
-                      {isLocked && (
+                      {isLocked ? (
                         <div className="border-input bg-accent text-muted-foreground flex items-center gap-0.5 rounded-full border px-1.5 py-0.5 text-[10px] font-medium">
                           <span>Locked</span>
                         </div>
+                      ) : (
+                        selectedModelId === model.id && (
+                          <SheetIcon name="checkcircle" size={16} />
+                        )
                       )}
                     </DropdownMenuItem>
                   )

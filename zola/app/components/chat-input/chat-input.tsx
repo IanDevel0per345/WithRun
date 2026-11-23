@@ -40,6 +40,8 @@ type ChatInputProps = {
   setEnableSearch: (enabled: boolean) => void
   enableSearch: boolean
   quotedText?: { text: string; messageId: string } | null
+  /** Estimated tokens used by the current conversation. */
+  contextTokens?: number
 }
 
 export function ChatInput({
@@ -60,6 +62,7 @@ export function ChatInput({
   setEnableSearch,
   enableSearch,
   quotedText,
+  contextTokens,
 }: ChatInputProps) {
   const selectModelConfig = getModelInfo(selectedModel)
   const hasSearchSupport = Boolean(selectModelConfig?.webSearch)
@@ -210,6 +213,7 @@ export function ChatInput({
                 onFileUpload={onFileUpload}
                 isUserAuthenticated={isUserAuthenticated}
                 model={selectedModel}
+                contextTokens={contextTokens}
               />
               {hasSearchSupport ? (
                 <ButtonSearch
