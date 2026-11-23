@@ -9,7 +9,8 @@ import { ProjectChatItem } from "@/app/components/layout/sidebar/project-chat-it
 import { toast } from "@/components/ui/toast"
 import { useChats } from "@/lib/chat-store/chats/provider"
 import { useMessages } from "@/lib/chat-store/messages/provider"
-import { MESSAGE_MAX_LENGTH, SYSTEM_PROMPT_DEFAULT } from "@/lib/config"
+import { MESSAGE_MAX_LENGTH } from "@/lib/config"
+import { useSystemPrompt } from "@/lib/mode-store/provider"
 import { Attachment } from "@/lib/file-handling"
 import { API_ROUTE_CHAT } from "@/lib/routes"
 import { useUser } from "@/lib/user-store/provider"
@@ -37,6 +38,7 @@ export function ProjectView({ projectId }: ProjectViewProps) {
   const [enableSearch, setEnableSearch] = useState(false)
   const [currentChatId, setCurrentChatId] = useState<string | null>(null)
   const { user } = useUser()
+  const systemPrompt = useSystemPrompt(user?.system_prompt)
   const { createNewChat, bumpChat } = useChats()
   const { cacheAndAddMessage } = useMessages()
   const pathname = usePathname()
@@ -125,7 +127,7 @@ export function ProjectView({ projectId }: ProjectViewProps) {
             input,
             selectedModel,
             true, // Always authenticated in this context
-            SYSTEM_PROMPT_DEFAULT,
+            systemPrompt,
             projectId
           )
 
@@ -172,7 +174,7 @@ export function ProjectView({ projectId }: ProjectViewProps) {
     chatId: null,
     messages,
     selectedModel,
-    systemPrompt: SYSTEM_PROMPT_DEFAULT,
+    systemPrompt,
     createNewChat,
     setHasDialogAuth: () => {}, // Not used in project context
     setMessages,
@@ -250,7 +252,7 @@ export function ProjectView({ projectId }: ProjectViewProps) {
           userId: user.id,
           model: selectedModel,
           isAuthenticated: true,
-          systemPrompt: SYSTEM_PROMPT_DEFAULT,
+          systemPrompt,
           enableSearch,
         },
         experimental_attachments: attachments || undefined,
@@ -289,6 +291,7 @@ export function ProjectView({ projectId }: ProjectViewProps) {
     messages.length,
     bumpChat,
     enableSearch,
+    systemPrompt,
   ])
 
   const handleReload = useCallback(async () => {
@@ -302,12 +305,12 @@ export function ProjectView({ projectId }: ProjectViewProps) {
         userId: user.id,
         model: selectedModel,
         isAuthenticated: true,
-        systemPrompt: SYSTEM_PROMPT_DEFAULT,
+        systemPrompt,
       },
     }
 
     reload(options)
-  }, [user, selectedModel, reload])
+  }, [user, selectedModel, reload, systemPrompt])
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString("en-US", {

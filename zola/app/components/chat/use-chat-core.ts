@@ -4,6 +4,7 @@ import { toast } from "@/components/ui/toast"
 import { getOrCreateGuestUserId } from "@/lib/api"
 import { useChats } from "@/lib/chat-store/chats/provider"
 import { MESSAGE_MAX_LENGTH, SYSTEM_PROMPT_DEFAULT } from "@/lib/config"
+import { useSystemPrompt } from "@/lib/mode-store/provider"
 import { Attachment } from "@/lib/file-handling"
 import { API_ROUTE_CHAT } from "@/lib/routes"
 import type { UserProfile } from "@/lib/user/types"
@@ -61,10 +62,7 @@ export function useChatCore({
   const hasSentFirstMessageRef = useRef(false)
   const prevChatIdRef = useRef<string | null>(chatId)
   const isAuthenticated = useMemo(() => !!user?.id, [user?.id])
-  const systemPrompt = useMemo(
-    () => user?.system_prompt || SYSTEM_PROMPT_DEFAULT,
-    [user?.system_prompt]
-  )
+  const systemPrompt = useSystemPrompt(user?.system_prompt)
 
   // Search params handling
   const searchParams = useSearchParams()
@@ -450,7 +448,7 @@ export function useChatCore({
             userId: uid,
             model: selectedModel,
             isAuthenticated,
-            systemPrompt: SYSTEM_PROMPT_DEFAULT,
+            systemPrompt,
           },
         }
 
@@ -478,6 +476,7 @@ export function useChatCore({
       isAuthenticated,
       setMessages,
       setIsSubmitting,
+      systemPrompt,
     ]
   )
 

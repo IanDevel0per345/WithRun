@@ -1,5 +1,6 @@
 "use client"
 
+import { useMode } from "@/lib/mode-store/provider"
 import { AnimatePresence } from "motion/react"
 import React, { memo } from "react"
 import { Suggestions } from "../chat-input/suggestions"
@@ -15,11 +16,13 @@ export const PromptSystem = memo(function PromptSystem({
   onSuggestion,
   value,
 }: PromptSystemProps) {
+  const { mode } = useMode()
   return (
     <>
       <div className="relative order-1 w-full md:absolute md:bottom-[-70px] md:order-2 md:h-[70px]">
         <AnimatePresence mode="popLayout">
           <Suggestions
+            key={mode}
             onValueChange={onValueChange}
             onSuggestion={onSuggestion}
             value={value}

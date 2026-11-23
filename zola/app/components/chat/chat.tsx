@@ -8,7 +8,7 @@ import { useChatDraft } from "@/app/hooks/use-chat-draft"
 import { useChats } from "@/lib/chat-store/chats/provider"
 import { useMessages } from "@/lib/chat-store/messages/provider"
 import { useChatSession } from "@/lib/chat-store/session/provider"
-import { SYSTEM_PROMPT_DEFAULT } from "@/lib/config"
+import { useSystemPrompt } from "@/lib/mode-store/provider"
 import { useUserPreferences } from "@/lib/user-preference-store/provider"
 import { useUser } from "@/lib/user-store/provider"
 import { cn } from "@/lib/utils"
@@ -72,10 +72,7 @@ export function Chat() {
   // State to pass between hooks
   const [hasDialogAuth, setHasDialogAuth] = useState(false)
   const isAuthenticated = useMemo(() => !!user?.id, [user?.id])
-  const systemPrompt = useMemo(
-    () => user?.system_prompt || SYSTEM_PROMPT_DEFAULT,
-    [user?.system_prompt]
-  )
+  const systemPrompt = useSystemPrompt(user?.system_prompt)
 
   // New state for quoted text
   const [quotedText, setQuotedText] = useState<{

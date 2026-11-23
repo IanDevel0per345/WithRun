@@ -8,6 +8,8 @@ import {
   PromptInputTextarea,
 } from "@/components/prompt-kit/prompt-input"
 import { Button } from "@/components/ui/button"
+import { useMode } from "@/lib/mode-store/provider"
+import { MODES } from "@/lib/modes"
 import { getModelInfo } from "@/lib/models"
 import { SheetIcon } from "@/components/ui/sheet-icon"
 import { cn } from "@/lib/utils"
@@ -62,6 +64,7 @@ export function ChatInput({
   const hasSearchSupport = Boolean(selectModelConfig?.webSearch)
   const isOnlyWhitespace = (text: string) => !/[^\s]/.test(text)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const { mode } = useMode()
   const speech = useSpeechInput(value, onValueChange)
   const canSend = !isSubmitting
     ? status === "streaming" || (Boolean(value) && !isOnlyWhitespace(value))
@@ -187,7 +190,7 @@ export function ChatInput({
           <FileList files={files} onFileRemove={onFileRemove} />
           <PromptInputTextarea
             ref={textareaRef}
-            placeholder="Pergunte qualquer coisa..."
+            placeholder={MODES[mode].placeholder}
             onKeyDown={handleKeyDown}
             onPaste={handlePaste}
             className="min-h-[44px] px-5 pt-4 pb-1 text-base leading-[1.3] placeholder:font-medium sm:text-base md:text-base"

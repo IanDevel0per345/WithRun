@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/sonner"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { ChatsProvider } from "@/lib/chat-store/chats/provider"
 import { ChatSessionProvider } from "@/lib/chat-store/session/provider"
+import { ModeProvider } from "@/lib/mode-store/provider"
 import { ModelProvider } from "@/lib/model-store/provider"
 import { TanstackQueryProvider } from "@/lib/tanstack-query/tanstack-query-provider"
 import { UserPreferencesProvider } from "@/lib/user-preference-store/provider"
@@ -71,10 +72,12 @@ export default async function RootLayout({
                         enableSystem
                         disableTransitionOnChange
                       >
-                        <SidebarProvider defaultOpen>
-                          <Toaster position="top-center" />
-                          {children}
-                        </SidebarProvider>
+                        <ModeProvider>
+                          <SidebarProvider defaultOpen>
+                            <Toaster position="top-center" />
+                            {children}
+                          </SidebarProvider>
+                        </ModeProvider>
                       </ThemeProvider>
                     </TooltipProvider>
                   </UserPreferencesProvider>

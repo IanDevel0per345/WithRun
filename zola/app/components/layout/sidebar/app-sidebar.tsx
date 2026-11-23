@@ -21,13 +21,15 @@ import { HeaderSidebarTrigger } from "@/app/components/layout/header-sidebar-tri
 import { BrandLogo } from "@/components/ui/brand-logo"
 import { SheetIcon } from "@/components/ui/sheet-icon"
 import { Pin } from "lucide-react"
+import Link from "next/link"
 import { useParams, useRouter } from "next/navigation"
 import { useMemo, useState } from "react"
+import { ModeSwitcher } from "./mode-switcher"
 import { SidebarList } from "./sidebar-list"
 import { SidebarProject } from "./sidebar-project"
 
 const rowClass =
-  "text-muted-foreground hover:bg-accent/70 hover:text-foreground flex h-8 w-full items-center gap-2.5 rounded-md px-2 text-[13.5px] font-medium transition-colors"
+  "text-muted-foreground hover:bg-accent/70 hover:text-foreground flex h-8 w-full items-center gap-2 rounded-md px-1.5 text-[13.5px] font-medium transition-colors"
 
 export function AppSidebar() {
   const { chats, pinnedChats, isLoading } = useChats()
@@ -47,19 +49,12 @@ export function AppSidebar() {
       variant="sidebar"
       className="border-border/40 border-r bg-transparent"
     >
-      <SidebarHeader className="flex h-12 flex-row items-center justify-between gap-1 px-2.5">
-        <div className="flex min-w-0 items-center gap-1">
-          <button
-            type="button"
-            className="hover:bg-accent/70 flex min-w-0 items-center gap-2 rounded-md py-1 pr-1.5 pl-1 transition-colors"
-            aria-label="Workspace: Abstraction"
-          >
-            <BrandLogo size={26} />
-            <span className="truncate text-sm font-semibold tracking-tight">
-              Abstraction
-            </span>
-            <SheetIcon name="chevron" size={14} className="opacity-70" />
-          </button>
+      <SidebarHeader className="flex h-14 flex-row items-center justify-between gap-1 px-2">
+        <div className="flex min-w-0 items-center gap-1.5">
+          <Link href="/" aria-label="Meteor AI" className="shrink-0 rounded-md">
+            <BrandLogo size={34} />
+          </Link>
+          <ModeSwitcher />
         </div>
         <div className="flex items-center">
           <button
@@ -69,25 +64,25 @@ export function AppSidebar() {
             title="New chat (⌘⇧U)"
             className="text-muted-foreground hover:text-foreground hover:bg-accent/70 inline-flex size-7 items-center justify-center rounded-md transition-colors"
           >
-            <SheetIcon name="newchat" size={18} />
+            <SheetIcon name="newchat" size={20} />
           </button>
           <HeaderSidebarTrigger className="size-8" />
         </div>
       </SidebarHeader>
 
       <SidebarContent>
-        <div className="space-y-0.5 px-2.5 pt-1 pb-2">
+        <div className="space-y-0.5 px-2 pt-1 pb-2">
           <button
             type="button"
             onClick={() => router.push("/")}
             className={`${rowClass} ${!currentChatId ? "bg-accent text-foreground" : ""}`}
           >
-            <SheetIcon name="home" size={18} />
+            <SheetIcon name="home" size={20} />
             Home
           </button>
         </div>
 
-        <ScrollArea className="flex h-full px-2.5 [&>div>div]:!block">
+        <ScrollArea className="flex h-full px-2 [&>div>div]:!block">
           <SectionLabel>Projects</SectionLabel>
           <SidebarProject />
 
@@ -117,7 +112,7 @@ export function AppSidebar() {
           ) : (
             <div className="flex flex-col items-center px-4 py-10">
               <div className="bg-muted mb-2.5 flex size-9 items-center justify-center rounded-lg">
-                <SheetIcon name="chatdots" size={20} />
+                <SheetIcon name="chatdots" size={22} />
               </div>
               <p className="text-[13px] font-medium">No chats yet</p>
               <p className="text-muted-foreground mt-0.5 text-center text-xs">
@@ -128,13 +123,13 @@ export function AppSidebar() {
         </ScrollArea>
       </SidebarContent>
 
-      <SidebarFooter className="border-border/40 gap-0.5 border-t px-2.5 py-2">
+      <SidebarFooter className="border-border/40 gap-0.5 border-t px-2 py-2">
         <button
           type="button"
           onClick={() => setSettingsOpen(true)}
           className={rowClass}
         >
-          <SheetIcon name="settings" size={18} />
+          <SheetIcon name="settings" size={20} />
           Settings
         </button>
         <div className="mt-1 flex items-center gap-2 px-1 pt-2">
@@ -161,7 +156,7 @@ export function AppSidebar() {
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <h3 className="text-muted-foreground/80 px-2 pt-3 pb-1 text-xs font-medium">
+    <h3 className="text-muted-foreground/80 px-1.5 pt-3 pb-1 text-xs font-medium">
       {children}
     </h3>
   )

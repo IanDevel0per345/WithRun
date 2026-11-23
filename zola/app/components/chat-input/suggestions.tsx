@@ -4,7 +4,9 @@ import { PromptSuggestion } from "@/components/prompt-kit/prompt-suggestion"
 import { TRANSITION_SUGGESTIONS } from "@/lib/motion"
 import { AnimatePresence, motion } from "motion/react"
 import React, { memo, useCallback, useMemo, useState } from "react"
-import { SUGGESTIONS as SUGGESTIONS_CONFIG } from "../../../lib/config"
+import { SUGGESTIONS as DEFAULT_SUGGESTIONS } from "../../../lib/config"
+import { useMode } from "@/lib/mode-store/provider"
+import { CODE_SUGGESTIONS } from "@/lib/modes"
 
 type SuggestionsProps = {
   onValueChange: (value: string) => void
@@ -19,6 +21,8 @@ export const Suggestions = memo(function Suggestions({
   onSuggestion,
   value,
 }: SuggestionsProps) {
+  const { mode } = useMode()
+  const SUGGESTIONS_CONFIG = mode === "code" ? CODE_SUGGESTIONS : DEFAULT_SUGGESTIONS
   const [activeCategory, setActiveCategory] = useState<string | null>(null)
 
   if (!value && activeCategory !== null) {
@@ -87,7 +91,7 @@ export const Suggestions = memo(function Suggestions({
         ))}
       </motion.div>
     ),
-    [handleCategoryClick]
+    [handleCategoryClick, SUGGESTIONS_CONFIG]
   )
 
   const suggestionsList = useMemo(

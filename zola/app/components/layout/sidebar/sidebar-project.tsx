@@ -32,12 +32,12 @@ export function SidebarProject() {
   return (
     <div className="mb-5">
       <button
-        className="text-muted-foreground hover:bg-accent/70 hover:text-foreground relative inline-flex h-8 w-full items-center rounded-md bg-transparent px-2 text-[13.5px] font-medium transition-colors"
+        className="text-muted-foreground hover:bg-accent/70 hover:text-foreground relative inline-flex h-8 w-full items-center rounded-md bg-transparent px-1.5 text-[13.5px] font-medium transition-colors"
         type="button"
         onClick={() => setIsDialogOpen(true)}
       >
-        <div className="flex items-center gap-2.5">
-          <SheetIcon name="folderplus" size={18} />
+        <div className="flex items-center gap-2">
+          <SheetIcon name="folderplus" size={20} />
           New project
         </div>
       </button>
