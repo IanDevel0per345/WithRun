@@ -6,9 +6,18 @@ import * as DropdownMenuPrimitive from "@animate-ui/react/primitives/radix-ui/dr
 import * as React from "react"
 
 function DropdownMenu({
+  // Non-modal by default: a modal menu mounted (even closed) makes Radix mark
+  // the whole page aria-hidden, hiding the app from screen readers.
+  modal = false,
   ...props
 }: React.ComponentProps<typeof DropdownMenuPrimitive.Root>) {
-  return <DropdownMenuPrimitive.Root data-slot="dropdown-menu" {...props} />
+  return (
+    <DropdownMenuPrimitive.Root
+      data-slot="dropdown-menu"
+      modal={modal}
+      {...props}
+    />
+  )
 }
 
 function DropdownMenuPortal({

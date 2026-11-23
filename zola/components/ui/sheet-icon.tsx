@@ -49,6 +49,16 @@ export type SheetIconName =
   | "star"
   | "minus"
   | "grip"
+  | "layers"
+  | "calendar"
+  | "clock"
+  | "play"
+  | "pause"
+  | "eye"
+  | "download"
+  | "external"
+  | "lock"
+  | "mail"
 
 type SheetIconProps = {
   name: SheetIconName

@@ -7,7 +7,10 @@ import { TooltipProvider } from "@/components/ui/tooltip"
 import { ChatsProvider } from "@/lib/chat-store/chats/provider"
 import { ChatSessionProvider } from "@/lib/chat-store/session/provider"
 import { SidebarDefaultEffect } from "@/app/components/layout/sidebar-default-effect"
+import { AssistantProvider } from "@/lib/assistant-store/provider"
 import { ModeProvider } from "@/lib/mode-store/provider"
+import { ScheduleProvider } from "@/lib/schedule-store/provider"
+import { WorkspaceProvider } from "@/lib/workspace-store/provider"
 import { SettingsProvider } from "@/lib/settings-store/provider"
 import { ModelProvider } from "@/lib/model-store/provider"
 import { TanstackQueryProvider } from "@/lib/tanstack-query/tanstack-query-provider"
@@ -76,11 +79,17 @@ export default async function RootLayout({
                       >
                         <SettingsProvider>
                           <ModeProvider>
-                            <SidebarProvider defaultOpen>
-                              <SidebarDefaultEffect />
-                              <Toaster position="top-center" />
-                              {children}
-                            </SidebarProvider>
+                            <AssistantProvider>
+                              <WorkspaceProvider>
+                                <ScheduleProvider>
+                                  <SidebarProvider defaultOpen>
+                                    <SidebarDefaultEffect />
+                                    <Toaster position="top-center" />
+                                    {children}
+                                  </SidebarProvider>
+                                </ScheduleProvider>
+                              </WorkspaceProvider>
+                            </AssistantProvider>
                           </ModeProvider>
                         </SettingsProvider>
                       </ThemeProvider>

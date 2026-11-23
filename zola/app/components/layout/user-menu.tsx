@@ -55,7 +55,16 @@ export function UserMenu() {
         forceMount
         onCloseAutoFocus={(e) => e.preventDefault()}
         onInteractOutside={(e) => {
-          if (isSettingsOpen) {
+          // Ignore while closed (content stays mounted): otherwise the click
+          // that opens the menu would be treated as an outside click.
+          // The trigger button toggles the menu by itself, so it is not an
+          // "outside" interaction either.
+          const target = e.target as HTMLElement | null
+          if (
+            !isMenuOpen ||
+            isSettingsOpen ||
+            target?.closest('[aria-haspopup="menu"]')
+          ) {
             e.preventDefault()
             return
           }

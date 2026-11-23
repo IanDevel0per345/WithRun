@@ -19,17 +19,23 @@ import { useChats } from "@/lib/chat-store/chats/provider"
 import { useUser } from "@/lib/user-store/provider"
 import { HeaderSidebarTrigger } from "@/app/components/layout/header-sidebar-trigger"
 import { BrandLogo } from "@/components/ui/brand-logo"
-import { SheetIcon } from "@/components/ui/sheet-icon"
+import { SheetIcon, type SheetIconName } from "@/components/ui/sheet-icon"
 import { Pin } from "lucide-react"
 import Link from "next/link"
-import { useParams, useRouter } from "next/navigation"
+import { useParams, usePathname, useRouter } from "next/navigation"
 import { useMemo, useState } from "react"
 import { ModeSwitcher } from "./mode-switcher"
 import { SidebarList } from "./sidebar-list"
-import { SidebarProject } from "./sidebar-project"
 
 const rowClass =
   "text-muted-foreground hover:bg-accent/70 hover:text-foreground flex h-8 w-full items-center gap-2 rounded-md px-1.5 text-[13.5px] font-medium transition-colors"
+
+const HOME_ITEMS: { href: string; label: string; icon: SheetIconName }[] = [
+  { href: "/projetos", label: "Projetos", icon: "folder" },
+  { href: "/ambiente", label: "Meu ambiente", icon: "layers" },
+  { href: "/agendamentos", label: "Agendamentos", icon: "calendar" },
+  { href: "/conexoes", label: "Conexões", icon: "link" },
+]
 
 export function AppSidebar() {
   const { chats, pinnedChats, isLoading } = useChats()
@@ -37,6 +43,8 @@ export function AppSidebar() {
   const params = useParams<{ chatId: string }>()
   const currentChatId = params.chatId
   const router = useRouter()
+  const pathname = usePathname()
+  const isNewConversation = pathname === "/" || pathname.startsWith("/c/")
   const [settingsOpen, setSettingsOpen] = useState(false)
 
   const groupedChats = useMemo(() => groupChatsByDate(chats, ""), [chats])
@@ -71,11 +79,11 @@ export function AppSidebar() {
       </SidebarHeader>
 
       <SidebarContent>
-        <div className="space-y-0.5 px-2 pt-1 pb-2">
+        <div className="border-border/40 mx-2 border-b px-0 pt-1 pb-2">
           <button
             type="button"
             onClick={() => router.push("/")}
-            className={`${rowClass} ${!currentChatId ? "bg-accent text-foreground" : ""}`}
+            className={`${rowClass} ${isNewConversation ? "bg-accent text-foreground" : ""}`}
           >
             <SheetIcon name="computer" size={20} />
             New Conversation
@@ -83,8 +91,23 @@ export function AppSidebar() {
         </div>
 
         <ScrollArea className="flex h-full px-2 [&>div>div]:!block">
-          <SectionLabel>Projects</SectionLabel>
-          <SidebarProject />
+          <SectionLabel>Home</SectionLabel>
+          <nav aria-label="Home" className="space-y-0.5 pb-1">
+            {HOME_ITEMS.map((item) => {
+              const active = pathname === item.href || pathname.startsWith(`${item.href}/`)
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  aria-current={active ? "page" : undefined}
+                  className={`${rowClass} ${active ? "bg-accent text-foreground" : ""}`}
+                >
+                  <SheetIcon name={item.icon} size={20} />
+                  {item.label}
+                </Link>
+              )
+            })}
+          </nav>
 
           <SectionLabel>Chats</SectionLabel>
           {isLoading ? (

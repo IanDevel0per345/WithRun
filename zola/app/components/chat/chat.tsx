@@ -8,14 +8,15 @@ import { useChatDraft } from "@/app/hooks/use-chat-draft"
 import { useChats } from "@/lib/chat-store/chats/provider"
 import { useMessages } from "@/lib/chat-store/messages/provider"
 import { useChatSession } from "@/lib/chat-store/session/provider"
-import { useSystemPrompt } from "@/lib/mode-store/provider"
+import { useMode, useSystemPrompt } from "@/lib/mode-store/provider"
+import { PENDING_RUN_EVENT, takePendingRun, type PendingRun } from "@/lib/schedule-store/provider"
 import { useUserPreferences } from "@/lib/user-preference-store/provider"
 import { useUser } from "@/lib/user-store/provider"
 import { cn } from "@/lib/utils"
 import { AnimatePresence, motion } from "motion/react"
 import dynamic from "next/dynamic"
 import { redirect } from "next/navigation"
-import { useCallback, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { useChatCore } from "./use-chat-core"
 import { useChatOperations } from "./use-chat-operations"
 import { useFileUpload } from "./use-file-upload"
@@ -132,6 +133,33 @@ export function Chat() {
     clearDraft,
     bumpChat,
   })
+
+  // Scheduled tasks: when a schedule fires, a new empty chat starts it by itself.
+  const { mode, setMode } = useMode()
+  const [runTick, setRunTick] = useState(0)
+  const [runToStart, setRunToStart] = useState<PendingRun | null>(null)
+
+  useEffect(() => {
+    const onRun = () => setRunTick((t) => t + 1)
+    window.addEventListener(PENDING_RUN_EVENT, onRun)
+    return () => window.removeEventListener(PENDING_RUN_EVENT, onRun)
+  }, [])
+
+  useEffect(() => {
+    if (chatId || messages.length > 0 || isSubmitting || runToStart) return
+    const run = takePendingRun()
+    if (!run) return
+    if (run.mode !== mode) setMode(run.mode)
+    setRunToStart(run)
+  }, [chatId, messages.length, isSubmitting, runToStart, runTick, mode, setMode])
+
+  useEffect(() => {
+    if (!runToStart || mode !== runToStart.mode) return
+    const run = runToStart
+    setRunToStart(null)
+    handleSuggestion(run.prompt)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [runToStart, mode])
 
   // Memoize the conversation props to prevent unnecessary rerenders
   const conversationProps = useMemo(

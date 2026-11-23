@@ -1,10 +1,13 @@
+import { HtmlBlockActions } from "@/app/components/chat/html-block-actions"
 import { LinkMarkdown } from "@/app/components/chat/link-markdown"
+import { ScheduleProposalCard } from "@/app/components/chat/schedule-proposal"
 import { cn } from "@/lib/utils"
 import { marked } from "marked"
 import { memo, useId, useMemo } from "react"
 import ReactMarkdown, { Components } from "react-markdown"
 import remarkBreaks from "remark-breaks"
 import remarkGfm from "remark-gfm"
+import { parseScheduleProposal } from "@/lib/schedule-store/proposal"
 import { ButtonCopy } from "../common/button-copy"
 import {
   CodeBlock,
@@ -52,12 +55,21 @@ const INITIAL_COMPONENTS: Partial<Components> = {
 
     const language = extractLanguage(className)
 
+    if (language === "agendamento" && parseScheduleProposal(String(children))) {
+      return <ScheduleProposalCard raw={String(children)} />
+    }
+
     return (
       <CodeBlock className={className}>
         <CodeBlockGroup className="flex h-9 items-center justify-between px-4">
           <div className="text-muted-foreground py-1 pr-2 font-mono text-xs">
             {language}
           </div>
+          {language === "html" && (
+            <div className="pr-10">
+              <HtmlBlockActions code={String(children)} />
+            </div>
+          )}
         </CodeBlockGroup>
         <div className="sticky top-16 lg:top-0">
           <div className="absolute right-0 bottom-0 flex h-9 items-center pr-1.5">

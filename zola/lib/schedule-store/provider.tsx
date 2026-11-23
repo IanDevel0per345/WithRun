@@ -151,17 +151,15 @@ export function ScheduleProvider({ children }: { children: React.ReactNode }) {
 
   const fire = useCallback(
     (s: Schedule, manual = false) => {
-      queueRun(s)
-      const open = () => {
-        if (window.location.pathname === "/") {
-          // the chat on this page picks the run up through the event
-          window.dispatchEvent(new CustomEvent(PENDING_RUN_EVENT))
-        } else {
-          router.push("/")
-        }
+      // Queue the run and make sure a new, empty chat is the one that starts it.
+      const start = () => {
+        queueRun(s)
+        // On "/" the empty chat that is already open picks it up through the
+        // event; from any other page we go to a fresh chat, which picks it up.
+        if (window.location.pathname !== "/") router.push("/")
       }
       if (autoRef.current || manual) {
-        open()
+        start()
         toast({
           title: manual ? `Executando "${s.title}"` : `Agendamento "${s.title}" iniciado`,
           description: "A IA começou a tarefa em uma nova conversa.",
@@ -172,7 +170,7 @@ export function ScheduleProvider({ children }: { children: React.ReactNode }) {
           title: `Hora de "${s.title}"`,
           description: "Quer que a IA comece essa tarefa agora?",
           status: "info",
-          button: { label: "Iniciar", onClick: open },
+          button: { label: "Iniciar", onClick: start },
         })
       }
       try {

@@ -196,3 +196,8 @@ html[data-reduce-motion="true"] *::after {
   transition-duration: 0.01ms !important;
   scroll-behavior: auto !important;
 }
+
+/* Closed menus/popovers kept mounted for animation must never capture clicks. */
+[data-radix-popper-content-wrapper]:has(> [data-state="closed"]) {
+  pointer-events: none !important;
+}
