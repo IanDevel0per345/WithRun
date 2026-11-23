@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/sidebar"
 import { useChats } from "@/lib/chat-store/chats/provider"
 import { useUser } from "@/lib/user-store/provider"
+import { BrandLogo } from "@/components/ui/brand-logo"
 import { SheetIcon } from "@/components/ui/sheet-icon"
 import { Pin } from "lucide-react"
 import { useParams, useRouter } from "next/navigation"
@@ -55,9 +56,7 @@ export function AppSidebar() {
           className="hover:bg-accent/70 flex min-w-0 items-center gap-2 rounded-md py-1 pr-1.5 pl-1 transition-colors"
           aria-label="Workspace: Abstraction"
         >
-          <span className="bg-foreground text-background flex size-6 shrink-0 items-center justify-center rounded-md">
-            <MeteorMark />
-          </span>
+          <BrandLogo size={26} />
           <span className="truncate text-sm font-semibold tracking-tight">
             Abstraction
           </span>
@@ -175,19 +174,5 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
     <h3 className="text-muted-foreground/80 px-2 pt-3 pb-1 text-xs font-medium">
       {children}
     </h3>
-  )
-}
-
-function MeteorMark() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <circle cx="16" cy="16" r="5" fill="currentColor" />
-      <path
-        d="M12 12 3 3M10 17 4 23M17 10 23 4"
-        stroke="currentColor"
-        strokeWidth="2.4"
-        strokeLinecap="round"
-      />
-    </svg>
   )
 }
