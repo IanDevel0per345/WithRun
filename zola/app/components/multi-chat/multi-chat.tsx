@@ -1,5 +1,6 @@
 "use client"
 
+import { WelcomeGreeting } from "@/app/components/chat/welcome-greeting"
 import { MultiModelConversation } from "@/app/components/multi-chat/multi-conversation"
 import { toast } from "@/components/ui/toast"
 import { getOrCreateGuestUserId } from "@/lib/api"
@@ -380,9 +381,7 @@ export function MultiChat() {
             layoutId="onboarding"
             transition={{ layout: { duration: 0 } }}
           >
-            <h1 className="mb-6 text-3xl font-medium tracking-tight">
-              What's on your mind?
-            </h1>
+            <WelcomeGreeting />
           </motion.div>
         ) : (
           <motion.div

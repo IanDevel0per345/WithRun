@@ -3,6 +3,7 @@
 import { ChatInput } from "@/app/components/chat-input/chat-input"
 import { Conversation } from "@/app/components/chat/conversation"
 import { useModel } from "@/app/components/chat/use-model"
+import { WelcomeGreeting } from "@/app/components/chat/welcome-greeting"
 import { useChatDraft } from "@/app/hooks/use-chat-draft"
 import { useChats } from "@/lib/chat-store/chats/provider"
 import { useMessages } from "@/lib/chat-store/messages/provider"
@@ -242,9 +243,7 @@ export function Chat() {
               },
             }}
           >
-            <h1 className="mb-6 text-3xl font-medium tracking-tight">
-              What&apos;s on your mind?
-            </h1>
+            <WelcomeGreeting />
           </motion.div>
         ) : (
           <Conversation key="conversation" {...conversationProps} />
