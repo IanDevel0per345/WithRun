@@ -66,7 +66,7 @@ export function ModeSwitcher() {
               onSelect={() => setMode(id)}
               className="cursor-pointer gap-3 rounded-xl px-2.5 py-2.5"
             >
-              <span className="bg-muted flex size-9 shrink-0 items-center justify-center rounded-xl">
+              <span className="flex size-8 shrink-0 items-center justify-center">
                 <SheetIcon name={MODE_ICON[id]} size={20} />
               </span>
               <span className="flex min-w-0 flex-1 flex-col">
