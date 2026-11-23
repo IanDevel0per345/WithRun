@@ -30,7 +30,7 @@ export function TemporaryChatButton() {
           whileTap={{ scale: 0.9 }}
           className={cn(
             "inline-flex size-9 items-center justify-center transition-opacity",
-            temporary ? "opacity-100" : "opacity-60 hover:opacity-100"
+            "opacity-100"
           )}
         >
           <motion.span

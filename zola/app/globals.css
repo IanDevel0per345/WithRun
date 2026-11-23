@@ -201,3 +201,10 @@ html[data-reduce-motion="true"] *::after {
 [data-radix-popper-content-wrapper]:has(> [data-state="closed"]) {
   pointer-events: none !important;
 }
+
+/* Icons: dark on the light theme, white on the dark theme (follows --foreground).
+   Skipped when the icon sits on a filled (primary/foreground) background. */
+svg.lucide:not(:where(.bg-primary, .bg-foreground, .bg-destructive, .text-background, .text-primary-foreground, .text-destructive) *),
+svg[viewBox="0 0 256 256"][fill="currentColor"]:not(:where(.bg-primary, .bg-foreground, .bg-destructive, .text-background, .text-primary-foreground, .text-destructive) *) {
+  color: var(--foreground);
+}
