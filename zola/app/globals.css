@@ -160,3 +160,39 @@ code {
 [data-sonner-toaster] > li {
   width: 100%;
 }
+
+/* ---------- Meteor personalization (see lib/settings-store) ---------- */
+html[data-accent="azul"] { --meteor-accent: #2563eb; }
+html[data-accent="verde"] { --meteor-accent: #16a34a; }
+html[data-accent="roxo"] { --meteor-accent: #7c3aed; }
+html[data-accent="laranja"] { --meteor-accent: #ea580c; }
+html[data-accent="rosa"] { --meteor-accent: #db2777; }
+html[data-accent]:not([data-accent=""]) ::selection {
+  background: color-mix(in oklab, var(--meteor-accent) 28%, transparent);
+}
+html[data-accent]:not([data-accent=""]) textarea {
+  caret-color: var(--meteor-accent);
+}
+
+html[data-font="serif"] body {
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+}
+html[data-font="mono"] body {
+  font-family: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+html[data-chat-width="narrow"] main .max-w-3xl {
+  max-width: 40rem;
+}
+html[data-chat-width="wide"] main .max-w-3xl {
+  max-width: 60rem;
+}
+
+html[data-reduce-motion="true"] *,
+html[data-reduce-motion="true"] *::before,
+html[data-reduce-motion="true"] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}

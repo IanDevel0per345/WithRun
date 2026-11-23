@@ -98,12 +98,15 @@ function PromptInput({
 
 export type PromptInputTextareaProps = {
   disableAutosize?: boolean
+  /** When false, a plain Enter inserts a new line (the parent handles sending). */
+  submitOnEnter?: boolean
 } & React.ComponentProps<typeof Textarea>
 
 function PromptInputTextarea({
   className,
   onKeyDown,
   disableAutosize = false,
+  submitOnEnter = true,
   ...props
 }: PromptInputTextareaProps) {
   const { value, setValue, maxHeight, onSubmit, disabled, textareaRef } =
@@ -120,7 +123,7 @@ function PromptInputTextarea({
   }, [value, disableAutosize, textareaRef])
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === "Enter" && !e.shiftKey) {
+    if (submitOnEnter && e.key === "Enter" && !e.shiftKey) {
       e.preventDefault()
       onSubmit?.()
     }

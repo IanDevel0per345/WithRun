@@ -77,8 +77,8 @@ export function AppSidebar() {
             onClick={() => router.push("/")}
             className={`${rowClass} ${!currentChatId ? "bg-accent text-foreground" : ""}`}
           >
-            <SheetIcon name="home" size={20} />
-            Home
+            <SheetIcon name="computer" size={20} />
+            New Conversation
           </button>
         </div>
 
@@ -145,7 +145,7 @@ export function AppSidebar() {
       <Dialog open={settingsOpen} onOpenChange={setSettingsOpen}>
         <DialogContent className="flex h-[80%] min-h-[480px] w-full flex-col gap-0 p-0 sm:max-w-[768px]">
           <DialogHeader className="border-border border-b px-6 py-5">
-            <DialogTitle>Settings</DialogTitle>
+            <DialogTitle>Configurações</DialogTitle>
           </DialogHeader>
           <SettingsContent />
         </DialogContent>

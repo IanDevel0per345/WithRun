@@ -1,6 +1,7 @@
 "use client"
 
 import { PromptSuggestion } from "@/components/prompt-kit/prompt-suggestion"
+import { SheetIcon } from "@/components/ui/sheet-icon"
 import { TRANSITION_SUGGESTIONS } from "@/lib/motion"
 import { AnimatePresence, motion } from "motion/react"
 import React, { memo, useCallback, useMemo, useState } from "react"
@@ -85,7 +86,7 @@ export const Suggestions = memo(function Suggestions({
               animate: { opacity: 1, scale: 1 },
             }}
           >
-            <suggestion.icon className="size-4" />
+            <SheetIcon name={suggestion.icon} size={16} />
             {suggestion.label}
           </MotionPromptSuggestion>
         ))}

@@ -10,6 +10,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { useMode } from "@/lib/mode-store/provider"
 import { MODES } from "@/lib/modes"
+import { useSettings } from "@/lib/settings-store/provider"
 import { getModelInfo } from "@/lib/models"
 import { SheetIcon } from "@/components/ui/sheet-icon"
 import { cn } from "@/lib/utils"
@@ -65,6 +66,8 @@ export function ChatInput({
   const isOnlyWhitespace = (text: string) => !/[^\s]/.test(text)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const { mode } = useMode()
+  const { settings } = useSettings()
+  const coloredAccent = settings.accent !== "padrao"
   const speech = useSpeechInput(value, onValueChange)
   const canSend = !isSubmitting
     ? status === "streaming" || (Boolean(value) && !isOnlyWhitespace(value))
@@ -95,7 +98,12 @@ export function ChatInput({
         return
       }
 
-      if (e.key === "Enter" && !e.shiftKey) {
+      // When "send with Enter" is off, Ctrl/Cmd+Enter sends and Enter breaks the line.
+      const sendsOnThisKey = settings.enterToSend
+        ? !e.shiftKey
+        : e.metaKey || e.ctrlKey
+
+      if (e.key === "Enter" && sendsOnThisKey) {
         if (isOnlyWhitespace(value)) {
           return
         }
@@ -104,7 +112,7 @@ export function ChatInput({
         onSend()
       }
     },
-    [isSubmitting, onSend, status, value]
+    [isSubmitting, onSend, status, value, settings.enterToSend]
   )
 
   const handlePaste = useCallback(
@@ -193,6 +201,7 @@ export function ChatInput({
             placeholder={MODES[mode].placeholder}
             onKeyDown={handleKeyDown}
             onPaste={handlePaste}
+            submitOnEnter={settings.enterToSend}
             className="min-h-[44px] px-5 pt-4 pb-1 text-base leading-[1.3] placeholder:font-medium sm:text-base md:text-base"
           />
           <PromptInputActions className="w-full justify-between px-3 pt-1 pb-3">
@@ -251,7 +260,9 @@ export function ChatInput({
                   className={cn(
                     "size-11 shrink-0 rounded-full p-0 shadow-none transition-all duration-300 ease-out",
                     canSend
-                      ? "bg-foreground text-background hover:bg-foreground/90"
+                      ? coloredAccent
+                        ? "bg-[var(--meteor-accent)] text-white hover:opacity-90"
+                        : "bg-foreground text-background hover:bg-foreground/90"
                       : "bg-muted text-muted-foreground hover:bg-muted"
                   )}
                   disabled={!canSend}
@@ -262,7 +273,8 @@ export function ChatInput({
                   <SheetIcon
                     name={status === "streaming" ? "stop" : "arrowup"}
                     size={22}
-                    invert={canSend}
+                    invert={canSend && !coloredAccent}
+                    forceWhite={canSend && coloredAccent}
                     className={cn(!canSend && "opacity-40")}
                   />
                 </Button>

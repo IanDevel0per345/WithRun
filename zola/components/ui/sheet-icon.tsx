@@ -20,6 +20,30 @@ export type SheetIconName =
   | "sidebar"
   | "code"
   | "checkcircle"
+  | "computer"
+  | "sparkle"
+  | "pen"
+  | "command"
+  | "database"
+  | "cube"
+  | "key"
+  | "link"
+  | "file"
+  | "book"
+  | "cap"
+  | "bulb"
+  | "warning"
+  | "search"
+  | "refresh"
+  | "flask"
+  | "wrench"
+  | "info"
+  | "user"
+  | "trash"
+  | "copy"
+  | "chevronu"
+  | "chevronl"
+  | "dots"
 
 type SheetIconProps = {
   name: SheetIconName
@@ -27,6 +51,8 @@ type SheetIconProps = {
   className?: string
   /** Use on dark surfaces in the light theme (white icon) and vice-versa. */
   invert?: boolean
+  /** Always render the white variant (for colored backgrounds). */
+  forceWhite?: boolean
 }
 
 /**
@@ -38,7 +64,25 @@ export function SheetIcon({
   size = 20,
   className,
   invert = false,
+  forceWhite = false,
 }: SheetIconProps) {
+  if (forceWhite) {
+    return (
+      <span
+        aria-hidden
+        className={cn("inline-flex shrink-0", className)}
+        style={{ width: size, height: size }}
+      >
+        <Image
+          src={`/icons/white/${name}.png`}
+          alt=""
+          width={size}
+          height={size}
+          unoptimized
+        />
+      </span>
+    )
+  }
   const light = invert ? "white" : "black"
   const dark = invert ? "black" : "white"
   return (
