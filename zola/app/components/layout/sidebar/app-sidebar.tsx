@@ -49,7 +49,6 @@ export function AppSidebar() {
     >
       <SidebarHeader className="flex h-12 flex-row items-center justify-between gap-1 px-2.5">
         <div className="flex min-w-0 items-center gap-1">
-          <HeaderSidebarTrigger className="size-8" />
           <button
             type="button"
             className="hover:bg-accent/70 flex min-w-0 items-center gap-2 rounded-md py-1 pr-1.5 pl-1 transition-colors"
@@ -72,6 +71,7 @@ export function AppSidebar() {
           >
             <SheetIcon name="newchat" size={18} />
           </button>
+          <HeaderSidebarTrigger className="size-8" />
         </div>
       </SidebarHeader>
 
