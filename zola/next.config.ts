@@ -9,6 +9,7 @@ const withBundleAnalyzer = bundleAnalyzer({
 const nextConfig: NextConfig = withBundleAnalyzer({
   output: "standalone",
   turbopack: {},
+  devIndicators: false,
   experimental: {
     optimizePackageImports: ["@phosphor-icons/react"],
   },

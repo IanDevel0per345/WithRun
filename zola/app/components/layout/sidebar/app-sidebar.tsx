@@ -85,7 +85,7 @@ export function AppSidebar() {
             onClick={() => router.push("/")}
             className={`${rowClass} ${isNewConversation ? "bg-accent text-foreground" : ""}`}
           >
-            <SheetIcon name="computer" size={20} />
+            <SheetIcon name="plus" size={20} />
             New Conversation
           </button>
         </div>

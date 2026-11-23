@@ -2,7 +2,7 @@
 
 import { HistoryTrigger } from "@/app/components/history/history-trigger"
 import { AppInfoTrigger } from "@/app/components/layout/app-info/app-info-trigger"
-import { ButtonNewChat } from "@/app/components/layout/button-new-chat"
+import { NewsButton } from "@/app/components/layout/news-button"
 import { UserMenu } from "@/app/components/layout/user-menu"
 import { useBreakpoint } from "@/app/hooks/use-breakpoint"
 import { BrandLogo } from "@/components/ui/brand-logo"
@@ -71,7 +71,7 @@ export function Header({ hasSidebar }: { hasSidebar: boolean }) {
           ) : (
             <div className="pointer-events-auto flex flex-1 items-center justify-end gap-2">
               {!isMultiModelEnabled && <DialogPublish />}
-              <ButtonNewChat />
+              <NewsButton />
               {!hasSidebar && <HistoryTrigger hasSidebar={hasSidebar} />}
               <UserMenu />
             </div>
