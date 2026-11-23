@@ -29,7 +29,7 @@ type ButtonFileUploadProps = {
 }
 
 const plusButtonClass =
-  "bg-muted/70 hover:bg-muted size-10 shrink-0 rounded-full p-0 shadow-none"
+  "hover:bg-accent size-10 shrink-0 rounded-full bg-transparent p-0 shadow-none dark:bg-transparent dark:hover:bg-accent"
 
 function PlusButton({
   className,
@@ -44,7 +44,7 @@ function PlusButton({
       aria-label="Add files"
       {...props}
     >
-      <SheetIcon name="plus" size={20} />
+      <SheetIcon name="plus" size={24} />
     </Button>
   )
 }

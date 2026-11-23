@@ -16,6 +16,7 @@ export type SheetIconName =
   | "arrowup"
   | "globe"
   | "stop"
+  | "mic"
 
 type SheetIconProps = {
   name: SheetIconName

@@ -13,6 +13,7 @@ import { SheetIcon } from "@/components/ui/sheet-icon"
 import { cn } from "@/lib/utils"
 import { useCallback, useEffect, useMemo, useRef } from "react"
 import { PromptSystem } from "../suggestions/prompt-system"
+import { useSpeechInput } from "./use-speech-input"
 import { ButtonFileUpload } from "./button-file-upload"
 import { ButtonSearch } from "./button-search"
 import { FileList } from "./file-list"
@@ -61,6 +62,7 @@ export function ChatInput({
   const hasSearchSupport = Boolean(selectModelConfig?.webSearch)
   const isOnlyWhitespace = (text: string) => !/[^\s]/.test(text)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const speech = useSpeechInput(value, onValueChange)
   const canSend = !isSubmitting
     ? status === "streaming" || (Boolean(value) && !isOnlyWhitespace(value))
     : false
@@ -177,26 +179,26 @@ export function ChatInput({
         onClick={() => textareaRef.current?.focus()}
       >
         <PromptInput
-          className="bg-popover border-border/60 relative z-10 rounded-[28px] p-1.5 shadow-[0_8px_30px_rgba(0,0,0,0.06)] backdrop-blur-xl dark:shadow-none"
+          className="bg-popover relative z-10 rounded-[2rem] border-[1.5px] border-neutral-300 p-0 shadow-none dark:border-neutral-700"
           maxHeight={200}
           value={value}
           onValueChange={onValueChange}
         >
           <FileList files={files} onFileRemove={onFileRemove} />
-          <div className="flex items-end gap-1.5">
-            <ButtonFileUpload
-              onFileUpload={onFileUpload}
-              isUserAuthenticated={isUserAuthenticated}
-              model={selectedModel}
-            />
-            <PromptInputTextarea
-              ref={textareaRef}
-              placeholder="Ask Meteor AI"
-              onKeyDown={handleKeyDown}
-              onPaste={handlePaste}
-              className="min-h-[40px] flex-1 px-2 py-2.5 text-base leading-[1.3] sm:text-base md:text-base"
-            />
-            <PromptInputActions className="h-10 shrink-0 gap-1">
+          <PromptInputTextarea
+            ref={textareaRef}
+            placeholder="Pergunte qualquer coisa..."
+            onKeyDown={handleKeyDown}
+            onPaste={handlePaste}
+            className="min-h-[44px] px-5 pt-4 pb-1 text-base leading-[1.3] placeholder:font-medium sm:text-base md:text-base"
+          />
+          <PromptInputActions className="w-full justify-between px-3 pt-1 pb-3">
+            <div className="flex items-center gap-1">
+              <ButtonFileUpload
+                onFileUpload={onFileUpload}
+                isUserAuthenticated={isUserAuthenticated}
+                model={selectedModel}
+              />
               {hasSearchSupport ? (
                 <ButtonSearch
                   isSelected={enableSearch}
@@ -210,13 +212,41 @@ export function ChatInput({
                 isUserAuthenticated={isUserAuthenticated}
                 className="text-muted-foreground hover:bg-accent hover:text-foreground h-9 max-w-[9.5rem] gap-1 rounded-full border-0 bg-transparent px-2.5 text-sm font-medium shadow-none dark:bg-transparent max-sm:gap-0 max-sm:px-2 max-sm:text-[0px] max-sm:[&>svg:last-child]:hidden [&_span]:truncate"
               />
+            </div>
+            <div className="flex items-center gap-1.5">
+              <PromptInputAction
+                tooltip={
+                  speech.supported
+                    ? speech.listening
+                      ? "Stop dictation"
+                      : "Dictate"
+                    : "Voice input is not supported in this browser"
+                }
+              >
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  type="button"
+                  onClick={speech.toggle}
+                  disabled={!speech.supported}
+                  aria-label="Voice input"
+                  aria-pressed={speech.listening}
+                  className={cn(
+                    "hover:bg-accent size-10 shrink-0 rounded-full bg-transparent p-0 shadow-none dark:bg-transparent dark:hover:bg-accent",
+                    speech.listening && "bg-accent dark:bg-accent animate-pulse",
+                    !speech.supported && "opacity-50"
+                  )}
+                >
+                  <SheetIcon name="mic" size={22} />
+                </Button>
+              </PromptInputAction>
               <PromptInputAction
                 tooltip={status === "streaming" ? "Stop" : "Send"}
               >
                 <Button
                   size="sm"
                   className={cn(
-                    "size-10 shrink-0 rounded-full p-0 shadow-none transition-all duration-300 ease-out",
+                    "size-11 shrink-0 rounded-full p-0 shadow-none transition-all duration-300 ease-out",
                     canSend
                       ? "bg-foreground text-background hover:bg-foreground/90"
                       : "bg-muted text-muted-foreground hover:bg-muted"
@@ -228,14 +258,14 @@ export function ChatInput({
                 >
                   <SheetIcon
                     name={status === "streaming" ? "stop" : "arrowup"}
-                    size={20}
+                    size={22}
                     invert={canSend}
                     className={cn(!canSend && "opacity-40")}
                   />
                 </Button>
               </PromptInputAction>
-            </PromptInputActions>
-          </div>
+            </div>
+          </PromptInputActions>
         </PromptInput>
       </div>
     </div>
