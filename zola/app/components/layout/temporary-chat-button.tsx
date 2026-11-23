@@ -1,6 +1,5 @@
 "use client"
 
-import { toast } from "@/components/ui/toast"
 import { SheetIcon } from "@/components/ui/sheet-icon"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { useTemporaryChat } from "@/lib/temporary-chat/provider"
@@ -18,13 +17,6 @@ export function TemporaryChatButton() {
     setTemporary(next)
     // A temporary chat is always a brand new conversation.
     if (next && pathname !== "/") router.push("/")
-    if (next) {
-      toast({
-        title: "Chat temporário ativado",
-        description: "Esta conversa não será salva e não aparece no histórico.",
-        status: "info",
-      })
-    }
   }
 
   return (
@@ -37,10 +29,8 @@ export function TemporaryChatButton() {
           aria-pressed={temporary}
           whileTap={{ scale: 0.9 }}
           className={cn(
-            "inline-flex size-9 items-center justify-center rounded-full transition-colors",
-            temporary
-              ? "bg-foreground"
-              : "bg-background hover:bg-muted"
+            "inline-flex size-9 items-center justify-center transition-opacity",
+            temporary ? "opacity-100" : "opacity-60 hover:opacity-100"
           )}
         >
           <motion.span
@@ -50,7 +40,7 @@ export function TemporaryChatButton() {
             transition={{ type: "spring", stiffness: 420, damping: 22 }}
             className="inline-flex"
           >
-            <SheetIcon name="eyeoff" size={22} invert={temporary} />
+            <SheetIcon name="eyeoff" size={22} />
           </motion.span>
         </motion.button>
       </TooltipTrigger>

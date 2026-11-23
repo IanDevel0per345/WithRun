@@ -43,9 +43,7 @@ export function WelcomeGreeting() {
         transition={{ duration: 0.35, ease: [0.32, 0.72, 0, 1] }}
         className="mb-6 flex flex-col items-center gap-3 px-4 text-center"
       >
-        <span className="bg-muted flex size-12 items-center justify-center rounded-full">
-          <SheetIcon name="eyeoff" size={26} />
-        </span>
+        <SheetIcon name="eyeoff" size={36} />
         <h1 className="text-2xl font-medium tracking-tight text-balance sm:text-3xl">
           Chat temporário
         </h1>
