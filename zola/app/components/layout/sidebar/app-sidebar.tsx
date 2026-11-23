@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/sidebar"
 import { useChats } from "@/lib/chat-store/chats/provider"
 import { useUser } from "@/lib/user-store/provider"
+import { useKeyShortcut } from "@/app/hooks/use-key-shortcut"
 import { HeaderSidebarTrigger } from "@/app/components/layout/header-sidebar-trigger"
 import { BrandLogo } from "@/components/ui/brand-logo"
 import { SheetIcon, type SheetIconName } from "@/components/ui/sheet-icon"
@@ -46,6 +47,11 @@ export function AppSidebar() {
   const pathname = usePathname()
   const isNewConversation = pathname === "/" || pathname.startsWith("/c/")
   const [settingsOpen, setSettingsOpen] = useState(false)
+
+  useKeyShortcut(
+    (e) => (e.key === "u" || e.key === "U") && e.metaKey && e.shiftKey,
+    () => router.push("/")
+  )
 
   const groupedChats = useMemo(() => groupChatsByDate(chats, ""), [chats])
   const hasChats = chats.length > 0
