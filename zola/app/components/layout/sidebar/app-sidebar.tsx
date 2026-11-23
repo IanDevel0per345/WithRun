@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/sidebar"
 import { useChats } from "@/lib/chat-store/chats/provider"
 import { useUser } from "@/lib/user-store/provider"
-import { SheetIcon, type SheetIconName } from "@/components/ui/sheet-icon"
+import { SheetIcon } from "@/components/ui/sheet-icon"
 import { Pin } from "lucide-react"
 import { useParams, useRouter } from "next/navigation"
 import { useMemo, useState } from "react"
@@ -99,10 +99,10 @@ export function AppSidebar() {
         </div>
 
         <ScrollArea className="flex h-full px-2.5 [&>div>div]:!block">
-          <SectionLabel icon="folder">Projects</SectionLabel>
+          <SectionLabel>Projects</SectionLabel>
           <SidebarProject />
 
-          <SectionLabel icon="chat">Chats</SectionLabel>
+          <SectionLabel>Chats</SectionLabel>
           {isLoading ? (
             <div className="h-full" />
           ) : hasChats ? (
@@ -170,16 +170,9 @@ export function AppSidebar() {
   )
 }
 
-function SectionLabel({
-  icon,
-  children,
-}: {
-  icon: SheetIconName
-  children: React.ReactNode
-}) {
+function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <h3 className="text-muted-foreground flex items-center gap-2.5 px-2 pt-3 pb-1 text-xs font-medium">
-      <SheetIcon name={icon} size={16} className="mx-px opacity-80" />
+    <h3 className="text-muted-foreground/80 px-2 pt-3 pb-1 text-xs font-medium">
       {children}
     </h3>
   )
