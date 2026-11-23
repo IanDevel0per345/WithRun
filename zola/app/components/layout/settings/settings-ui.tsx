@@ -47,11 +47,12 @@ export function SettingRow({
   return (
     <div
       className={cn(
-        "flex gap-4 px-4 py-3.5",
-        vertical ? "flex-col" : "items-center justify-between"
+        "flex gap-x-4 gap-y-3 px-4 py-3.5",
+        // Wide controls wrap under the text on small screens instead of squeezing it.
+        vertical ? "flex-col" : "flex-wrap items-center justify-between"
       )}
     >
-      <div className="min-w-0">
+      <div className={cn("min-w-0", !vertical && "min-w-[11rem] flex-1")}>
         <div className="text-sm font-medium">{title}</div>
         {description && (
           <p className="text-muted-foreground mt-0.5 text-xs leading-snug">
@@ -59,7 +60,7 @@ export function SettingRow({
           </p>
         )}
       </div>
-      <div className={cn(vertical ? "w-full" : "shrink-0")}>{children}</div>
+      <div className={cn(vertical ? "w-full" : "max-w-full shrink-0")}>{children}</div>
     </div>
   )
 }

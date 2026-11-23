@@ -172,8 +172,8 @@ export function AppSidebar() {
       </SidebarFooter>
 
       <Dialog open={settingsOpen} onOpenChange={setSettingsOpen}>
-        <DialogContent className="flex h-[80%] min-h-[480px] w-full flex-col gap-0 p-0 sm:max-w-[768px]">
-          <DialogHeader className="border-border border-b px-6 py-5">
+        <DialogContent className="flex h-[80%] min-h-[480px] w-full flex-col gap-0 overflow-hidden p-0 sm:max-w-[768px] max-sm:top-0 max-sm:left-0 max-sm:h-dvh max-sm:max-h-dvh max-sm:min-h-0 max-sm:max-w-none max-sm:translate-x-0 max-sm:translate-y-0 max-sm:rounded-none max-sm:border-0">
+          <DialogHeader className="border-border shrink-0 border-b px-5 py-4 sm:px-6 sm:py-5">
             <DialogTitle>Configurações</DialogTitle>
           </DialogHeader>
           <SettingsContent />

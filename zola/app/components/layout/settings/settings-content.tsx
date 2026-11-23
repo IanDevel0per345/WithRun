@@ -6,7 +6,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { isSupabaseEnabled } from "@/lib/supabase/config"
 import { cn, isDev } from "@/lib/utils"
 import { SheetIcon, type SheetIconName } from "@/components/ui/sheet-icon"
-import { useState } from "react"
+import { useBreakpoint } from "@/app/hooks/use-breakpoint"
+import { AnimatePresence, motion } from "motion/react"
+import { useEffect, useRef, useState } from "react"
 import { ByokSection } from "./apikeys/byok-section"
 import { AppearanceSettings } from "./appearance/appearance-settings"
 import { ChatSettings } from "./chat/chat-settings"
@@ -33,6 +35,11 @@ type Tab = {
 
 export function SettingsContent({ isDrawer = false }: SettingsContentProps) {
   const [activeTab, setActiveTab] = useState("general")
+  const isMobile = useBreakpoint(768)
+  const compact = isDrawer || isMobile
+  const [direction, setDirection] = useState(1)
+  const stripRef = useRef<HTMLDivElement>(null)
+  const touchStart = useRef<{ x: number; y: number } | null>(null)
 
   const tabs: Tab[] = [
     {
@@ -101,6 +108,116 @@ export function SettingsContent({ isDrawer = false }: SettingsContentProps) {
       ),
     },
   ]
+
+  const activeIndex = Math.max(
+    0,
+    tabs.findIndex((t) => t.value === activeTab)
+  )
+
+  const goTo = (index: number) => {
+    const next = tabs[Math.min(tabs.length - 1, Math.max(0, index))]
+    if (!next || next.value === activeTab) return
+    setDirection(index > activeIndex ? 1 : -1)
+    setActiveTab(next.value)
+  }
+
+  // Keep the selected tab visible (and centered) in the horizontal strip.
+  useEffect(() => {
+    if (!compact) return
+    const el = stripRef.current?.querySelector<HTMLElement>(
+      `[data-tab="${activeTab}"]`
+    )
+    el?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" })
+  }, [activeTab, compact])
+
+  if (compact) {
+    return (
+      <div className="flex min-h-0 w-full flex-1 flex-col">
+        {isDrawer && (
+          <div className="border-border flex items-center justify-between border-b px-4 py-2">
+            <h2 className="text-lg font-medium">Configurações</h2>
+            <DrawerClose asChild>
+              <Button variant="ghost" size="icon">
+                <SheetIcon name="close" size={16} />
+              </Button>
+            </DrawerClose>
+          </div>
+        )}
+        <div className="border-border relative shrink-0 border-b">
+          <div
+            ref={stripRef}
+            role="tablist"
+            aria-label="Seções das configurações"
+            className="flex snap-x gap-1 overflow-x-auto px-3 py-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          >
+            {tabs.map((tab) => {
+              const active = tab.value === activeTab
+              return (
+                <button
+                  key={tab.value}
+                  type="button"
+                  role="tab"
+                  data-tab={tab.value}
+                  aria-selected={active}
+                  onClick={() => goTo(tabs.findIndex((t) => t.value === tab.value))}
+                  className={cn(
+                    "relative flex shrink-0 snap-center items-center gap-2 rounded-full px-3.5 py-2 text-sm font-medium transition-colors",
+                    active ? "text-foreground" : "text-muted-foreground"
+                  )}
+                >
+                  {active && (
+                    <motion.span
+                      layoutId="settings-mobile-pill"
+                      className="bg-accent absolute inset-0 rounded-full"
+                      transition={{ type: "spring", stiffness: 500, damping: 40 }}
+                    />
+                  )}
+                  <span className="relative flex items-center gap-2">
+                    <SheetIcon name={tab.icon} size={16} />
+                    {tab.label}
+                  </span>
+                </button>
+              )
+            })}
+          </div>
+        </div>
+
+        <div
+          className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto px-4 pt-4 pb-10"
+          onTouchStart={(e) => {
+            const t = e.touches[0]
+            touchStart.current = { x: t.clientX, y: t.clientY }
+          }}
+          onTouchEnd={(e) => {
+            const start = touchStart.current
+            touchStart.current = null
+            if (!start) return
+            const t = e.changedTouches[0]
+            const dx = t.clientX - start.x
+            const dy = t.clientY - start.y
+            // Horizontal swipe moves to the next / previous section.
+            if (Math.abs(dx) > 70 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+              goTo(activeIndex + (dx < 0 ? 1 : -1))
+            }
+          }}
+        >
+          <AnimatePresence mode="wait" initial={false} custom={direction}>
+            <motion.div
+              key={activeTab}
+              custom={direction}
+              initial={{ opacity: 0, x: direction * 28 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: direction * -28 }}
+              transition={{ duration: 0.18, ease: "easeOut" }}
+              className="space-y-6"
+            >
+              {tabs[activeIndex].content}
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div
