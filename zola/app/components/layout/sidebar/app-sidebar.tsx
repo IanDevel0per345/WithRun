@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/sidebar"
 import { useChats } from "@/lib/chat-store/chats/provider"
 import { useUser } from "@/lib/user-store/provider"
-import { SheetIcon } from "@/components/ui/sheet-icon"
+import { SheetIcon, type SheetIconName } from "@/components/ui/sheet-icon"
 import { Pin } from "lucide-react"
 import { useParams, useRouter } from "next/navigation"
 import { useMemo, useState } from "react"
@@ -61,6 +61,7 @@ export function AppSidebar() {
           <span className="truncate text-sm font-semibold tracking-tight">
             Abstraction
           </span>
+          <SheetIcon name="chevron" size={14} className="opacity-70" />
         </button>
         <div className="flex items-center">
           {isMobile && (
@@ -70,7 +71,7 @@ export function AppSidebar() {
               aria-label="Close sidebar"
               className="text-muted-foreground hover:text-foreground hover:bg-accent/70 inline-flex size-7 items-center justify-center rounded-md transition-colors"
             >
-              <SheetIcon name="close" size={18} />
+              <SheetIcon name="close" size={16} />
             </button>
           )}
           <button
@@ -80,7 +81,7 @@ export function AppSidebar() {
             title="New chat (⌘⇧U)"
             className="text-muted-foreground hover:text-foreground hover:bg-accent/70 inline-flex size-7 items-center justify-center rounded-md transition-colors"
           >
-            <SheetIcon name="newchat" size={21} />
+            <SheetIcon name="newchat" size={18} />
           </button>
         </div>
       </SidebarHeader>
@@ -92,15 +93,16 @@ export function AppSidebar() {
             onClick={() => router.push("/")}
             className={`${rowClass} ${!currentChatId ? "bg-accent text-foreground" : ""}`}
           >
-            <SheetIcon name="home" size={21} />
+            <SheetIcon name="home" size={18} />
             Home
           </button>
         </div>
 
         <ScrollArea className="flex h-full px-2.5 [&>div>div]:!block">
-          <SectionLabel>Projects</SectionLabel>
+          <SectionLabel icon="folder">Projects</SectionLabel>
           <SidebarProject />
 
+          <SectionLabel icon="chat">Chats</SectionLabel>
           {isLoading ? (
             <div className="h-full" />
           ) : hasChats ? (
@@ -124,18 +126,15 @@ export function AppSidebar() {
               ))}
             </div>
           ) : (
-            <>
-              <SectionLabel>Chats</SectionLabel>
-              <div className="flex flex-col items-center px-4 py-10">
-                <div className="bg-muted mb-2.5 flex size-9 items-center justify-center rounded-lg">
-                  <SheetIcon name="chat" size={22} />
-                </div>
-                <p className="text-[13px] font-medium">No chats yet</p>
-                <p className="text-muted-foreground mt-0.5 text-center text-xs">
-                  Your conversations with Meteor show up here.
-                </p>
+            <div className="flex flex-col items-center px-4 py-10">
+              <div className="bg-muted mb-2.5 flex size-9 items-center justify-center rounded-lg">
+                <SheetIcon name="chatdots" size={20} />
               </div>
-            </>
+              <p className="text-[13px] font-medium">No chats yet</p>
+              <p className="text-muted-foreground mt-0.5 text-center text-xs">
+                Your conversations with Meteor show up here.
+              </p>
+            </div>
           )}
         </ScrollArea>
       </SidebarContent>
@@ -146,7 +145,7 @@ export function AppSidebar() {
           onClick={() => setSettingsOpen(true)}
           className={rowClass}
         >
-          <SheetIcon name="settings" size={21} />
+          <SheetIcon name="settings" size={18} />
           Settings
         </button>
         <div className="mt-1 flex items-center gap-2 px-1 pt-2">
@@ -171,9 +170,16 @@ export function AppSidebar() {
   )
 }
 
-function SectionLabel({ children }: { children: React.ReactNode }) {
+function SectionLabel({
+  icon,
+  children,
+}: {
+  icon: SheetIconName
+  children: React.ReactNode
+}) {
   return (
-    <h3 className="text-muted-foreground/80 px-2 pt-3 pb-1 text-xs font-medium">
+    <h3 className="text-muted-foreground flex items-center gap-2.5 px-2 pt-3 pb-1 text-xs font-medium">
+      <SheetIcon name={icon} size={16} className="mx-px opacity-80" />
       {children}
     </h3>
   )
