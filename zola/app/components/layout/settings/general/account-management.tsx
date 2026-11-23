@@ -6,7 +6,7 @@ import { useChats } from "@/lib/chat-store/chats/provider"
 import { useMessages } from "@/lib/chat-store/messages/provider"
 import { clearAllIndexedDBStores } from "@/lib/chat-store/persist"
 import { useUser } from "@/lib/user-store/provider"
-import { SignOut } from "@phosphor-icons/react"
+import { SheetIcon } from "@/components/ui/sheet-icon"
 import { useRouter } from "next/navigation"
 
 export function AccountManagement() {
@@ -24,15 +24,17 @@ export function AccountManagement() {
       router.push("/")
     } catch (e) {
       console.error("Sign out failed:", e)
-      toast({ title: "Failed to sign out", status: "error" })
+      toast({ title: "Não foi possível sair", status: "error" })
     }
   }
 
   return (
     <div className="flex items-center justify-between">
       <div>
-        <h3 className="text-sm font-medium">Account</h3>
-        <p className="text-muted-foreground text-xs">Log out on this device</p>
+        <h3 className="text-sm font-medium">Conta</h3>
+        <p className="text-muted-foreground text-xs">
+          Sair deste dispositivo
+        </p>
       </div>
       <Button
         variant="default"
@@ -40,8 +42,8 @@ export function AccountManagement() {
         className="flex items-center gap-2"
         onClick={handleSignOut}
       >
-        <SignOut className="size-4" />
-        <span>Sign out</span>
+        <SheetIcon name="arrowr" size={16} invert />
+        <span>Sair</span>
       </Button>
     </div>
   )

@@ -24,9 +24,9 @@ import { toast } from "@/components/ui/toast"
 import { fetchClient } from "@/lib/fetch"
 import { useModel } from "@/lib/model-store/provider"
 import { cn } from "@/lib/utils"
-import { KeyIcon, PlusIcon } from "@phosphor-icons/react"
+import { SheetIcon } from "@/components/ui/sheet-icon"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { Loader2, Trash2 } from "lucide-react"
+import { Loader2 } from "lucide-react"
 import { useState } from "react"
 
 type Provider = {
@@ -140,10 +140,10 @@ export function ByokSection() {
       const providerConfig = PROVIDERS.find((p) => p.id === provider)
 
       toast({
-        title: "API key saved",
+        title: "Chave de API salva",
         description: response.isNewKey
-          ? `Your ${providerConfig?.name} API key has been saved and models have been added to your favorites.`
-          : `Your ${providerConfig?.name} API key has been updated.`,
+          ? `Sua chave de API ${providerConfig?.name} foi salva e os modelos foram adicionados aos seus favoritos.`
+          : `Sua chave de API ${providerConfig?.name} foi atualizada.`,
       })
 
       // Use refreshAll to ensure models, user key status, and favorites are all in sync after saving a key
@@ -162,8 +162,8 @@ export function ByokSection() {
     onError: (_, { provider }) => {
       const providerConfig = PROVIDERS.find((p) => p.id === provider)
       toast({
-        title: "Failed to save API key",
-        description: `Failed to save ${providerConfig?.name} API key. Please try again.`,
+        title: "Não foi possível salvar a chave de API",
+        description: `Não foi possível salvar a chave ${providerConfig?.name}. Tente novamente.`,
       })
     },
   })
@@ -182,8 +182,8 @@ export function ByokSection() {
     onSuccess: async (_, provider) => {
       const providerConfig = PROVIDERS.find((p) => p.id === provider)
       toast({
-        title: "API key deleted",
-        description: `Your ${providerConfig?.name} API key has been deleted.`,
+        title: "Chave de API excluída",
+        description: `Sua chave de API ${providerConfig?.name} foi excluída.`,
       })
       await refreshAll()
       setApiKeys((prev) => ({ ...prev, [provider]: "" }))
@@ -193,8 +193,8 @@ export function ByokSection() {
     onError: (_, provider) => {
       const providerConfig = PROVIDERS.find((p) => p.id === provider)
       toast({
-        title: "Failed to delete API key",
-        description: `Failed to delete ${providerConfig?.name} API key. Please try again.`,
+        title: "Não foi possível excluir a chave de API",
+        description: `Não foi possível excluir a chave ${providerConfig?.name}. Tente novamente.`,
       })
       setDeleteDialogOpen(false)
       setProviderToDelete("")
@@ -220,16 +220,16 @@ export function ByokSection() {
   return (
     <div>
       <h3 className="relative mb-2 inline-flex text-lg font-medium">
-        Model Providers{" "}
-        <span className="text-muted-foreground absolute top-0 -right-7 text-xs">
-          new
+        Provedores de modelos{" "}
+        <span className="text-muted-foreground absolute top-0 -right-8 text-xs">
+          novo
         </span>
       </h3>
       <p className="text-muted-foreground text-sm">
-        Add your own API keys to unlock access to models.
+        Adicione suas próprias chaves de API para liberar o acesso aos modelos.
       </p>
       <p className="text-muted-foreground text-sm">
-        Your keys are stored securely with end-to-end encryption.
+        Suas chaves ficam guardadas com segurança, com criptografia de ponta a ponta.
       </p>
 
       <div className="mt-4 grid grid-cols-2 gap-3 min-[400px]:grid-cols-3 min-[500px]:grid-cols-4">
@@ -247,7 +247,7 @@ export function ByokSection() {
           >
             {userKeyStatus[provider.id] && (
               <span className="bg-secondary absolute top-1 right-1 rounded-sm border-[1px] p-1">
-                <KeyIcon className="text-secondary-foreground size-3.5" />
+                <SheetIcon name="key" size={14} />
               </span>
             )}
             <provider.icon className="size-4" />
@@ -263,7 +263,7 @@ export function ByokSection() {
             "border-primary border-dashed"
           )}
         >
-          <PlusIcon className="size-4" />
+          <SheetIcon name="plus" size={16} />
         </button>
       </div>
 
@@ -271,7 +271,7 @@ export function ByokSection() {
         {selectedProviderConfig && (
           <div className="flex flex-col">
             <Label htmlFor={`${selectedProvider}-key`} className="mb-3">
-              {selectedProviderConfig.name} API Key
+              Chave de API {selectedProviderConfig.name}
             </Label>
             <Input
               id={`${selectedProvider}-key`}
@@ -292,7 +292,7 @@ export function ByokSection() {
                 target="_blank"
                 className="text-muted-foreground mt-1 text-xs hover:underline"
               >
-                Get API key
+                Obter chave de API
               </a>
               <div className="flex gap-2">
                 {userKeyStatus[
@@ -308,8 +308,8 @@ export function ByokSection() {
                       deleteMutation.isPending || saveMutation.isPending
                     }
                   >
-                    <Trash2 className="mr-1 size-4" />
-                    Delete
+                    <SheetIcon name="trash" size={16} className="mr-1" />
+                    Excluir
                   </Button>
                 )}
                 <Button
@@ -322,7 +322,7 @@ export function ByokSection() {
                   {saveMutation.isPending ? (
                     <Loader2 className="size-4 animate-spin" />
                   ) : (
-                    "Save"
+                    "Salvar"
                   )}
                 </Button>
               </div>
@@ -334,16 +334,16 @@ export function ByokSection() {
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete API Key</AlertDialogTitle>
+            <AlertDialogTitle>Excluir chave de API</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete your{" "}
-              {PROVIDERS.find((p) => p.id === providerToDelete)?.name} API key?
-              This action cannot be undone and you will lose access to{" "}
-              {PROVIDERS.find((p) => p.id === providerToDelete)?.name} models.
+              Tem certeza de que quer excluir sua chave de API{" "}
+              {PROVIDERS.find((p) => p.id === providerToDelete)?.name}? Essa ação
+              não pode ser desfeita e você perderá o acesso aos modelos{" "}
+              {PROVIDERS.find((p) => p.id === providerToDelete)?.name}.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
             <AlertDialogAction
               onClick={handleConfirmDelete}
               disabled={deleteMutation.isPending}
@@ -351,7 +351,7 @@ export function ByokSection() {
               {deleteMutation.isPending ? (
                 <Loader2 className="mr-2 size-4 animate-spin" />
               ) : null}
-              Delete
+              Excluir
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

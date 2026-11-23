@@ -105,8 +105,8 @@ export function useFavoriteModels() {
       console.error("❌ Error saving favorite models:", error)
 
       toast({
-        title: "Failed to save favorite models",
-        description: error.message || "Please try again.",
+        title: "Não foi possível salvar os modelos favoritos",
+        description: error.message || "Tente novamente.",
       })
 
       // Also refresh ModelProvider and UserProvider on error to sync back with server state

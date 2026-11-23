@@ -4,12 +4,7 @@ import { useModel } from "@/lib/model-store/provider"
 import { ModelConfig } from "@/lib/models/types"
 import { PROVIDERS } from "@/lib/providers"
 import { useUserPreferences } from "@/lib/user-preference-store/provider"
-import {
-  DotsSixVerticalIcon,
-  MinusIcon,
-  PlusIcon,
-  StarIcon,
-} from "@phosphor-icons/react"
+import { SheetIcon } from "@/components/ui/sheet-icon"
 import { AnimatePresence, motion, Reorder } from "framer-motion"
 import { useMemo, useState } from "react"
 import { useFavoriteModels } from "./use-favorite-models"
@@ -45,7 +40,7 @@ export function ModelsSettings() {
       .filter(Boolean) as FavoriteModelItem[]
   }, [currentFavoriteModels, models, isModelHidden])
 
-  // Available models that aren't favorites yet, filtered and grouped by provider
+  // Modelos disponíveis that aren't favorites yet, filtered and grouped by provider
   const availableModelsByProvider = useMemo(() => {
     if (!currentFavoriteModels || !Array.isArray(currentFavoriteModels)) {
       return {}
@@ -117,16 +112,16 @@ export function ModelsSettings() {
   return (
     <div className="space-y-6">
       <div>
-        <h3 className="mb-2 text-lg font-medium">Models</h3>
+        <h3 className="mb-2 text-lg font-medium">Modelos</h3>
         <p className="text-muted-foreground mb-4 text-sm">
-          Reorder and manage the models shown in your selector.
+          Reordene e gerencie os modelos que aparecem no seletor.
         </p>
       </div>
 
       {/* Favorite Models - Drag and Drop List */}
       <div>
         <h4 className="mb-3 text-sm font-medium">
-          Your favorites ({favoriteModels.length})
+          Seus favoritos ({favoriteModels.length})
         </h4>
         <AnimatePresence initial={false}>
           {favoriteModels.length > 0 ? (
@@ -144,7 +139,7 @@ export function ModelsSettings() {
                     <div className="border-border flex items-center gap-3 rounded-lg border bg-transparent p-3">
                       {/* Drag Handle */}
                       <div className="text-muted-foreground cursor-grab opacity-60 transition-opacity group-hover:opacity-100 active:cursor-grabbing">
-                        <DotsSixVerticalIcon className="size-4" />
+                        <SheetIcon name="grip" size={20} />
                       </div>
 
                       {/* Provider Icon */}
@@ -177,11 +172,11 @@ export function ModelsSettings() {
                         className="text-muted-foreground rounded-md border p-1 opacity-0 transition-all group-hover:opacity-100 disabled:cursor-not-allowed disabled:opacity-50"
                         title={
                           favoriteModels.length <= 1
-                            ? "At least one favorite model is required"
-                            : "Remove from favorites"
+                            ? "É preciso ter pelo menos um modelo favorito"
+                            : "Remover dos favoritos"
                         }
                       >
-                        <MinusIcon className="size-4" />
+                        <SheetIcon name="minus" size={16} />
                       </button>
                     </div>
                   </Reorder.Item>
@@ -195,9 +190,9 @@ export function ModelsSettings() {
               className="border-border text-muted-foreground flex h-32 items-center justify-center rounded-lg border-2 border-dashed"
             >
               <div className="text-center">
-                <StarIcon className="mx-auto mb-2 size-8 opacity-50" />
-                <p className="text-sm">No favorite models yet</p>
-                <p className="text-xs">Add models from the list below</p>
+                <SheetIcon name="star" size={32} className="mx-auto mb-2 opacity-50" />
+                <p className="text-sm">Nenhum modelo favorito ainda</p>
+                <p className="text-xs">Adicione modelos da lista abaixo</p>
               </div>
             </motion.div>
           )}
@@ -206,16 +201,16 @@ export function ModelsSettings() {
 
       {/* Available Models */}
       <div>
-        <h4 className="mb-3 text-sm font-medium">Available models</h4>
+        <h4 className="mb-3 text-sm font-medium">Modelos disponíveis</h4>
         <p className="text-muted-foreground mb-4 text-sm">
-          Choose models to add to your favorites.
+          Escolha modelos para adicionar aos favoritos.
         </p>
 
         {/* Search */}
         <div className="mb-4">
           <input
             type="text"
-            placeholder="Search models..."
+            placeholder="Buscar modelos..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring flex h-9 w-full rounded-md border px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:ring-1 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
@@ -235,7 +230,7 @@ export function ModelsSettings() {
                     {provider?.icon && <provider.icon className="size-5" />}
                     <h4 className="font-medium">{provider?.name || iconKey}</h4>
                     <span className="text-muted-foreground text-sm">
-                      ({modelsGroup.length} models)
+                      ({modelsGroup.length} modelos)
                     </span>
                   </div>
 
@@ -272,9 +267,9 @@ export function ModelsSettings() {
                             onClick={() => toggleFavorite(model.id)}
                             type="button"
                             className="text-muted-foreground hover:text-foreground border-border rounded-md border p-1 transition-colors"
-                            title="Add to favorites"
+                            title="Adicionar aos favoritos"
                           >
-                            <PlusIcon className="size-4" />
+                            <SheetIcon name="plus" size={16} />
                           </button>
                         </motion.div>
                       )
@@ -289,8 +284,8 @@ export function ModelsSettings() {
         {Object.keys(availableModelsByProvider).length === 0 && (
           <div className="text-muted-foreground py-8 text-center text-sm">
             {searchQuery
-              ? `No models found matching "${searchQuery}"`
-              : "No available models to add"}
+              ? `Nenhum modelo encontrado para "${searchQuery}"`
+              : "Nenhum modelo disponível para adicionar"}
           </div>
         )}
       </div>

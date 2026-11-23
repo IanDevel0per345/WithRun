@@ -44,6 +44,11 @@ export type SheetIconName =
   | "chevronu"
   | "chevronl"
   | "dots"
+  | "arrowr"
+  | "arrowl"
+  | "star"
+  | "minus"
+  | "grip"
 
 type SheetIconProps = {
   name: SheetIconName

@@ -130,7 +130,7 @@ export function AppSidebar() {
           className={rowClass}
         >
           <SheetIcon name="settings" size={20} />
-          Settings
+          Configurações
         </button>
         <div className="mt-1 flex items-center gap-2 px-1 pt-2">
           <div className="bg-muted text-foreground flex size-6 items-center justify-center rounded-full text-[11px] font-semibold">

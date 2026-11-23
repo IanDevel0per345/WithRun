@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog"
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer"
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu"
-import { User } from "@phosphor-icons/react"
+import { SheetIcon } from "@/components/ui/sheet-icon"
 import type React from "react"
 import { useState } from "react"
 import { SettingsContent } from "./settings-content"
@@ -30,8 +30,8 @@ export function SettingsTrigger({ onOpenChange }: SettingsTriggerProps) {
 
   const trigger = (
     <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-      <User className="size-4" />
-      <span>Settings</span>
+      <SheetIcon name="settings" size={16} />
+      <span>Configurações</span>
     </DropdownMenuItem>
   )
 

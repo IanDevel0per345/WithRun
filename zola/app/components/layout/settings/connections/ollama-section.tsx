@@ -25,19 +25,19 @@ export function OllamaSection() {
       const response = await fetch(`${ollamaEndpoint}/api/tags`)
       if (response.ok) {
         toast({
-          title: "Ollama connection successful",
-          description: "You can now use Ollama to run models locally.",
+          title: "Conexão com o Ollama bem-sucedida",
+          description: "Agora você pode usar o Ollama para rodar modelos localmente.",
         })
       } else {
         toast({
-          title: "Ollama connection failed",
-          description: "Please check your Ollama endpoint and try again.",
+          title: "Falha na conexão com o Ollama",
+          description: "Confira o endereço do Ollama e tente de novo.",
         })
       }
     } catch {
       toast({
-        title: "Ollama connection failed",
-        description: "Please check your Ollama endpoint and try again.",
+        title: "Falha na conexão com o Ollama",
+        description: "Confira o endereço do Ollama e tente de novo.",
       })
     } finally {
       setIsLoading(false)
@@ -47,12 +47,12 @@ export function OllamaSection() {
   return (
     <div className="space-y-6">
       <div>
-        <h3 className="mb-2 text-lg font-medium">Local Model Settings</h3>
+        <h3 className="mb-2 text-lg font-medium">Modelos locais</h3>
         <p className="text-muted-foreground text-sm">
-          Configure your local Ollama instance for running models locally.
+          Configure sua instância local do Ollama para rodar modelos no seu computador.
           {isLocked && (
             <span className="mt-1 block text-orange-600 dark:text-orange-400">
-              Ollama is disabled in production mode.
+              O Ollama fica desativado no modo de produção.
             </span>
           )}
         </p>
@@ -71,7 +71,7 @@ export function OllamaSection() {
         </CardHeader>
         <CardContent className="space-y-4">
           <div>
-            <Label htmlFor="ollama-endpoint">Endpoint</Label>
+            <Label htmlFor="ollama-endpoint">Endereço</Label>
             <Input
               id="ollama-endpoint"
               type="url"
@@ -82,8 +82,8 @@ export function OllamaSection() {
             />
             <p className="text-muted-foreground mt-1 text-xs">
               {isLocked
-                ? "Endpoint is read-only in production mode."
-                : "Default Ollama endpoint. Make sure Ollama is running locally."}
+                ? "O endereço é somente leitura no modo de produção."
+                : "Endereço padrão do Ollama. Confirme que o Ollama está rodando no seu computador."}
             </p>
           </div>
 
@@ -95,7 +95,7 @@ export function OllamaSection() {
                 onClick={testConnection}
                 disabled={isLoading || !ollamaEndpoint}
               >
-                {isLoading ? "Testing..." : "Test Connection"}
+                {isLoading ? "Testando..." : "Testar conexão"}
               </Button>
             </div>
           )}
@@ -103,8 +103,8 @@ export function OllamaSection() {
           {isLocked && (
             <div className="rounded-md bg-orange-50 p-3 dark:bg-orange-950/20">
               <p className="text-sm text-orange-800 dark:text-orange-200">
-                Ollama is disabled in production deployments for performance and
-                security.
+                O Ollama fica desativado em ambientes de produção por desempenho e
+                segurança.
               </p>
             </div>
           )}

@@ -35,13 +35,13 @@ export function DeveloperTools() {
     try {
       await navigator.clipboard.writeText(text)
       toast({
-        title: "Copied to clipboard",
+        title: "Copiado para a área de transferência",
         status: "success",
       })
     } catch (error) {
       console.error("Failed to copy to clipboard:", error)
       toast({
-        title: "Failed to copy to clipboard",
+        title: "Não foi possível copiar",
         status: "error",
       })
     }
@@ -50,7 +50,7 @@ export function DeveloperTools() {
   if (isLoading) {
     return (
       <div className="py-8 text-center">
-        <div className="text-muted-foreground">Loading connections...</div>
+        <div className="text-muted-foreground">Carregando conexões...</div>
       </div>
     )
   }
@@ -59,10 +59,11 @@ export function DeveloperTools() {
     <div className="space-y-6 pb-8">
       {/* Header */}
       <div>
-        <h3 className="mb-2 text-lg font-medium">Developer Tool connections</h3>
+        <h3 className="mb-2 text-lg font-medium">Conexões de ferramentas de desenvolvedor</h3>
         <p className="text-muted-foreground text-sm">
-          Add API keys in .env.local to enable tools like Exa and GitHub. These
-          keys follow specific formats and are only used in development mode.
+          Adicione chaves de API no .env.local para ativar ferramentas como Exa e
+          GitHub. Essas chaves seguem formatos específicos e só são usadas no
+          modo de desenvolvimento.
         </p>
       </div>
 
@@ -78,11 +79,11 @@ export function DeveloperTools() {
                     <h4 className="font-medium">{tool.name}</h4>
                     {tool.connected ? (
                       <span className="bg-secondary text-secondary-foreground flex items-center gap-1 rounded-full px-2 py-0.5 text-xs">
-                        Connected
+                        Conectado
                       </span>
                     ) : (
                       <span className="bg-destructive/10 text-destructive flex items-center gap-1 rounded-full px-2 py-0.5 text-xs">
-                        Not connected
+                        Não conectado
                       </span>
                     )}
                   </div>
@@ -95,7 +96,7 @@ export function DeveloperTools() {
                   {tool.connected && tool.maskedKey && (
                     <div className="flex flex-col gap-2">
                       <div className="text-muted-foreground text-sm">
-                        Key detected:
+                        Chave detectada:
                       </div>
                       <div className="text-muted-foreground bg-secondary mb-3 rounded px-3 py-2 font-mono text-xs">
                         {tool.maskedKey}
@@ -107,7 +108,7 @@ export function DeveloperTools() {
 
               {/* Required Keys Section - Always Show */}
               <div className="space-y-2">
-                <p className="text-sm font-medium">Required keys:</p>
+                <p className="text-sm font-medium">Chaves necessárias:</p>
                 <div className="relative">
                   <pre className="bg-muted text-foreground overflow-x-auto rounded-md border p-3 font-mono text-xs">
                     {tool.sampleEnv}
@@ -118,7 +119,7 @@ export function DeveloperTools() {
                     className="absolute top-2 right-2 h-6 px-2 text-xs"
                     onClick={() => copyToClipboard(tool.sampleEnv)}
                   >
-                    Copy to clipboard
+                    Copiar
                   </Button>
                 </div>
               </div>
