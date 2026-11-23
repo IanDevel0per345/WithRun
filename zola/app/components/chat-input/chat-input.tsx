@@ -9,7 +9,8 @@ import {
 } from "@/components/prompt-kit/prompt-input"
 import { Button } from "@/components/ui/button"
 import { getModelInfo } from "@/lib/models"
-import { ArrowUpIcon, StopIcon } from "@phosphor-icons/react"
+import { SheetIcon } from "@/components/ui/sheet-icon"
+import { cn } from "@/lib/utils"
 import { useCallback, useEffect, useMemo, useRef } from "react"
 import { PromptSystem } from "../suggestions/prompt-system"
 import { ButtonFileUpload } from "./button-file-upload"
@@ -60,6 +61,9 @@ export function ChatInput({
   const hasSearchSupport = Boolean(selectModelConfig?.webSearch)
   const isOnlyWhitespace = (text: string) => !/[^\s]/.test(text)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const canSend = !isSubmitting
+    ? status === "streaming" || (Boolean(value) && !isOnlyWhitespace(value))
+    : false
 
   const handleSend = useCallback(() => {
     if (isSubmitting) {
@@ -173,32 +177,26 @@ export function ChatInput({
         onClick={() => textareaRef.current?.focus()}
       >
         <PromptInput
-          className="bg-popover relative z-10 p-0 pt-1 shadow-xs backdrop-blur-xl"
+          className="bg-popover border-border/60 relative z-10 rounded-[28px] p-1.5 shadow-[0_8px_30px_rgba(0,0,0,0.06)] backdrop-blur-xl dark:shadow-[0_8px_30px_rgba(0,0,0,0.35)]"
           maxHeight={200}
           value={value}
           onValueChange={onValueChange}
         >
           <FileList files={files} onFileRemove={onFileRemove} />
-          <PromptInputTextarea
-            ref={textareaRef}
-            placeholder="Ask Meteor AI"
-            onKeyDown={handleKeyDown}
-            onPaste={handlePaste}
-            className="min-h-[44px] pt-3 pl-4 text-base leading-[1.3] sm:text-base md:text-base"
-          />
-          <PromptInputActions className="mt-3 w-full justify-between p-2">
-            <div className="flex gap-2">
-              <ButtonFileUpload
-                onFileUpload={onFileUpload}
-                isUserAuthenticated={isUserAuthenticated}
-                model={selectedModel}
-              />
-              <ModelSelector
-                selectedModelId={selectedModel}
-                setSelectedModelId={onSelectModel}
-                isUserAuthenticated={isUserAuthenticated}
-                className="rounded-full"
-              />
+          <div className="flex items-end gap-1.5">
+            <ButtonFileUpload
+              onFileUpload={onFileUpload}
+              isUserAuthenticated={isUserAuthenticated}
+              model={selectedModel}
+            />
+            <PromptInputTextarea
+              ref={textareaRef}
+              placeholder="Ask Meteor AI"
+              onKeyDown={handleKeyDown}
+              onPaste={handlePaste}
+              className="min-h-[40px] flex-1 px-2 py-2.5 text-base leading-[1.3] sm:text-base md:text-base"
+            />
+            <PromptInputActions className="h-10 shrink-0 gap-1">
               {hasSearchSupport ? (
                 <ButtonSearch
                   isSelected={enableSearch}
@@ -206,26 +204,38 @@ export function ChatInput({
                   isAuthenticated={isUserAuthenticated}
                 />
               ) : null}
-            </div>
-            <PromptInputAction
-              tooltip={status === "streaming" ? "Stop" : "Send"}
-            >
-              <Button
-                size="sm"
-                className="size-9 rounded-full transition-all duration-300 ease-out"
-                disabled={!value || isSubmitting || isOnlyWhitespace(value)}
-                type="button"
-                onClick={handleSend}
-                aria-label={status === "streaming" ? "Stop" : "Send message"}
+              <ModelSelector
+                selectedModelId={selectedModel}
+                setSelectedModelId={onSelectModel}
+                isUserAuthenticated={isUserAuthenticated}
+                className="text-muted-foreground hover:bg-accent hover:text-foreground h-9 max-w-[9.5rem] gap-1 rounded-full border-0 bg-transparent px-2.5 text-sm font-medium shadow-none dark:bg-transparent max-sm:gap-0 max-sm:px-2 max-sm:text-[0px] max-sm:[&>svg:last-child]:hidden [&_span]:truncate"
+              />
+              <PromptInputAction
+                tooltip={status === "streaming" ? "Stop" : "Send"}
               >
-                {status === "streaming" ? (
-                  <StopIcon className="size-4" />
-                ) : (
-                  <ArrowUpIcon className="size-4" />
-                )}
-              </Button>
-            </PromptInputAction>
-          </PromptInputActions>
+                <Button
+                  size="sm"
+                  className={cn(
+                    "size-10 shrink-0 rounded-full p-0 shadow-none transition-all duration-300 ease-out",
+                    canSend
+                      ? "bg-foreground text-background hover:bg-foreground/90"
+                      : "bg-muted text-muted-foreground hover:bg-muted"
+                  )}
+                  disabled={!canSend}
+                  type="button"
+                  onClick={handleSend}
+                  aria-label={status === "streaming" ? "Stop" : "Send message"}
+                >
+                  <SheetIcon
+                    name={status === "streaming" ? "stop" : "arrowup"}
+                    size={20}
+                    invert={canSend}
+                    className={cn(!canSend && "opacity-40")}
+                  />
+                </Button>
+              </PromptInputAction>
+            </PromptInputActions>
+          </div>
         </PromptInput>
       </div>
     </div>

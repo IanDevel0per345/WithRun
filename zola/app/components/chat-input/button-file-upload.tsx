@@ -9,6 +9,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import { SheetIcon } from "@/components/ui/sheet-icon"
 import {
   Tooltip,
   TooltipContent,
@@ -17,7 +18,7 @@ import {
 import { getModelInfo } from "@/lib/models"
 import { isSupabaseEnabled } from "@/lib/supabase/config"
 import { cn } from "@/lib/utils"
-import { FileArrowUp, Paperclip } from "@phosphor-icons/react"
+import { FileArrowUp } from "@phosphor-icons/react"
 import React from "react"
 import { PopoverContentAuth } from "./popover-content-auth"
 
@@ -27,13 +28,50 @@ type ButtonFileUploadProps = {
   model: string
 }
 
+const plusButtonClass =
+  "bg-muted/70 hover:bg-muted size-10 shrink-0 rounded-full p-0 shadow-none"
+
+function PlusButton({
+  className,
+  ...props
+}: React.ComponentProps<typeof Button>) {
+  return (
+    <Button
+      size="sm"
+      variant="ghost"
+      className={cn(plusButtonClass, className)}
+      type="button"
+      aria-label="Add files"
+      {...props}
+    >
+      <SheetIcon name="plus" size={20} />
+    </Button>
+  )
+}
+
 export function ButtonFileUpload({
   onFileUpload,
   isUserAuthenticated,
   model,
 }: ButtonFileUploadProps) {
   if (!isSupabaseEnabled) {
-    return null
+    return (
+      <Popover>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <PopoverTrigger asChild>
+              <PlusButton />
+            </PopoverTrigger>
+          </TooltipTrigger>
+          <TooltipContent>Add files</TooltipContent>
+        </Tooltip>
+        <PopoverContent className="p-2">
+          <div className="text-secondary-foreground text-sm">
+            File uploads are not available in this deployment.
+          </div>
+        </PopoverContent>
+      </Popover>
+    )
   }
 
   const isFileUploadAvailable = getModelInfo(model)?.vision
@@ -44,15 +82,7 @@ export function ButtonFileUpload({
         <Tooltip>
           <TooltipTrigger asChild>
             <PopoverTrigger asChild>
-              <Button
-                size="sm"
-                variant="secondary"
-                className="border-border dark:bg-secondary size-9 rounded-full border bg-transparent"
-                type="button"
-                aria-label="Add files"
-              >
-                <Paperclip className="size-4" />
-              </Button>
+              <PlusButton />
             </PopoverTrigger>
           </TooltipTrigger>
           <TooltipContent>Add files</TooltipContent>
@@ -74,15 +104,7 @@ export function ButtonFileUpload({
         <Tooltip>
           <TooltipTrigger asChild>
             <PopoverTrigger asChild>
-              <Button
-                size="sm"
-                variant="secondary"
-                className="border-border dark:bg-secondary size-9 rounded-full border bg-transparent"
-                type="button"
-                aria-label="Add files"
-              >
-                <Paperclip className="size-4" />
-              </Button>
+              <PlusButton />
             </PopoverTrigger>
           </TooltipTrigger>
           <TooltipContent>Add files</TooltipContent>
@@ -102,19 +124,10 @@ export function ButtonFileUpload({
       <Tooltip>
         <TooltipTrigger asChild>
           <FileUploadTrigger asChild>
-            <Button
-              size="sm"
-              variant="secondary"
-              className={cn(
-                "border-border dark:bg-secondary size-9 rounded-full border bg-transparent",
-                !isUserAuthenticated && "opacity-50"
-              )}
-              type="button"
+            <PlusButton
+              className={cn(!isUserAuthenticated && "opacity-50")}
               disabled={!isUserAuthenticated}
-              aria-label="Add files"
-            >
-              <Paperclip className="size-4" />
-            </Button>
+            />
           </FileUploadTrigger>
         </TooltipTrigger>
         <TooltipContent>Add files</TooltipContent>

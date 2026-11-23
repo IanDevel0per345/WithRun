@@ -12,18 +12,31 @@ export type SheetIconName =
   | "close"
   | "chevron"
   | "chevronr"
+  | "plus"
+  | "arrowup"
+  | "globe"
+  | "stop"
 
 type SheetIconProps = {
   name: SheetIconName
   size?: number
   className?: string
+  /** Use on dark surfaces in the light theme (white icon) and vice-versa. */
+  invert?: boolean
 }
 
 /**
  * Icons cut from the provided black/white icon sheets.
  * Black variant is used on the light theme, white on the dark theme.
  */
-export function SheetIcon({ name, size = 20, className }: SheetIconProps) {
+export function SheetIcon({
+  name,
+  size = 20,
+  className,
+  invert = false,
+}: SheetIconProps) {
+  const light = invert ? "white" : "black"
+  const dark = invert ? "black" : "white"
   return (
     <span
       aria-hidden
@@ -31,7 +44,7 @@ export function SheetIcon({ name, size = 20, className }: SheetIconProps) {
       style={{ width: size, height: size }}
     >
       <Image
-        src={`/icons/black/${name}.png`}
+        src={`/icons/${light}/${name}.png`}
         alt=""
         width={size}
         height={size}
@@ -39,7 +52,7 @@ export function SheetIcon({ name, size = 20, className }: SheetIconProps) {
         className="dark:hidden"
       />
       <Image
-        src={`/icons/white/${name}.png`}
+        src={`/icons/${dark}/${name}.png`}
         alt=""
         width={size}
         height={size}

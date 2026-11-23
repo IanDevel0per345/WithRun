@@ -25,7 +25,7 @@ export function WelcomeGreeting() {
     : user.display_name?.trim().split(/\s+/)[0] || undefined
 
   return (
-    <h1 className="mb-6 min-h-[2.25rem] text-3xl font-medium tracking-tight">
+    <h1 className="mb-6 min-h-[2.25rem] px-4 text-center text-2xl font-medium tracking-tight text-balance sm:text-3xl">
       {template ? fillWelcomeTemplate(template, firstName) : " "}
     </h1>
   )

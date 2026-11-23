@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Popover, PopoverTrigger } from "@/components/ui/popover"
+import { SheetIcon } from "@/components/ui/sheet-icon"
 import { cn } from "@/lib/utils"
-import { GlobeIcon } from "@phosphor-icons/react"
 import React from "react"
 import { PopoverContentAuth } from "./popover-content-auth"
 
@@ -10,6 +10,9 @@ type ButtonSearchProps = {
   onToggle?: (isSelected: boolean) => void
   isAuthenticated: boolean
 }
+
+const baseClass =
+  "text-muted-foreground hover:bg-accent hover:text-foreground size-9 shrink-0 rounded-full bg-transparent p-0 shadow-none transition-all duration-150 dark:bg-transparent"
 
 export function ButtonSearch({
   isSelected = false,
@@ -26,11 +29,12 @@ export function ButtonSearch({
       <Popover>
         <PopoverTrigger asChild>
           <Button
-            variant="secondary"
-            className="border-border dark:bg-secondary rounded-full border bg-transparent"
+            variant="ghost"
+            className={baseClass}
+            type="button"
+            aria-label="Search the web"
           >
-            <GlobeIcon className="size-5" />
-            Search
+            <SheetIcon name="globe" size={19} />
           </Button>
         </PopoverTrigger>
         <PopoverContentAuth />
@@ -40,16 +44,18 @@ export function ButtonSearch({
 
   return (
     <Button
-      variant="secondary"
+      variant="ghost"
+      type="button"
+      aria-label="Search the web"
+      aria-pressed={isSelected}
       className={cn(
-        "border-border dark:bg-secondary rounded-full border bg-transparent transition-all duration-150 has-[>svg]:px-1.75 md:has-[>svg]:px-3",
+        baseClass,
         isSelected &&
-          "border-[#0091FF]/20 bg-[#E5F3FE] text-[#0091FF] hover:bg-[#E5F3FE] hover:text-[#0091FF]"
+          "bg-[#E5F3FE] text-[#0091FF] hover:bg-[#E5F3FE] dark:bg-[#0091FF]/20 dark:hover:bg-[#0091FF]/25"
       )}
       onClick={handleClick}
     >
-      <GlobeIcon className="size-5" />
-      <span className="hidden md:block">Search</span>
+      <SheetIcon name="globe" size={19} />
     </Button>
   )
 }
