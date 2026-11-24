@@ -74,7 +74,7 @@ export const SUGGESTIONS = [
       "Inspire me with a poetic way to start a newsletter",
       "Inspire me by describing a peaceful morning in nature",
     ],
-    icon: "sparkle" as SheetIconName,
+    icon: "bulb" as SheetIconName,
   },
   {
     label: "Think deeply",

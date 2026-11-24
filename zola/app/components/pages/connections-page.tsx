@@ -11,9 +11,9 @@ import { MemoryTab } from "./connections/memory-tab"
 import { SkillsTab } from "./connections/skills-tab"
 import { PageShell } from "./page-shell"
 
-const TABS: { id: string; label: string; icon: SheetIconName }[] = [
+const TABS: { id: string; label: string; icon?: SheetIconName }[] = [
   { id: "apps", label: "Apps", icon: "link" },
-  { id: "skills", label: "Skills", icon: "sparkle" },
+  { id: "skills", label: "Skills" },
   { id: "habilidades", label: "Habilidades", icon: "bulb" },
   { id: "memoria", label: "Memória", icon: "database" },
 ]
@@ -39,7 +39,7 @@ function ConnectionsInner() {
               active ? "text-foreground" : "text-muted-foreground hover:text-foreground"
             )}
           >
-            <SheetIcon name={tab.icon} size={18} />
+            {tab.icon && <SheetIcon name={tab.icon} size={18} />}
             {tab.label}
             {active && (
               <motion.span

@@ -29,7 +29,7 @@ type SettingsContentProps = {
 type Tab = {
   value: string
   label: string
-  icon: SheetIconName
+  icon?: SheetIconName
   content: React.ReactNode
 }
 
@@ -56,7 +56,6 @@ export function SettingsContent({ isDrawer = false }: SettingsContentProps) {
     {
       value: "personalization",
       label: "Personalização",
-      icon: "sparkle",
       content: <PersonalizationSettings />,
     },
     {
@@ -165,19 +164,14 @@ export function SettingsContent({ isDrawer = false }: SettingsContentProps) {
                     active ? "text-foreground" : "text-muted-foreground"
                   )}
                 >
-                  {active && (
-                    <motion.span
-                      layoutId="settings-mobile-pill"
-                      className="bg-accent absolute inset-0 rounded-full"
-                      transition={{ type: "spring", stiffness: 500, damping: 40 }}
-                    />
-                  )}
                   <span className="relative flex items-center gap-2">
-                    <SheetIcon
-                      name={tab.icon}
-                      size={16}
-                      className="translate-y-[-0.5px]"
-                    />
+                    {tab.icon && (
+                      <SheetIcon
+                        name={tab.icon}
+                        size={16}
+                        className="translate-y-[-0.5px]"
+                      />
+                    )}
                     {tab.label}
                   </span>
                 </button>
@@ -262,11 +256,13 @@ export function SettingsContent({ isDrawer = false }: SettingsContentProps) {
                     i === 0 && "ml-6"
                   )}
                 >
-                  <SheetIcon
-                    name={tab.icon}
-                    size={16}
-                    className="translate-y-[-0.5px]"
-                  />
+                  {tab.icon && (
+                    <SheetIcon
+                      name={tab.icon}
+                      size={16}
+                      className="translate-y-[-0.5px]"
+                    />
+                  )}
                   <span>{tab.label}</span>
                 </TabsTrigger>
               ))}
@@ -293,11 +289,13 @@ export function SettingsContent({ isDrawer = false }: SettingsContentProps) {
                     className="w-full justify-start rounded-md px-3 py-2 text-left"
                   >
                     <div className="flex items-center gap-2">
-                      <SheetIcon
-                        name={tab.icon}
-                        size={16}
-                        className="translate-y-[-0.5px]"
-                      />
+                      {tab.icon && (
+                        <SheetIcon
+                          name={tab.icon}
+                          size={16}
+                          className="translate-y-[-0.5px]"
+                        />
+                      )}
                       <span>{tab.label}</span>
                     </div>
                   </TabsTrigger>
