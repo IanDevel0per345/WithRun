@@ -267,7 +267,7 @@ export function ChatInput({
                     size={22}
                     invert={canSend && !coloredAccent}
                     forceWhite={canSend && coloredAccent}
-                    className={cn(!canSend && "opacity-40")}
+                    className={cn("translate-y-[3px]", !canSend && "opacity-40")}
                   />
                 </Button>
               </PromptInputAction>

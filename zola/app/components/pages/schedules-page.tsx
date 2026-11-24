@@ -342,9 +342,13 @@ export function SchedulesPage() {
       title="Agendamentos"
       description="Tarefas que a IA inicia sozinha na hora marcada. Só a IA cria agendamentos: peça para ela no chat e ela monta tudo para você."
       actions={
-        <Button size="sm" onClick={() => askAiToCreate(ASK_AI_TO_CREATE_MESSAGE)}>
+        <Button
+          size="lg"
+          className="justify-center text-center"
+          onClick={() => askAiToCreate(ASK_AI_TO_CREATE_MESSAGE)}
+        >
           <SheetIcon name="sparkle" size={16} invert />
-          Mandar para a IA criar um novo agendamento
+          Pedir para a IA criar
         </Button>
       }
     >
