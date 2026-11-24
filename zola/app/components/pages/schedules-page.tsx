@@ -347,7 +347,6 @@ export function SchedulesPage() {
           className="justify-center text-center"
           onClick={() => askAiToCreate(ASK_AI_TO_CREATE_MESSAGE)}
         >
-          <SheetIcon name="sparkle" size={16} invert />
           Pedir para a IA criar
         </Button>
       }
