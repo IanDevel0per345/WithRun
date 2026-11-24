@@ -56,6 +56,7 @@ export function AppSidebar() {
   const groupedChats = useMemo(() => groupChatsByDate(chats, ""), [chats])
   const hasChats = chats.length > 0
   const name = user?.display_name || "Guest"
+  const displayName = name === "Guest" ? "Convidado" : name
 
   return (
     <Sidebar
@@ -92,7 +93,7 @@ export function AppSidebar() {
             className={`${rowClass} ${isNewConversation ? "bg-accent text-foreground" : ""}`}
           >
             <SheetIcon name="plus" size={20} />
-            New Conversation
+            Nova conversa
           </button>
         </div>
 
@@ -143,9 +144,9 @@ export function AppSidebar() {
               <div className="bg-muted mb-2.5 flex size-9 items-center justify-center rounded-lg">
                 <SheetIcon name="chatdots" size={22} />
               </div>
-              <p className="text-[13px] font-medium">No chats yet</p>
+              <p className="text-[13px] font-medium">Nenhuma conversa ainda</p>
               <p className="text-muted-foreground mt-0.5 text-center text-xs">
-                Your conversations with Meteor show up here.
+                Suas conversas com o Meteor aparecem aqui.
               </p>
             </div>
           )}
@@ -163,10 +164,10 @@ export function AppSidebar() {
         </button>
         <div className="mt-1 flex items-center gap-2 px-1 pt-2">
           <div className="bg-muted text-foreground flex size-6 items-center justify-center rounded-full text-[11px] font-semibold">
-            {name.charAt(0).toUpperCase()}
+            {displayName.charAt(0).toUpperCase()}
           </div>
           <span className="text-muted-foreground min-w-0 truncate text-xs">
-            {name} · Free
+            {displayName} · Grátis
           </span>
         </div>
       </SidebarFooter>

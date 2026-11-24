@@ -54,7 +54,7 @@ export function SystemPromptSection() {
         <Textarea
           id="system-prompt"
           className="min-h-24 w-full"
-          placeholder="Enter a default system prompt for new conversations"
+          placeholder="Digite um prompt de sistema padrão para novas conversas"
           value={effectivePrompt}
           onChange={handlePromptChange}
         />

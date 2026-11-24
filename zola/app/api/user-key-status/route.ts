@@ -8,10 +8,16 @@ export async function GET() {
   try {
     const supabase = await createClient()
     if (!supabase) {
-      return NextResponse.json(
-        { error: "Supabase not available" },
-        { status: 500 }
+      // Sem Supabase configurado não há login nem chaves salvas:
+      // devolve o estado vazio em vez de erro 500.
+      const emptyStatus = SUPPORTED_PROVIDERS.reduce(
+        (acc, provider) => {
+          acc[provider] = false
+          return acc
+        },
+        {} as Record<string, boolean>
       )
+      return NextResponse.json(emptyStatus)
     }
 
     const { data: authData } = await supabase.auth.getUser()

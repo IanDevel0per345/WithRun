@@ -6,10 +6,10 @@ export async function POST(request: NextRequest) {
     const supabase = await createClient()
 
     if (!supabase) {
-      return NextResponse.json(
-        { error: "Database connection failed" },
-        { status: 500 }
-      )
+      // Sem Supabase configurado não há login: ninguém pode salvar
+      // favoritos. 401 (sem conta) em vez de erro 500 — o cliente
+      // desfaz a troca otimista e nada é perdido.
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
     // Get the current user
@@ -78,10 +78,11 @@ export async function GET() {
     const supabase = await createClient()
 
     if (!supabase) {
-      return NextResponse.json(
-        { error: "Database connection failed" },
-        { status: 500 }
-      )
+      // Sem Supabase configurado não há favoritos salvos:
+      // devolver a lista vazia em vez de erro 500.
+      return NextResponse.json({
+        favorite_models: [],
+      })
     }
 
     // Get the current user

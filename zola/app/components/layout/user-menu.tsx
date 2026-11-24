@@ -1,6 +1,5 @@
 "use client"
 
-import XIcon from "@/components/icons/x"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
   DropdownMenu,
@@ -84,18 +83,7 @@ export function UserMenu() {
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
           <a
-            href="https://x.com/zoladotchat"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2"
-          >
-            <XIcon className="size-4 p-0.5" />
-            <span>@zoladotchat</span>
-          </a>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <a
-            href="https://github.com/ibelick/zola"
+            href="https://github.com/IanDevel0per345/WithRun"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2"
