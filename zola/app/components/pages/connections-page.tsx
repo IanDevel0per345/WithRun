@@ -13,7 +13,7 @@ import { PageShell } from "./page-shell"
 
 const TABS: { id: string; label: string; icon?: SheetIconName }[] = [
   { id: "apps", label: "Apps", icon: "link" },
-  { id: "skills", label: "Skills" },
+  { id: "skills", label: "Skills", icon: "wrench" },
   { id: "habilidades", label: "Habilidades", icon: "bulb" },
   { id: "memoria", label: "Memória", icon: "database" },
 ]

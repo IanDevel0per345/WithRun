@@ -56,6 +56,7 @@ export function SettingsContent({ isDrawer = false }: SettingsContentProps) {
     {
       value: "personalization",
       label: "Personalização",
+      icon: "user",
       content: <PersonalizationSettings />,
     },
     {

@@ -190,6 +190,7 @@ export function ModelsSettings() {
               className="border-border text-muted-foreground flex h-32 items-center justify-center rounded-lg border-2 border-dashed"
             >
               <div className="text-center">
+                <SheetIcon name="cube" size={32} className="mx-auto mb-2 opacity-50" />
                 <p className="text-sm">Nenhum modelo favorito ainda</p>
                 <p className="text-xs">Adicione modelos da lista abaixo</p>
               </div>
