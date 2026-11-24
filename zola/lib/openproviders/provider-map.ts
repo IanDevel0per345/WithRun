@@ -16,6 +16,8 @@ const MODEL_PROVIDER_MAP: Record<string, Provider> = {
   "gpt-4.1-mini-2025-04-14": "openai",
   "gpt-4.1-nano": "openai",
   "gpt-4.1-nano-2025-04-14": "openai",
+  // Meteor 1: modelo da Meteor; por enquanto usa a chave e o motor da OpenAI.
+  "meteor-1": "openai",
   "gpt-4o": "openai",
   "gpt-4o-2024-05-13": "openai",
   "gpt-4o-2024-08-06": "openai",

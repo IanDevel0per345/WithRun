@@ -1,6 +1,7 @@
 import { toast } from "@/components/ui/toast"
 import { Chats } from "@/lib/chat-store/types"
 import { MODEL_DEFAULT } from "@/lib/config"
+import { getModelInfo } from "@/lib/models"
 import type { UserProfile } from "@/lib/user/types"
 import { useCallback, useState } from "react"
 
@@ -27,9 +28,14 @@ export function useModel({
   chatId,
 }: UseModelProps) {
   // Calculate the effective model based on priority: chat model > first favorite model > default
+  // Um modelo antigo (de antes da troca para o Meteor 1) cai para o padrão.
   const getEffectiveModel = useCallback(() => {
+    const known = (id?: string | null) =>
+      id && getModelInfo(id) ? id : undefined
     const firstFavoriteModel = user?.favorite_models?.[0]
-    return currentChat?.model || firstFavoriteModel || MODEL_DEFAULT
+    return (
+      known(currentChat?.model) || known(firstFavoriteModel) || MODEL_DEFAULT
+    )
   }, [currentChat?.model, user?.favorite_models])
 
   // Use local state only for temporary overrides, derive base value from props

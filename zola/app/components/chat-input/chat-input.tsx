@@ -15,7 +15,6 @@ import { getModelInfo } from "@/lib/models"
 import { SheetIcon } from "@/components/ui/sheet-icon"
 import { cn } from "@/lib/utils"
 import { useCallback, useEffect, useMemo, useRef } from "react"
-import { PromptSystem } from "../suggestions/prompt-system"
 import { useSpeechInput } from "./use-speech-input"
 import { ButtonFileUpload } from "./button-file-upload"
 import { ButtonSearch } from "./button-search"
@@ -30,8 +29,6 @@ type ChatInputProps = {
   files: File[]
   onFileUpload: (files: File[]) => void
   onFileRemove: (file: File) => void
-  onSuggestion: (suggestion: string) => void
-  hasSuggestions?: boolean
   onSelectModel: (model: string) => void
   selectedModel: string
   isUserAuthenticated: boolean
@@ -52,8 +49,6 @@ export function ChatInput({
   files,
   onFileUpload,
   onFileRemove,
-  onSuggestion,
-  hasSuggestions,
   onSelectModel,
   selectedModel,
   isUserAuthenticated,
@@ -181,13 +176,6 @@ export function ChatInput({
 
   return (
     <div className="relative flex w-full flex-col gap-4">
-      {hasSuggestions && (
-        <PromptSystem
-          onValueChange={onValueChange}
-          onSuggestion={onSuggestion}
-          value={value}
-        />
-      )}
       <div
         className="relative order-2 px-2 pb-3 sm:pb-4 md:order-1"
         onClick={() => textareaRef.current?.focus()}
