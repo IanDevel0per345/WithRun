@@ -12,7 +12,7 @@ type ButtonSearchProps = {
 }
 
 const baseClass =
-  "text-muted-foreground hover:bg-accent hover:text-foreground size-9 shrink-0 rounded-lg bg-transparent p-0 shadow-none transition-all duration-150 dark:bg-transparent"
+  "text-muted-foreground hover:bg-accent hover:text-foreground size-9 shrink-0 rounded-full bg-transparent p-0 shadow-none transition-all duration-150 dark:bg-transparent"
 
 export function ButtonSearch({
   isSelected = false,

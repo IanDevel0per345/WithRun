@@ -269,7 +269,7 @@ export function ModelSelector({
           </TooltipTrigger>
           <TooltipContent>Switch model ⌘⇧P</TooltipContent>
           <DropdownMenuContent
-            className="flex h-[300px] w-[320px] flex-col space-y-0.5 overflow-visible rounded-lg border p-0 shadow-none"
+            className="flex h-[300px] w-[320px] flex-col space-y-0.5 overflow-visible rounded-2xl p-0 shadow-xl"
             align="start"
             sideOffset={8}
             collisionPadding={12}

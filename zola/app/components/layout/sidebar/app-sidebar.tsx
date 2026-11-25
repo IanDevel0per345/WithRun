@@ -29,7 +29,7 @@ import { ModeSwitcher } from "./mode-switcher"
 import { SidebarList } from "./sidebar-list"
 
 const rowClass =
-  "text-muted-foreground hover:bg-accent hover:text-foreground flex h-8 w-full items-center gap-1.5 rounded-lg px-2.5 text-sm transition-colors"
+  "text-muted-foreground hover:bg-accent/70 hover:text-foreground flex h-8 w-full items-center gap-2 rounded-md px-1.5 text-[13.5px] font-medium transition-colors"
 
 const HOME_ITEMS: { href: string; label: string; icon: SheetIconName }[] = [
   { href: "/projetos", label: "Projetos", icon: "folder" },
@@ -62,7 +62,7 @@ export function AppSidebar() {
     <Sidebar
       collapsible="offcanvas"
       variant="sidebar"
-      className="border-border border-r bg-transparent"
+      className="border-border/40 border-r bg-transparent"
     >
       <SidebarHeader className="flex h-14 flex-row items-center justify-between gap-1 px-2">
         <div className="flex min-w-0 items-center gap-1.5">
@@ -77,29 +77,29 @@ export function AppSidebar() {
             onClick={() => router.push("/")}
             aria-label="New chat"
             title="New chat (⌘⇧U)"
-            className="text-muted-foreground hover:text-foreground hover:bg-accent inline-flex size-7 items-center justify-center rounded-lg transition-colors"
+            className="text-muted-foreground hover:text-foreground hover:bg-accent/70 inline-flex size-7 items-center justify-center rounded-md transition-colors"
           >
-            <SheetIcon name="newchat" size={16} />
+            <SheetIcon name="newchat" size={20} />
           </button>
           <HeaderSidebarTrigger className="size-8" />
         </div>
       </SidebarHeader>
 
       <SidebarContent>
-        <div className="border-border mx-2 border-b px-0 pt-1 pb-2">
+        <div className="border-border/40 mx-2 border-b px-0 pt-1 pb-2">
           <button
             type="button"
             onClick={() => router.push("/")}
-            className={`${rowClass} ${isNewConversation ? "bg-accent font-medium text-foreground" : ""}`}
+            className={`${rowClass} ${isNewConversation ? "bg-accent text-foreground" : ""}`}
           >
-            <SheetIcon name="plus" size={16} />
+            <SheetIcon name="plus" size={20} />
             Nova conversa
           </button>
         </div>
 
         <ScrollArea className="flex h-full px-2 [&>div>div]:!block">
           <SectionLabel>Home</SectionLabel>
-          <nav aria-label="Home" className="space-y-1.5 pb-1">
+          <nav aria-label="Home" className="space-y-0.5 pb-1">
             {HOME_ITEMS.map((item) => {
               const active = pathname === item.href || pathname.startsWith(`${item.href}/`)
               return (
@@ -107,9 +107,9 @@ export function AppSidebar() {
                   key={item.href}
                   href={item.href}
                   aria-current={active ? "page" : undefined}
-                  className={`${rowClass} ${active ? "bg-accent font-medium text-foreground" : ""}`}
+                  className={`${rowClass} ${active ? "bg-accent text-foreground" : ""}`}
                 >
-                  <SheetIcon name={item.icon} size={16} />
+                  <SheetIcon name={item.icon} size={20} />
                   {item.label}
                 </Link>
               )
@@ -120,7 +120,7 @@ export function AppSidebar() {
           {isLoading ? (
             <div className="h-full" />
           ) : hasChats ? (
-            <div className="space-y-1.5 pb-4">
+            <div className="space-y-1 pb-4">
               {pinnedChats.length > 0 && (
                 <SidebarList
                   key="pinned"
@@ -144,7 +144,7 @@ export function AppSidebar() {
               <div className="bg-muted mb-2.5 flex size-9 items-center justify-center rounded-lg">
                 <SheetIcon name="chatdots" size={22} />
               </div>
-              <p className="text-sm font-medium">Nenhuma conversa ainda</p>
+              <p className="text-[13px] font-medium">Nenhuma conversa ainda</p>
               <p className="text-muted-foreground mt-0.5 text-center text-xs">
                 Suas conversas com o Meteor aparecem aqui.
               </p>
@@ -153,22 +153,21 @@ export function AppSidebar() {
         </ScrollArea>
       </SidebarContent>
 
-      <SidebarFooter className="border-border gap-1.5 border-t px-2 py-2">
+      <SidebarFooter className="border-border/40 gap-0.5 border-t px-2 py-2">
         <button
           type="button"
           onClick={() => setSettingsOpen(true)}
           className={rowClass}
         >
-          <SheetIcon name="settings" size={16} />
+          <SheetIcon name="settings" size={20} />
           Configurações
         </button>
-        <div className="bg-popover mt-1 flex items-center gap-2 rounded-full border px-3 py-1.5">
-          <div className="bg-muted text-foreground flex size-6 shrink-0 items-center justify-center rounded-full text-[11px] font-semibold">
+        <div className="mt-1 flex items-center gap-2 px-1 pt-2">
+          <div className="bg-muted text-foreground flex size-6 items-center justify-center rounded-full text-[11px] font-semibold">
             {displayName.charAt(0).toUpperCase()}
           </div>
-          <span className="text-foreground min-w-0 truncate text-sm font-medium">
-            {displayName}
-            <span className="text-muted-foreground font-normal"> · Grátis</span>
+          <span className="text-muted-foreground min-w-0 truncate text-xs">
+            {displayName} · Grátis
           </span>
         </div>
       </SidebarFooter>
@@ -187,7 +186,7 @@ export function AppSidebar() {
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <h3 className="text-muted-foreground px-2.5 pt-3 pb-1 text-xs">
+    <h3 className="text-muted-foreground/80 px-1.5 pt-3 pb-1 text-xs font-medium">
       {children}
     </h3>
   )

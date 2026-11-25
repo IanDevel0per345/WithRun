@@ -32,7 +32,7 @@ export function ProjectsPage() {
       {!loaded ? (
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {[0, 1, 2].map((i) => (
-            <div key={i} className="bg-muted/60 h-28 animate-pulse rounded-lg" />
+            <div key={i} className="bg-muted/60 h-28 animate-pulse rounded-2xl" />
           ))}
         </div>
       ) : projects.length > 0 ? (

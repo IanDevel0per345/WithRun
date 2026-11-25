@@ -172,7 +172,7 @@ export function MessageUser({
       ))}
       {isEditing ? (
         <div
-          className="bg-card border-border relative flex w-full max-w-xl min-w-[180px] flex-col gap-2 rounded-lg border px-5 py-2.5"
+          className="bg-accent relative flex w-full max-w-xl min-w-[180px] flex-col gap-2 rounded-3xl px-5 py-2.5"
           style={{
             width: contentRef.current?.offsetWidth,
           }}
@@ -208,7 +208,7 @@ export function MessageUser({
         </div>
       ) : (
         <MessageContent
-          className="bg-card border-border prose dark:prose-invert relative max-w-[70%] rounded-lg border px-5 py-2.5"
+          className="bg-accent prose dark:prose-invert relative max-w-[70%] rounded-3xl px-5 py-2.5"
           markdown={true}
           ref={contentRef}
           components={{
@@ -232,7 +232,7 @@ export function MessageUser({
       <MessageActions className="flex gap-0 opacity-0 transition-opacity duration-0 group-hover:opacity-100">
         <MessageAction tooltip={copied ? "Copied!" : "Copy text"} side="bottom">
           <button
-            className="hover:bg-accent/60 text-muted-foreground hover:text-foreground flex size-7.5 items-center justify-center rounded-lg bg-transparent transition"
+            className="hover:bg-accent/60 text-muted-foreground hover:text-foreground flex size-7.5 items-center justify-center rounded-full bg-transparent transition"
             aria-label="Copy text"
             onClick={copyToClipboard}
             type="button"
@@ -252,7 +252,7 @@ export function MessageUser({
             delayDuration={0}
           >
             <button
-              className="hover:bg-accent/60 text-muted-foreground hover:text-foreground flex size-7.5 items-center justify-center rounded-lg bg-transparent transition"
+              className="hover:bg-accent/60 text-muted-foreground hover:text-foreground flex size-7.5 items-center justify-center rounded-full bg-transparent transition"
               aria-label={isEditing ? "Cancel edit" : "Edit message"}
               onClick={isEditing ? handleEditCancel : handleEditStart}
               type="button"

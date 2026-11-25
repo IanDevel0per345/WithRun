@@ -24,7 +24,7 @@ export function SettingsGroup({
           </p>
         )}
       </div>
-      <div className="divide-border border-border divide-y rounded-lg border">
+      <div className="divide-border/60 border-border/60 divide-y rounded-xl border">
         {children}
       </div>
     </section>
@@ -94,7 +94,7 @@ export function Segmented<T extends string>({
             aria-checked={selected}
             onClick={() => onChange(option.value)}
             className={cn(
-              "relative rounded-lg px-3 py-1.5 text-sm font-medium transition-colors",
+              "relative rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
               selected
                 ? "text-foreground"
                 : "text-muted-foreground hover:text-foreground"
@@ -103,7 +103,7 @@ export function Segmented<T extends string>({
             {selected && (
               <motion.span
                 layoutId={`seg-${id}`}
-                className="bg-popover border-border absolute inset-0 rounded-lg border"
+                className="bg-background absolute inset-0 rounded-md shadow-sm"
                 transition={{ type: "spring", stiffness: 500, damping: 38 }}
               />
             )}
