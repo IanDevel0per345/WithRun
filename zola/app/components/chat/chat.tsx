@@ -209,15 +209,12 @@ export function Chat() {
   const chatInputProps = useMemo(
     () => ({
       value: input,
-      onSuggestion: handleSuggestion,
       onValueChange: handleInputChange,
       onSend: submit,
       isSubmitting,
       files,
       onFileUpload: handleFileUpload,
       onFileRemove: handleFileRemove,
-      // The shortcut pills (Summary, Code, Design…) were removed from the chat input.
-      hasSuggestions: false,
       onSelectModel: handleModelChange,
       selectedModel,
       isUserAuthenticated: isAuthenticated,
@@ -238,7 +235,6 @@ export function Chat() {
       files,
       handleFileUpload,
       handleFileRemove,
-      preferences.promptSuggestions,
       chatId,
       messages.length,
       handleModelChange,

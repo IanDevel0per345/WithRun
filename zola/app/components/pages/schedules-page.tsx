@@ -20,7 +20,9 @@ import {
 import { useSchedules, type Schedule, type ScheduleInput } from "@/lib/schedule-store/provider"
 import { cn } from "@/lib/utils"
 import { AnimatePresence, motion } from "motion/react"
+import { useRouter } from "next/navigation"
 import { useEffect, useMemo, useState } from "react"
+import { NEW_CHAT_DRAFT_KEY } from "@/app/hooks/use-chat-draft"
 import { Segmented } from "../layout/settings/settings-ui"
 import { EmptyState, PageShell } from "./page-shell"
 import { relativeTime } from "./workspace-page"
@@ -59,6 +61,18 @@ const EXAMPLES: (Draft & { label: string })[] = [
     recurrence: { type: "interval", everyMinutes: 120 },
   },
 ]
+
+// Mensagem pronta que aparece no campo do chat quando o usuário pede para a
+// IA criar um agendamento — é só enviar.
+const ASK_AI_TO_CREATE_MESSAGE =
+  "Olá! Quero criar um novo agendamento. Me ajude a criar um: me pergunte o que precisa saber — o que a IA deve fazer quando chegar a hora, quando deve acontecer e se deve se repetir."
+
+function exampleMessage(ex: (typeof EXAMPLES)[number]): string {
+  const when = ex.recurrence
+    ? `${describeRecurrence(ex.recurrence).toLowerCase()}: `
+    : ""
+  return `Quero criar um agendamento — ${when}${ex.prompt}`
+}
 
 function ScheduleDialog({
   open, onOpenChange, editing, draft, onSave,
@@ -291,31 +305,30 @@ function ScheduleCard({ s, onEdit, onDelete }: { s: Schedule; onEdit: () => void
 }
 
 export function SchedulesPage() {
-  const { schedules, loaded, autoOpen, setAutoOpen, add, update, remove } = useSchedules()
+  const { schedules, loaded, autoOpen, setAutoOpen, update, remove } = useSchedules()
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editing, setEditing] = useState<Schedule | null>(null)
-  const [draft, setDraft] = useState<Draft | null>(null)
   const [toDelete, setToDelete] = useState<Schedule | null>(null)
   const [permission, setPermission] = useState<NotificationPermission | "unsupported">("default")
+  const router = useRouter()
 
   useEffect(() => {
     setPermission(typeof Notification === "undefined" ? "unsupported" : Notification.permission)
   }, [])
 
-  const openNew = (d: Draft | null = null) => {
-    setEditing(null)
-    setDraft(d)
-    setDialogOpen(true)
+  // Só a IA cria agendamentos: o botão deixa uma mensagem pronta no campo
+  // do chat e abre a conversa — é só o usuário enviar.
+  const askAiToCreate = (message: string) => {
+    try {
+      localStorage.setItem(NEW_CHAT_DRAFT_KEY, message)
+    } catch {}
+    router.push("/")
   }
 
   const save = (input: ScheduleInput, id?: string) => {
-    if (id) {
-      update(id, input)
-      toast({ title: "Agendamento atualizado", status: "success" })
-    } else {
-      add({ ...input, source: "manual" })
-      toast({ title: "Agendamento criado", description: "A IA vai começar a tarefa na hora marcada, com o app aberto.", status: "success" })
-    }
+    if (!id) return
+    update(id, input)
+    toast({ title: "Agendamento atualizado", status: "success" })
   }
 
   const askPermission = async () => {
@@ -327,11 +340,14 @@ export function SchedulesPage() {
   return (
     <PageShell
       title="Agendamentos"
-      description="Tarefas que a IA inicia sozinha na hora marcada. Você também pode pedir no chat: “todo dia às 8h, me resuma as notícias”."
+      description="Tarefas que a IA inicia sozinha na hora marcada. Só a IA cria agendamentos: peça para ela no chat e ela monta tudo para você."
       actions={
-        <Button size="sm" onClick={() => openNew()}>
-          <SheetIcon name="plus" size={16} invert />
-          Novo agendamento
+        <Button
+          size="lg"
+          className="justify-center text-center"
+          onClick={() => askAiToCreate(ASK_AI_TO_CREATE_MESSAGE)}
+        >
+          Pedir para a IA criar
         </Button>
       }
     >
@@ -372,10 +388,10 @@ export function SchedulesPage() {
         <EmptyState
           icon="calendar"
           title="Nenhum agendamento ainda"
-          description="Crie um agendamento ou peça para a IA no chat. Comece por um destes exemplos:"
+          description="Só a IA cria agendamentos. Peça para ela no chat — comece por um destes exemplos:"
         >
           {EXAMPLES.map((ex) => (
-            <Button key={ex.label} size="sm" variant="outline" onClick={() => openNew(ex)}>
+            <Button key={ex.label} size="sm" variant="outline" onClick={() => askAiToCreate(exampleMessage(ex))}>
               {ex.label}
             </Button>
           ))}
@@ -387,7 +403,7 @@ export function SchedulesPage() {
               <ScheduleCard
                 key={s.id}
                 s={s}
-                onEdit={() => { setEditing(s); setDraft(null); setDialogOpen(true) }}
+                onEdit={() => { setEditing(s); setDialogOpen(true) }}
                 onDelete={() => setToDelete(s)}
               />
             ))}
@@ -395,7 +411,7 @@ export function SchedulesPage() {
         </div>
       )}
 
-      <ScheduleDialog open={dialogOpen} onOpenChange={setDialogOpen} editing={editing} draft={draft} onSave={save} />
+      <ScheduleDialog open={dialogOpen} onOpenChange={setDialogOpen} editing={editing} draft={null} onSave={save} />
 
       <AlertDialog open={!!toDelete} onOpenChange={(o) => !o && setToDelete(null)}>
         <AlertDialogContent>

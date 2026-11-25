@@ -228,7 +228,7 @@ export function ModelSelector({
                     No results found.
                   </p>
                   <a
-                    href="https://github.com/ibelick/zola/issues/new?title=Model%20Request%3A%20"
+                    href="https://github.com/IanDevel0per345/WithRun/issues/new?title=Model%20Request%3A%20"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-muted-foreground text-sm underline"
@@ -357,7 +357,7 @@ export function ModelSelector({
                     No results found.
                   </p>
                   <a
-                    href="https://github.com/ibelick/zola/issues/new?title=Model%20Request%3A%20"
+                    href="https://github.com/IanDevel0per345/WithRun/issues/new?title=Model%20Request%3A%20"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-muted-foreground text-sm underline"
