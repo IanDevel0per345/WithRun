@@ -3,7 +3,7 @@
 import { PopoverContentAuth } from "@/app/components/chat-input/popover-content-auth"
 import { useBreakpoint } from "@/app/hooks/use-breakpoint"
 import { useKeyShortcut } from "@/app/hooks/use-key-shortcut"
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import {
   Drawer,
   DrawerContent,
@@ -31,11 +31,7 @@ import { ModelConfig } from "@/lib/models/types"
 import { PROVIDERS } from "@/lib/providers"
 import { useUserPreferences } from "@/lib/user-preference-store/provider"
 import { cn } from "@/lib/utils"
-import {
-  CaretDownIcon,
-  MagnifyingGlassIcon,
-  StarIcon,
-} from "@phosphor-icons/react"
+import { CaretDownIcon, MagnifyingGlassIcon, StarIcon } from "@/components/icons"
 import { useRef, useState } from "react"
 import { ProModelDialog } from "./pro-dialog"
 import { SubMenu } from "./sub-menu"
@@ -136,17 +132,21 @@ export function ModelSelector({
   )
 
   const trigger = (
-    <Button
-      variant="outline"
-      className={cn("dark:bg-secondary justify-between", className)}
+    <button
+      type="button"
+      className={cn(
+        buttonVariants({ variant: "outline" }),
+        "dark:bg-secondary justify-between",
+        className
+      )}
       disabled={isLoadingModels}
     >
       <div className="flex items-center gap-2">
         {currentProvider?.icon && <currentProvider.icon className="size-5" />}
-        <span>{currentModel?.name || "Select model"}</span>
+        <span className="truncate">{currentModel?.name || "Select model"}</span>
       </div>
-      <CaretDownIcon className="size-4 opacity-50" />
-    </Button>
+      <CaretDownIcon className="size-4 opacity-50 max-sm:hidden" />
+    </button>
   )
 
   // Handle input change without losing focus

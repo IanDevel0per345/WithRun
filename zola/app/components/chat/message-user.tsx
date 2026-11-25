@@ -19,12 +19,7 @@ import { toast } from "@/components/ui/toast"
 import { isSupabaseEnabled } from "@/lib/supabase/config"
 import { cn } from "@/lib/utils"
 import { Message as MessageType } from "@ai-sdk/react"
-import {
-  Check,
-  Copy,
-  PencilSimpleIcon,
-  PencilSimpleSlashIcon,
-} from "@phosphor-icons/react"
+import { Check, Copy, PencilSimpleIcon, PencilSimpleSlashIcon } from "@/components/icons"
 import Image from "next/image"
 import React, { useEffect, useRef, useState } from "react"
 

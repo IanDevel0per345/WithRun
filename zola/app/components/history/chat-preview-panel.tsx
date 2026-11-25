@@ -1,7 +1,7 @@
 import { MessageContent } from "@/components/prompt-kit/message"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { AlertCircle, Loader2, RefreshCw } from "lucide-react"
+import { AlertCircle, Loader2, RefreshCw } from "@/components/icons"
 import { useLayoutEffect, useRef, useState } from "react"
 
 type ChatPreviewPanelProps = {

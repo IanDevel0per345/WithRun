@@ -6,7 +6,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { NotePencilIcon } from "@phosphor-icons/react/dist/ssr"
+import { NotePencilIcon } from "@/components/icons"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 

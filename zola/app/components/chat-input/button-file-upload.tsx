@@ -20,8 +20,8 @@ import {
 import { getModelInfo } from "@/lib/models"
 import { formatDuration, useUsage } from "@/lib/usage-store/provider"
 import { cn } from "@/lib/utils"
-import { FileArrowUp } from "@phosphor-icons/react"
-import { FileText, Image as ImageIcon, Video } from "lucide-react"
+import { FileArrowUp } from "@/components/icons"
+import { FileText, Image as ImageIcon, Video } from "@/components/icons"
 import { motion } from "motion/react"
 import { useRef, useState } from "react"
 

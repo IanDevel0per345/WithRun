@@ -2,15 +2,7 @@
 
 import { cn } from "@/lib/utils"
 import type { ToolInvocationUIPart } from "@ai-sdk/ui-utils"
-import {
-  CaretDown,
-  CheckCircle,
-  Code,
-  Link,
-  Nut,
-  Spinner,
-  Wrench,
-} from "@phosphor-icons/react"
+import { CaretDown, CheckCircle, Code, Link, Nut, Spinner, Wrench } from "@/components/icons"
 import { AnimatePresence, motion } from "framer-motion"
 import { useMemo, useState } from "react"
 

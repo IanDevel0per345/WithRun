@@ -1,7 +1,7 @@
 "use client"
 
 import { cn } from "@/lib/utils"
-import { CaretRight, Check, Circle } from "@phosphor-icons/react"
+import { CaretRight, Check, Circle } from "@/components/icons"
 import * as DropdownMenuPrimitive from "@animate-ui/react/primitives/radix-ui/dropdown-menu"
 import * as React from "react"
 

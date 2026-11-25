@@ -5,7 +5,7 @@ import { Message, MessageContent } from "@/components/prompt-kit/message"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import type { Message as MessageAISDK } from "@ai-sdk/react"
-import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr"
+import { ArrowUpRight } from "@/components/icons"
 import Link from "next/link"
 import { Header } from "./header"
 

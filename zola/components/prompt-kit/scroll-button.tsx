@@ -3,7 +3,7 @@
 import { Button, buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { type VariantProps } from "class-variance-authority"
-import { ChevronDown } from "lucide-react"
+import { ChevronDown } from "@/components/icons"
 import { useStickToBottomContext } from "use-stick-to-bottom"
 
 export type ScrollButtonProps = {
