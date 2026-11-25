@@ -44,7 +44,7 @@ export function WelcomeGreeting() {
         className="mb-6 flex flex-col items-center gap-3 px-4 text-center"
       >
         <SheetIcon name="eyeoff" size={36} />
-        <h1 className="text-2xl font-medium tracking-tight text-balance sm:text-3xl">
+        <h1 className="text-2xl font-semibold text-balance">
           Chat temporário
         </h1>
         <p className="text-muted-foreground max-w-sm text-sm text-balance">
@@ -60,7 +60,7 @@ export function WelcomeGreeting() {
   const text = template ? fillWelcomeTemplate(template, firstName) : ""
 
   return (
-    <h1 className="mb-6 min-h-10 px-4 text-center text-3xl font-medium tracking-tight text-balance sm:text-4xl">
+    <h1 className="mb-6 min-h-10 px-4 text-center text-2xl font-semibold text-balance">
       <AnimatePresence mode="wait" initial={false}>
         <motion.span
           key={text || "empty"}

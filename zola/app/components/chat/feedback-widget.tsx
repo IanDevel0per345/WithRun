@@ -47,7 +47,7 @@ export function FeedbackWidget({ authUserId }: FeedbackWidgetProps) {
         className="relative flex flex-col items-end justify-end"
       >
         <MorphingPopoverTrigger
-          className="border-border bg-background text-foreground hover:bg-secondary flex size-6 items-center justify-center rounded-full border shadow-md"
+          className="border-border bg-background text-foreground hover:bg-secondary flex size-6 items-center justify-center rounded-lg border shadow-none"
           style={{
             transformOrigin: "bottom right",
             originX: "right",

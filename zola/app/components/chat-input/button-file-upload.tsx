@@ -151,7 +151,7 @@ export function ButtonFileUpload({
                 aria-label="Add files"
                 // The input area focuses the textarea on click, which would close the menu.
                 onClick={(e) => e.stopPropagation()}
-                className="hover:bg-accent dark:hover:bg-accent size-10 shrink-0 rounded-full bg-transparent p-0 shadow-none dark:bg-transparent"
+                className="hover:bg-accent size-10 shrink-0 rounded-lg bg-transparent p-0 shadow-none dark:bg-transparent"
               >
                 <motion.span
                   animate={{ rotate: open ? 45 : 0 }}
@@ -170,7 +170,7 @@ export function ButtonFileUpload({
           side="bottom"
           sideOffset={8}
           collisionPadding={12}
-          className="w-[300px] rounded-2xl p-1.5 shadow-xl"
+          className="w-[300px] rounded-lg border p-1.5 shadow-none"
           onClick={(e) => e.stopPropagation()}
         >
           {items.map((it) => (

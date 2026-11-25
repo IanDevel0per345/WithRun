@@ -287,7 +287,7 @@ export function SettingsContent({ isDrawer = false }: SettingsContentProps) {
                   <TabsTrigger
                     key={tab.value}
                     value={tab.value}
-                    className="w-full justify-start rounded-md px-3 py-2 text-left"
+                    className="w-full justify-start rounded-lg px-2.5 py-1.5 text-left data-[state=active]:bg-accent"
                   >
                     <div className="flex items-center gap-2">
                       {tab.icon && (

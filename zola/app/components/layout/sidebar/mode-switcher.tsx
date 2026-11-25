@@ -56,7 +56,7 @@ export function ModeSwitcher() {
       <DropdownMenuContent
         align="start"
         sideOffset={8}
-        className="w-[18.5rem] rounded-2xl p-1.5"
+        className="w-[18.5rem] rounded-lg border p-1.5"
       >
         {MODE_ORDER.map((id) => {
           const selected = id === mode
@@ -64,7 +64,7 @@ export function ModeSwitcher() {
             <DropdownMenuItem
               key={id}
               onSelect={() => setMode(id)}
-              className="cursor-pointer gap-3 rounded-xl px-2.5 py-2.5"
+              className="cursor-pointer gap-3 rounded-lg px-2.5 py-2.5"
             >
               <span className="flex size-8 shrink-0 items-center justify-center">
                 <SheetIcon name={MODE_ICON[id]} size={20} />

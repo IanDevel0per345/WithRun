@@ -181,7 +181,7 @@ export function ChatInput({
         onClick={() => textareaRef.current?.focus()}
       >
         <PromptInput
-          className="bg-popover relative z-10 rounded-[2rem] border-[1.5px] border-neutral-300 p-0 shadow-none dark:border-neutral-700"
+          className="bg-background relative z-10 rounded-lg border p-0 shadow-none"
           maxHeight={200}
           value={value}
           onValueChange={onValueChange}
@@ -214,7 +214,7 @@ export function ChatInput({
                 selectedModelId={selectedModel}
                 setSelectedModelId={onSelectModel}
                 isUserAuthenticated={isUserAuthenticated}
-                className="text-muted-foreground hover:bg-accent hover:text-foreground h-9 max-w-[9.5rem] gap-1 rounded-full border-0 bg-transparent px-2.5 text-sm font-medium shadow-none dark:bg-transparent max-sm:gap-0 max-sm:px-2 max-sm:text-[0px] max-sm:[&>svg:last-child]:hidden [&_span]:truncate"
+                className="text-muted-foreground hover:bg-accent hover:text-foreground h-9 max-w-[9.5rem] gap-1 rounded-lg border-0 bg-transparent px-2.5 text-sm font-medium shadow-none dark:bg-transparent max-sm:gap-0 max-sm:px-2 max-sm:text-[0px] max-sm:[&>svg:last-child]:hidden [&_span]:truncate"
               />
             </div>
             <div className="flex items-center gap-1.5">
@@ -236,7 +236,7 @@ export function ChatInput({
                   aria-label="Voice input"
                   aria-pressed={speech.listening}
                   className={cn(
-                    "hover:bg-accent size-10 shrink-0 rounded-full bg-transparent p-0 shadow-none dark:bg-transparent dark:hover:bg-accent",
+                    "hover:bg-accent size-10 shrink-0 rounded-lg bg-transparent p-0 shadow-none dark:bg-transparent",
                     speech.listening && "bg-accent dark:bg-accent animate-pulse",
                     !speech.supported && "opacity-50"
                   )}
@@ -250,7 +250,7 @@ export function ChatInput({
                 <Button
                   size="sm"
                   className={cn(
-                    "size-11 shrink-0 rounded-full p-0 shadow-none transition-all duration-300 ease-out",
+                    "size-11 shrink-0 rounded-lg p-0 shadow-none transition-all duration-300 ease-out",
                     canSend
                       ? coloredAccent
                         ? "bg-[var(--meteor-accent)] text-white hover:opacity-90"

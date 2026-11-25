@@ -141,7 +141,7 @@ export function MessageAssistant({
               side="bottom"
             >
               <button
-                className="hover:bg-accent/60 text-muted-foreground hover:text-foreground flex size-7.5 items-center justify-center rounded-full bg-transparent transition"
+                className="hover:bg-accent/60 text-muted-foreground hover:text-foreground flex size-7.5 items-center justify-center rounded-lg bg-transparent transition"
                 aria-label="Copy text"
                 onClick={copyToClipboard}
                 type="button"
@@ -160,7 +160,7 @@ export function MessageAssistant({
                 delayDuration={0}
               >
                 <button
-                  className="hover:bg-accent/60 text-muted-foreground hover:text-foreground flex size-7.5 items-center justify-center rounded-full bg-transparent transition"
+                  className="hover:bg-accent/60 text-muted-foreground hover:text-foreground flex size-7.5 items-center justify-center rounded-lg bg-transparent transition"
                   aria-label="Regenerate"
                   onClick={onReload}
                   type="button"

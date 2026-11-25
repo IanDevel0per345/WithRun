@@ -19,7 +19,7 @@ export function SubMenu({ hoveredModelData }: SubMenuProps) {
   )
 
   return (
-    <div className="bg-popover border-border w-[280px] rounded-md border p-3 shadow-md">
+    <div className="bg-popover border-border w-[280px] rounded-lg border p-3 shadow-none">
       <div className="flex flex-col gap-2">
         <div className="flex items-center gap-3">
           {provider?.icon && <provider.icon className="size-5" />}
@@ -33,21 +33,21 @@ export function SubMenu({ hoveredModelData }: SubMenuProps) {
         <div className="flex flex-col gap-1">
           <div className="mt-1 flex flex-wrap gap-2">
             {hoveredModelData.vision && (
-              <div className="flex items-center gap-1 rounded-full bg-green-100 px-2 py-0.5 text-xs text-green-700 dark:bg-green-800 dark:text-green-100">
+              <div className="bg-muted text-muted-foreground flex items-center gap-1 rounded-none px-2 py-0.5 text-xs">
                 <ImageIcon className="size-3" />
                 <span>Vision</span>
               </div>
             )}
 
             {hoveredModelData.tools && (
-              <div className="flex items-center gap-1 rounded-full bg-purple-100 px-2 py-0.5 text-xs text-purple-700 dark:bg-purple-800 dark:text-purple-100">
+              <div className="bg-muted text-muted-foreground flex items-center gap-1 rounded-none px-2 py-0.5 text-xs">
                 <WrenchIcon className="size-3" />
                 <span>Tools</span>
               </div>
             )}
 
             {hoveredModelData.reasoning && (
-              <div className="flex items-center gap-1 rounded-full bg-amber-100 px-2 py-0.5 text-xs text-amber-700 dark:bg-amber-800 dark:text-amber-100">
+              <div className="bg-muted text-muted-foreground flex items-center gap-1 rounded-none px-2 py-0.5 text-xs">
                 <BrainIcon className="size-3" />
                 <span>Reasoning</span>
               </div>

@@ -53,7 +53,7 @@ export function Header({ hasSidebar }: { hasSidebar: boolean }) {
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="bg-background hover:bg-muted text-muted-foreground h-8 w-8 rounded-full"
+                    className="bg-background hover:bg-muted text-muted-foreground h-8 w-8 rounded-lg"
                     aria-label={`About ${APP_NAME}`}
                   >
                     <Info className="size-4" />
