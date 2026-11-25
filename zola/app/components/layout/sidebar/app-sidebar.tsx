@@ -28,8 +28,10 @@ import { useMemo, useState } from "react"
 import { ModeSwitcher } from "./mode-switcher"
 import { SidebarList } from "./sidebar-list"
 
-const rowClass =
-  "text-muted-foreground hover:bg-accent/70 hover:text-foreground flex h-8 w-full items-center gap-2 rounded-md px-1.5 text-[13.5px] font-medium transition-colors"
+const rowBase =
+  "text-muted-foreground flex h-8 w-full items-center gap-2 rounded-md px-1.5 text-[13.5px] font-medium transition-colors"
+
+const rowClass = `${rowBase} hover:bg-accent/70 hover:text-foreground`
 
 const HOME_ITEMS: { href: string; label: string; icon: SheetIconName }[] = [
   { href: "/projetos", label: "Projetos", icon: "folder" },
@@ -90,9 +92,9 @@ export function AppSidebar() {
           <button
             type="button"
             onClick={() => router.push("/")}
-            className={`${rowClass} ${isNewConversation ? "bg-accent text-foreground" : ""}`}
+            className={`${rowBase} ${isNewConversation ? "bg-deep-teal text-white" : "hover:bg-accent/70 hover:text-foreground"}`}
           >
-            <SheetIcon name="plus" size={20} />
+            <SheetIcon name="plus" size={20} forceWhite={isNewConversation} />
             Nova conversa
           </button>
         </div>
@@ -107,9 +109,9 @@ export function AppSidebar() {
                   key={item.href}
                   href={item.href}
                   aria-current={active ? "page" : undefined}
-                  className={`${rowClass} ${active ? "bg-accent text-foreground" : ""}`}
+                  className={`${rowBase} ${active ? "bg-deep-teal text-white" : "hover:bg-accent/70 hover:text-foreground"}`}
                 >
-                  <SheetIcon name={item.icon} size={20} />
+                  <SheetIcon name={item.icon} size={20} forceWhite={active} />
                   {item.label}
                 </Link>
               )

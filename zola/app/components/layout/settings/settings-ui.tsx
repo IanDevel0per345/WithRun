@@ -96,14 +96,14 @@ export function Segmented<T extends string>({
             className={cn(
               "relative rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
               selected
-                ? "text-foreground"
+                ? "text-white"
                 : "text-muted-foreground hover:text-foreground"
             )}
           >
             {selected && (
               <motion.span
                 layoutId={`seg-${id}`}
-                className="bg-background absolute inset-0 rounded-md shadow-sm"
+                className="bg-deep-teal absolute inset-0 rounded-md"
                 transition={{ type: "spring", stiffness: 500, damping: 38 }}
               />
             )}
