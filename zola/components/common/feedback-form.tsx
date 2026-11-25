@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { toast } from "@/components/ui/toast"
 import { createClient } from "@/lib/supabase/client"
 import { isSupabaseEnabled } from "@/lib/supabase/config"
-import { CaretLeft, SealCheck, Spinner } from "@phosphor-icons/react"
+import { CaretLeft, SealCheck, Spinner } from "@/components/icons"
 import { AnimatePresence, motion } from "motion/react"
 import { useState } from "react"
 

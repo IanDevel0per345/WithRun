@@ -1,4 +1,4 @@
-import { ArrowLeft } from "@phosphor-icons/react"
+import { ArrowLeft } from "@/components/icons"
 import Link from "next/link"
 
 export function HeaderGoBack({ href = "/" }: { href?: string }) {

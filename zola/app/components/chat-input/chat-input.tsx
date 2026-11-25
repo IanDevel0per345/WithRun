@@ -226,7 +226,7 @@ export function ChatInput({
                 selectedModelId={selectedModel}
                 setSelectedModelId={onSelectModel}
                 isUserAuthenticated={isUserAuthenticated}
-                className="text-muted-foreground hover:bg-accent hover:text-foreground h-9 max-w-[9.5rem] gap-1 rounded-full border-0 bg-transparent px-2.5 text-sm font-medium shadow-none dark:bg-transparent max-sm:gap-0 max-sm:px-2 max-sm:text-[0px] max-sm:[&>svg:last-child]:hidden [&_span]:truncate"
+                className="text-muted-foreground hover:bg-accent hover:text-foreground h-9 max-w-[9.5rem] gap-1 rounded-full border-0 bg-transparent px-2.5 text-sm font-medium shadow-none dark:bg-transparent max-sm:gap-0 max-sm:px-2 max-sm:text-[0px]"
               />
             </div>
             <div className="flex items-center gap-1.5">

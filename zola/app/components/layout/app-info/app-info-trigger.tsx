@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/drawer"
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu"
 import { APP_NAME } from "@/lib/config"
-import { Info } from "@phosphor-icons/react"
+import { Info } from "@/components/icons"
 import Image from "next/image"
 import { AppInfoContent } from "./app-info-content"
 

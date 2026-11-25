@@ -8,7 +8,7 @@ import {
   MorphingPopoverTrigger,
 } from "@/components/motion-primitives/morphing-popover"
 import { isSupabaseEnabled } from "@/lib/supabase/config"
-import { QuestionMark } from "@phosphor-icons/react"
+import { QuestionMark } from "@/components/icons"
 import { motion } from "motion/react"
 import { useState } from "react"
 

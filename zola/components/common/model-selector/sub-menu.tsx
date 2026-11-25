@@ -1,13 +1,7 @@
 import { addUTM } from "@/app/components/chat/utils"
 import { ModelConfig } from "@/lib/models/types"
 import { PROVIDERS } from "@/lib/providers"
-import {
-  ArrowSquareOutIcon,
-  BrainIcon,
-  GlobeIcon,
-  ImageIcon,
-  WrenchIcon,
-} from "@phosphor-icons/react"
+import { ArrowSquareOutIcon, BrainIcon, GlobeIcon, ImageIcon, WrenchIcon } from "@/components/icons"
 
 type SubMenuProps = {
   hoveredModelData: ModelConfig

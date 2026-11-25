@@ -1,7 +1,7 @@
 "use client"
 
 import { cn } from "@/lib/utils"
-import { X } from "@phosphor-icons/react"
+import { X } from "@/components/icons"
 import {
   AnimatePresence,
   motion,

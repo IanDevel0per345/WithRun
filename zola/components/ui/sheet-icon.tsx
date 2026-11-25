@@ -60,6 +60,15 @@ export type SheetIconName =
   | "lock"
   | "mail"
   | "eyeoff"
+  | "check"
+  | "filetext"
+  | "image"
+  | "video"
+  | "bolt"
+  | "pin"
+  | "pinoff"
+  | "question"
+  | "upload"
 
 type SheetIconProps = {
   name: SheetIconName
