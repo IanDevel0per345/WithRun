@@ -216,8 +216,8 @@ export function Chat() {
       files,
       onFileUpload: handleFileUpload,
       onFileRemove: handleFileRemove,
-      // The shortcut pills (Summary, Code, Design…) were removed from the chat input.
-      hasSuggestions: false,
+      hasSuggestions:
+        preferences.promptSuggestions && !chatId && messages.length === 0,
       onSelectModel: handleModelChange,
       selectedModel,
       isUserAuthenticated: isAuthenticated,
