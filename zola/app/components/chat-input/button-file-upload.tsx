@@ -10,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { SheetIcon, type SheetIconName } from "@/components/ui/sheet-icon"
+import { SheetIcon } from "@/components/ui/sheet-icon"
 import { toast } from "@/components/ui/toast"
 import {
   Tooltip,
@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/tooltip"
 import { getModelInfo } from "@/lib/models"
 import { useMode } from "@/lib/mode-store/provider"
-import { MODES, MODE_ORDER, type Mode } from "@/lib/modes"
+import { MODES, MODE_ORDER } from "@/lib/modes"
 import { formatDuration, useUsage } from "@/lib/usage-store/provider"
 import { cn } from "@/lib/utils"
 import { FileArrowUp } from "@phosphor-icons/react"
@@ -42,11 +42,6 @@ const ACCEPT = {
 } as const
 
 type Kind = keyof typeof ACCEPT
-
-const MODE_ICON: Record<Mode, SheetIconName> = {
-  chat: "chat",
-  code: "code",
-}
 
 function formatTokens(n: number) {
   if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1).replace(".0", "")}M`
@@ -92,6 +87,7 @@ export function ButtonFileUpload({
   const { usage } = useUsage()
   const { mode, setMode } = useMode()
   const [open, setOpen] = useState(false)
+  const [modesOpen, setModesOpen] = useState(false)
   const inputs = {
     photo: useRef<HTMLInputElement>(null),
     file: useRef<HTMLInputElement>(null),
@@ -148,7 +144,13 @@ export function ButtonFileUpload({
           tabIndex={-1}
         />
       ))}
-      <DropdownMenu open={open} onOpenChange={setOpen}>
+      <DropdownMenu
+        open={open}
+        onOpenChange={(v) => {
+          setOpen(v)
+          if (!v) setModesOpen(false)
+        }}
+      >
         <Tooltip>
           <TooltipTrigger asChild>
             <DropdownMenuTrigger asChild>
@@ -199,29 +201,32 @@ export function ButtonFileUpload({
           <p className="text-muted-foreground px-2.5 pt-0.5 pb-0 text-xs font-medium">
             Alternar entre modos
           </p>
-          {MODE_ORDER.map((id) => {
-            const selected = id === mode
-            return (
+          <button
+            type="button"
+            onClick={() => setModesOpen((v) => !v)}
+            aria-expanded={modesOpen}
+            className="hover:bg-accent flex w-full cursor-pointer items-center justify-between gap-3 rounded-xl px-2.5 py-1.5 text-sm font-medium"
+          >
+            {MODES[mode].label}
+            <span
+              className={cn(
+                "inline-flex transition-transform",
+                modesOpen && "rotate-180"
+              )}
+            >
+              <SheetIcon name="chevron" size={16} className="opacity-70" />
+            </span>
+          </button>
+          {modesOpen &&
+            MODE_ORDER.map((id) => (
               <DropdownMenuItem
                 key={id}
                 onSelect={() => setMode(id)}
-                className="flex cursor-pointer items-center gap-3 rounded-xl px-2.5 py-1.5"
+                className="flex cursor-pointer items-center rounded-xl px-2.5 py-1.5 text-sm"
               >
-                <span className="flex size-6 shrink-0 items-center justify-center">
-                  <SheetIcon name={MODE_ICON[id]} size={18} />
-                </span>
-                <span className="flex min-w-0 flex-1 flex-col">
-                  <span className="text-sm font-medium">{MODES[id].label}</span>
-                  <span className="text-muted-foreground text-xs leading-snug">
-                    {MODES[id].description}
-                  </span>
-                </span>
-                {selected && (
-                  <SheetIcon name="checkcircle" size={20} className="shrink-0" />
-                )}
+                {MODES[id].label}
               </DropdownMenuItem>
-            )
-          })}
+            ))}
 
           <DropdownMenuSeparator className="my-1" />
           <p className="text-muted-foreground px-2.5 pt-0.5 pb-0 text-xs font-medium">
