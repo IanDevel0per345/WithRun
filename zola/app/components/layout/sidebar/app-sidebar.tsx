@@ -25,11 +25,10 @@ import { Pin } from "lucide-react"
 import Link from "next/link"
 import { useParams, usePathname, useRouter } from "next/navigation"
 import { useMemo, useState } from "react"
-import { ModeSwitcher } from "./mode-switcher"
 import { SidebarList } from "./sidebar-list"
 
 const rowClass =
-  "text-muted-foreground hover:bg-accent/70 hover:text-foreground flex h-8 w-full items-center gap-2 rounded-md px-1.5 text-[13.5px] font-medium transition-colors"
+  "text-foreground hover:bg-accent/70 flex h-8 w-full items-center gap-2 rounded-md px-1.5 text-[13.5px] font-medium transition-colors"
 
 const HOME_ITEMS: { href: string; label: string; icon: SheetIconName }[] = [
   { href: "/projetos", label: "Projetos", icon: "folder" },
@@ -66,10 +65,16 @@ export function AppSidebar() {
     >
       <SidebarHeader className="flex h-14 flex-row items-center justify-between gap-1 px-2">
         <div className="flex min-w-0 items-center gap-1.5">
-          <Link href="/" aria-label="Meteor AI" className="shrink-0 rounded-md">
+          <Link
+            href="/"
+            aria-label="Meteor AI"
+            className="flex shrink-0 items-center gap-2 rounded-md"
+          >
             <BrandLogo size={34} />
+            <span className="text-base font-semibold tracking-tight">
+              Meteor AI
+            </span>
           </Link>
-          <ModeSwitcher />
         </div>
         <div className="flex items-center">
           <button
@@ -77,7 +82,7 @@ export function AppSidebar() {
             onClick={() => router.push("/")}
             aria-label="New chat"
             title="New chat (⌘⇧U)"
-            className="text-muted-foreground hover:text-foreground hover:bg-accent/70 inline-flex size-7 items-center justify-center rounded-md transition-colors"
+            className="text-foreground hover:bg-accent/70 inline-flex size-7 items-center justify-center rounded-md transition-colors"
           >
             <SheetIcon name="newchat" size={20} />
           </button>
@@ -166,8 +171,9 @@ export function AppSidebar() {
           <div className="bg-muted text-foreground flex size-6 items-center justify-center rounded-full text-[11px] font-semibold">
             {displayName.charAt(0).toUpperCase()}
           </div>
-          <span className="text-muted-foreground min-w-0 truncate text-xs">
-            {displayName} · Grátis
+          <span className="text-foreground min-w-0 truncate text-xs">
+            {displayName}
+            <span className="text-muted-foreground"> · Grátis</span>
           </span>
         </div>
       </SidebarFooter>
