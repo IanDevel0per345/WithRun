@@ -15,6 +15,7 @@ import { getModelInfo } from "@/lib/models"
 import { SheetIcon } from "@/components/ui/sheet-icon"
 import { cn } from "@/lib/utils"
 import { useCallback, useEffect, useMemo, useRef } from "react"
+import { PromptSystem } from "../suggestions/prompt-system"
 import { useSpeechInput } from "./use-speech-input"
 import { ButtonFileUpload } from "./button-file-upload"
 import { ButtonSearch } from "./button-search"
@@ -29,6 +30,8 @@ type ChatInputProps = {
   files: File[]
   onFileUpload: (files: File[]) => void
   onFileRemove: (file: File) => void
+  onSuggestion: (suggestion: string) => void
+  hasSuggestions?: boolean
   onSelectModel: (model: string) => void
   selectedModel: string
   isUserAuthenticated: boolean
@@ -49,6 +52,8 @@ export function ChatInput({
   files,
   onFileUpload,
   onFileRemove,
+  onSuggestion,
+  hasSuggestions,
   onSelectModel,
   selectedModel,
   isUserAuthenticated,
@@ -176,6 +181,13 @@ export function ChatInput({
 
   return (
     <div className="relative flex w-full flex-col gap-4">
+      {hasSuggestions && (
+        <PromptSystem
+          onValueChange={onValueChange}
+          onSuggestion={onSuggestion}
+          value={value}
+        />
+      )}
       <div
         className="relative order-2 px-2 pb-3 sm:pb-4 md:order-1"
         onClick={() => textareaRef.current?.focus()}
@@ -214,7 +226,7 @@ export function ChatInput({
                 selectedModelId={selectedModel}
                 setSelectedModelId={onSelectModel}
                 isUserAuthenticated={isUserAuthenticated}
-                className="text-muted-foreground hover:bg-accent hover:text-foreground h-9 max-w-[9.5rem] gap-1 rounded-full border-0 bg-transparent px-2.5 text-sm font-medium shadow-none dark:bg-transparent max-sm:gap-0 max-sm:px-2 max-sm:text-[0px]"
+                className="text-muted-foreground hover:bg-accent hover:text-foreground h-9 max-w-[9.5rem] gap-1 rounded-full border-0 bg-transparent px-2.5 text-sm font-medium shadow-none dark:bg-transparent max-sm:gap-0 max-sm:px-2 max-sm:text-[0px] max-sm:[&>svg:last-child]:hidden [&_span]:truncate"
               />
             </div>
             <div className="flex items-center gap-1.5">
@@ -267,7 +279,7 @@ export function ChatInput({
                     size={22}
                     invert={canSend && !coloredAccent}
                     forceWhite={canSend && coloredAccent}
-                    className={cn("translate-y-[3px]", !canSend && "opacity-40")}
+                    className={cn(!canSend && "opacity-40")}
                   />
                 </Button>
               </PromptInputAction>

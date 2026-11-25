@@ -1,6 +1,6 @@
 import useClickOutside from "@/components/motion-primitives/useClickOutside"
 import { Button } from "@/components/ui/button"
-import { Quote } from "@/components/icons"
+import { Quote } from "lucide-react"
 import { RefObject, useRef } from "react"
 
 type QuoteButtonProps = {

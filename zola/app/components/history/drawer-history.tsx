@@ -9,8 +9,14 @@ import {
 } from "@/components/ui/tooltip"
 import { useChats } from "@/lib/chat-store/chats/provider"
 import { Chats } from "@/lib/chat-store/types"
-import { Check, MagnifyingGlass, PencilSimple, TrashSimple, X } from "@/components/icons"
-import { Pin, PinOff } from "@/components/icons"
+import {
+  Check,
+  MagnifyingGlass,
+  PencilSimple,
+  TrashSimple,
+  X,
+} from "@phosphor-icons/react"
+import { Pin, PinOff } from "lucide-react"
 import Link from "next/link"
 import { useParams } from "next/navigation"
 import React, { useCallback, useMemo, useState } from "react"

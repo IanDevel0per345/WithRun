@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { toast } from "@/components/ui/toast"
 import { createClient } from "@/lib/supabase/client"
 import { isSupabaseEnabled } from "@/lib/supabase/config"
-import { CaretLeft, SealCheck, Spinner } from "@/components/icons"
+import { CaretLeft, SealCheck, Spinner } from "@phosphor-icons/react"
 import { AnimatePresence, motion } from "motion/react"
 import { useState } from "react"
 
@@ -107,7 +107,7 @@ export function FeedbackForm({ authUserId, onClose }: FeedbackFormProps) {
               Thank you for your time!
             </p>
             <p className="text-muted-foreground text-sm">
-              Your feedback makes Meteor better.
+              Your feedback makes Zola better.
             </p>
           </motion.div>
         ) : (
@@ -133,7 +133,7 @@ export function FeedbackForm({ authUserId, onClose }: FeedbackFormProps) {
               }}
               className="text-muted-foreground pointer-events-none absolute top-3.5 left-4 text-sm leading-[1.4] select-none"
             >
-              What would make Meteor better for you?
+              What would make Zola better for you?
             </motion.span>
             <textarea
               className="text-foreground h-full w-full resize-none rounded-md bg-transparent px-4 py-3.5 text-sm outline-hidden"

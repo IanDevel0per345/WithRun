@@ -8,7 +8,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { DotsThree, PencilSimple, Trash } from "@/components/icons"
+import { DotsThree, PencilSimple, Trash } from "@phosphor-icons/react"
 import { useState } from "react"
 
 type Project = {

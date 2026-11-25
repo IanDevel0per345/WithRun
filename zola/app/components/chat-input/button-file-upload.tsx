@@ -18,12 +18,10 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { getModelInfo } from "@/lib/models"
-import { useMode } from "@/lib/mode-store/provider"
-import { MODES, MODE_ORDER } from "@/lib/modes"
 import { formatDuration, useUsage } from "@/lib/usage-store/provider"
 import { cn } from "@/lib/utils"
-import { FileArrowUp } from "@/components/icons"
-import { FileText, Image as ImageIcon, Video } from "@/components/icons"
+import { FileArrowUp } from "@phosphor-icons/react"
+import { FileText, Image as ImageIcon, Video } from "lucide-react"
 import { motion } from "motion/react"
 import { useRef, useState } from "react"
 
@@ -85,9 +83,7 @@ export function ButtonFileUpload({
   contextTokens = 0,
 }: ButtonFileUploadProps) {
   const { usage } = useUsage()
-  const { mode, setMode } = useMode()
   const [open, setOpen] = useState(false)
-  const [modesOpen, setModesOpen] = useState(false)
   const inputs = {
     photo: useRef<HTMLInputElement>(null),
     file: useRef<HTMLInputElement>(null),
@@ -144,13 +140,7 @@ export function ButtonFileUpload({
           tabIndex={-1}
         />
       ))}
-      <DropdownMenu
-        open={open}
-        onOpenChange={(v) => {
-          setOpen(v)
-          if (!v) setModesOpen(false)
-        }}
-      >
+      <DropdownMenu open={open} onOpenChange={setOpen}>
         <Tooltip>
           <TooltipTrigger asChild>
             <DropdownMenuTrigger asChild>
@@ -196,37 +186,6 @@ export function ButtonFileUpload({
               <span className="text-sm font-medium">{it.label}</span>
             </DropdownMenuItem>
           ))}
-
-          <DropdownMenuSeparator className="my-1" />
-          <p className="text-muted-foreground px-2.5 pt-0.5 pb-0 text-xs font-medium">
-            Alternar entre modos
-          </p>
-          <button
-            type="button"
-            onClick={() => setModesOpen((v) => !v)}
-            aria-expanded={modesOpen}
-            className="hover:bg-accent flex w-full cursor-pointer items-center justify-between gap-3 rounded-xl px-2.5 py-1.5 text-sm font-medium"
-          >
-            {MODES[mode].label}
-            <span
-              className={cn(
-                "inline-flex transition-transform",
-                modesOpen && "rotate-180"
-              )}
-            >
-              <SheetIcon name="chevron" size={16} className="opacity-70" />
-            </span>
-          </button>
-          {modesOpen &&
-            MODE_ORDER.map((id) => (
-              <DropdownMenuItem
-                key={id}
-                onSelect={() => setMode(id)}
-                className="flex cursor-pointer items-center rounded-xl px-2.5 py-1.5 text-sm"
-              >
-                {MODES[id].label}
-              </DropdownMenuItem>
-            ))}
 
           <DropdownMenuSeparator className="my-1" />
           <p className="text-muted-foreground px-2.5 pt-0.5 pb-0 text-xs font-medium">

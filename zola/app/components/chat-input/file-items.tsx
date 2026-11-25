@@ -10,7 +10,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { X } from "@/components/icons"
+import { X } from "@phosphor-icons/react"
 import Image from "next/image"
 import { useState } from "react"
 

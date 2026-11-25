@@ -1,6 +1,6 @@
 "use client"
 
-import { CheckCircle, Info, Warning } from "@/components/icons"
+import { CheckCircle, Info, Warning } from "@phosphor-icons/react/dist/ssr"
 import { toast as sonnerToast } from "sonner"
 import { Button } from "./button"
 

@@ -60,7 +60,7 @@ export function WelcomeGreeting() {
   const text = template ? fillWelcomeTemplate(template, firstName) : ""
 
   return (
-    <h1 className="mb-6 min-h-10 px-4 text-center text-3xl font-medium tracking-tight text-balance sm:text-4xl">
+    <h1 className="mb-6 min-h-[2.25rem] px-4 text-center text-2xl font-medium tracking-tight text-balance sm:text-3xl">
       <AnimatePresence mode="wait" initial={false}>
         <motion.span
           key={text || "empty"}

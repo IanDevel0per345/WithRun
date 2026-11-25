@@ -21,14 +21,15 @@ import { useKeyShortcut } from "@/app/hooks/use-key-shortcut"
 import { HeaderSidebarTrigger } from "@/app/components/layout/header-sidebar-trigger"
 import { BrandLogo } from "@/components/ui/brand-logo"
 import { SheetIcon, type SheetIconName } from "@/components/ui/sheet-icon"
-import { Pin } from "@/components/icons"
+import { Pin } from "lucide-react"
 import Link from "next/link"
 import { useParams, usePathname, useRouter } from "next/navigation"
 import { useMemo, useState } from "react"
+import { ModeSwitcher } from "./mode-switcher"
 import { SidebarList } from "./sidebar-list"
 
 const rowClass =
-  "text-foreground hover:bg-accent/70 flex h-8 w-full items-center gap-2 rounded-md px-1.5 text-[13.5px] font-medium transition-colors"
+  "text-muted-foreground hover:bg-accent/70 hover:text-foreground flex h-8 w-full items-center gap-2 rounded-md px-1.5 text-[13.5px] font-medium transition-colors"
 
 const HOME_ITEMS: { href: string; label: string; icon: SheetIconName }[] = [
   { href: "/projetos", label: "Projetos", icon: "folder" },
@@ -55,7 +56,6 @@ export function AppSidebar() {
   const groupedChats = useMemo(() => groupChatsByDate(chats, ""), [chats])
   const hasChats = chats.length > 0
   const name = user?.display_name || "Guest"
-  const displayName = name === "Guest" ? "Convidado" : name
 
   return (
     <Sidebar
@@ -65,16 +65,10 @@ export function AppSidebar() {
     >
       <SidebarHeader className="flex h-14 flex-row items-center justify-between gap-1 px-2">
         <div className="flex min-w-0 items-center gap-1.5">
-          <Link
-            href="/"
-            aria-label="Meteor AI"
-            className="flex shrink-0 items-center gap-2 rounded-md"
-          >
+          <Link href="/" aria-label="Meteor AI" className="shrink-0 rounded-md">
             <BrandLogo size={34} />
-            <span className="text-base font-semibold tracking-tight">
-              Meteor AI
-            </span>
           </Link>
+          <ModeSwitcher />
         </div>
         <div className="flex items-center">
           <button
@@ -82,7 +76,7 @@ export function AppSidebar() {
             onClick={() => router.push("/")}
             aria-label="New chat"
             title="New chat (⌘⇧U)"
-            className="text-foreground hover:bg-accent/70 inline-flex size-7 items-center justify-center rounded-md transition-colors"
+            className="text-muted-foreground hover:text-foreground hover:bg-accent/70 inline-flex size-7 items-center justify-center rounded-md transition-colors"
           >
             <SheetIcon name="newchat" size={20} />
           </button>
@@ -98,7 +92,7 @@ export function AppSidebar() {
             className={`${rowClass} ${isNewConversation ? "bg-accent text-foreground" : ""}`}
           >
             <SheetIcon name="plus" size={20} />
-            Nova conversa
+            New Conversation
           </button>
         </div>
 
@@ -149,9 +143,9 @@ export function AppSidebar() {
               <div className="bg-muted mb-2.5 flex size-9 items-center justify-center rounded-lg">
                 <SheetIcon name="chatdots" size={22} />
               </div>
-              <p className="text-[13px] font-medium">Nenhuma conversa ainda</p>
+              <p className="text-[13px] font-medium">No chats yet</p>
               <p className="text-muted-foreground mt-0.5 text-center text-xs">
-                Suas conversas com o Meteor aparecem aqui.
+                Your conversations with Meteor show up here.
               </p>
             </div>
           )}
@@ -169,17 +163,16 @@ export function AppSidebar() {
         </button>
         <div className="mt-1 flex items-center gap-2 px-1 pt-2">
           <div className="bg-muted text-foreground flex size-6 items-center justify-center rounded-full text-[11px] font-semibold">
-            {displayName.charAt(0).toUpperCase()}
+            {name.charAt(0).toUpperCase()}
           </div>
-          <span className="text-foreground min-w-0 truncate text-xs">
-            {displayName}
-            <span className="text-muted-foreground"> · Grátis</span>
+          <span className="text-muted-foreground min-w-0 truncate text-xs">
+            {name} · Free
           </span>
         </div>
       </SidebarFooter>
 
       <Dialog open={settingsOpen} onOpenChange={setSettingsOpen}>
-        <DialogContent className="flex h-[80%] min-h-[480px] w-full flex-col gap-0 overflow-hidden p-0 sm:max-w-[768px]">
+        <DialogContent className="flex h-[80%] min-h-[480px] w-full flex-col gap-0 overflow-hidden p-0 sm:max-w-[768px] max-sm:top-0 max-sm:left-0 max-sm:h-dvh max-sm:max-h-dvh max-sm:min-h-0 max-sm:max-w-none max-sm:translate-x-0 max-sm:translate-y-0 max-sm:rounded-none max-sm:border-0">
           <DialogHeader className="border-border shrink-0 border-b px-5 py-4 sm:px-6 sm:py-5">
             <DialogTitle>Configurações</DialogTitle>
           </DialogHeader>

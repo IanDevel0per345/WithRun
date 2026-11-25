@@ -209,12 +209,15 @@ export function Chat() {
   const chatInputProps = useMemo(
     () => ({
       value: input,
+      onSuggestion: handleSuggestion,
       onValueChange: handleInputChange,
       onSend: submit,
       isSubmitting,
       files,
       onFileUpload: handleFileUpload,
       onFileRemove: handleFileRemove,
+      hasSuggestions:
+        preferences.promptSuggestions && !chatId && messages.length === 0,
       onSelectModel: handleModelChange,
       selectedModel,
       isUserAuthenticated: isAuthenticated,
@@ -235,6 +238,7 @@ export function Chat() {
       files,
       handleFileUpload,
       handleFileRemove,
+      preferences.promptSuggestions,
       chatId,
       messages.length,
       handleModelChange,

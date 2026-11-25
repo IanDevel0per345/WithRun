@@ -59,19 +59,19 @@ export function groupChatsByDate(
   const result: TimeGroup[] = []
 
   if (todayChats.length > 0) {
-    result.push({ name: "Hoje", chats: todayChats })
+    result.push({ name: "Today", chats: todayChats })
   }
 
   if (last7DaysChats.length > 0) {
-    result.push({ name: "Últimos 7 dias", chats: last7DaysChats })
+    result.push({ name: "Last 7 days", chats: last7DaysChats })
   }
 
   if (last30DaysChats.length > 0) {
-    result.push({ name: "Últimos 30 dias", chats: last30DaysChats })
+    result.push({ name: "Last 30 days", chats: last30DaysChats })
   }
 
   if (thisYearChats.length > 0) {
-    result.push({ name: "Este ano", chats: thisYearChats })
+    result.push({ name: "This year", chats: thisYearChats })
   }
 
   Object.entries(olderChats)

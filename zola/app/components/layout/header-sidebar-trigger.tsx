@@ -26,7 +26,7 @@ export function HeaderSidebarTrigger({
           onClick={toggleSidebar}
           className={cn(
             "pointer-events-auto",
-            "text-foreground hover:bg-muted rounded-md transition-colors",
+            "text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors",
             "inline-flex size-9 items-center justify-center focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none",
             className
           )}

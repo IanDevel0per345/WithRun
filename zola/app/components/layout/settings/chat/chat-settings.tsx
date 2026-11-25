@@ -9,6 +9,7 @@ export function ChatSettings() {
   const { settings, update } = useSettings()
   const {
     preferences,
+    setPromptSuggestions,
     setShowToolInvocations,
     setShowConversationPreviews,
     setMultiModelEnabled,
@@ -36,6 +37,15 @@ export function ChatSettings() {
           <Switch
             checked={settings.showGreeting}
             onCheckedChange={(showGreeting) => update({ showGreeting })}
+          />
+        </SettingRow>
+        <SettingRow
+          title="Sugestões de prompts"
+          description="Mostra atalhos de prompts ao começar uma conversa."
+        >
+          <Switch
+            checked={preferences.promptSuggestions}
+            onCheckedChange={setPromptSuggestions}
           />
         </SettingRow>
       </SettingsGroup>

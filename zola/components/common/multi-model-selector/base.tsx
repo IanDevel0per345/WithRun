@@ -31,7 +31,12 @@ import { ModelConfig } from "@/lib/models/types"
 import { PROVIDERS } from "@/lib/providers"
 import { useUserPreferences } from "@/lib/user-preference-store/provider"
 import { cn } from "@/lib/utils"
-import { CaretDownIcon, CheckIcon, MagnifyingGlassIcon, StarIcon } from "@/components/icons"
+import {
+  CaretDownIcon,
+  CheckIcon,
+  MagnifyingGlassIcon,
+  StarIcon,
+} from "@phosphor-icons/react"
 import { AnimatePresence, motion } from "motion/react"
 import { useRef, useState } from "react"
 import { ProModelDialog } from "../model-selector/pro-dialog"
@@ -370,7 +375,7 @@ export function MultiModelSelector({
                     No results found.
                   </p>
                   <a
-                    href="https://github.com/IanDevel0per345/WithRun/issues/new?title=Model%20Request%3A%20"
+                    href="https://github.com/ibelick/zola/issues/new?title=Model%20Request%3A%20"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-muted-foreground text-sm underline"
@@ -495,7 +500,7 @@ export function MultiModelSelector({
                     No results found.
                   </p>
                   <a
-                    href="https://github.com/IanDevel0per345/WithRun/issues/new?title=Model%20Request%3A%20"
+                    href="https://github.com/ibelick/zola/issues/new?title=Model%20Request%3A%20"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-muted-foreground text-sm underline"

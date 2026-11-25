@@ -55,7 +55,7 @@ export default async function RootLayout({
         <Script
           defer
           src="https://assets.onedollarstats.com/stonks.js"
-          {...(isDev ? { "data-debug": "meteor-ai.vercel.app" } : {})}
+          {...(isDev ? { "data-debug": "zola.chat" } : {})}
         />
       ) : null}
       <body
@@ -77,7 +77,7 @@ export default async function RootLayout({
                     >
                       <ThemeProvider
                         attribute="class"
-                        defaultTheme="system"
+                        defaultTheme="light"
                         enableSystem
                         disableTransitionOnChange
                       >

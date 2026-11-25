@@ -8,7 +8,7 @@ import {
   PromptInputTextarea,
 } from "@/components/prompt-kit/prompt-input"
 import { Button } from "@/components/ui/button"
-import { ArrowUp, Stop } from "@/components/icons"
+import { ArrowUp, Stop } from "@phosphor-icons/react"
 import React, { useCallback } from "react"
 
 type MultiChatInputProps = {

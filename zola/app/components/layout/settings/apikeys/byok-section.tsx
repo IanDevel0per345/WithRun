@@ -26,7 +26,7 @@ import { useModel } from "@/lib/model-store/provider"
 import { cn } from "@/lib/utils"
 import { SheetIcon } from "@/components/ui/sheet-icon"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { Loader2 } from "@/components/icons"
+import { Loader2 } from "lucide-react"
 import { useState } from "react"
 
 type Provider = {

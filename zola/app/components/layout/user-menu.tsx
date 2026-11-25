@@ -1,5 +1,6 @@
 "use client"
 
+import XIcon from "@/components/icons/x"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
   DropdownMenu,
@@ -14,7 +15,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { useUser } from "@/lib/user-store/provider"
-import { GithubLogoIcon } from "@/components/icons"
+import { GithubLogoIcon } from "@phosphor-icons/react"
 import { useState } from "react"
 import { AppInfoTrigger } from "./app-info/app-info-trigger"
 import { FeedbackTrigger } from "./feedback/feedback-trigger"
@@ -83,7 +84,18 @@ export function UserMenu() {
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
           <a
-            href="https://github.com/IanDevel0per345/WithRun"
+            href="https://x.com/zoladotchat"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2"
+          >
+            <XIcon className="size-4 p-0.5" />
+            <span>@zoladotchat</span>
+          </a>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <a
+            href="https://github.com/ibelick/zola"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2"

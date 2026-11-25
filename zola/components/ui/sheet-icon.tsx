@@ -60,18 +60,6 @@ export type SheetIconName =
   | "lock"
   | "mail"
   | "eyeoff"
-  | "check"
-  | "filetext"
-  | "image"
-  | "video"
-  | "bolt"
-  | "pin"
-  | "pinoff"
-  | "question"
-  | "upload"
-
-/** How much of its box the icon fills (smaller = smaller icons everywhere). */
-const ICON_SCALE = 0.82
 
 type SheetIconProps = {
   name: SheetIconName
@@ -94,20 +82,18 @@ export function SheetIcon({
   invert = false,
   forceWhite = false,
 }: SheetIconProps) {
-  // Icons are drawn a bit smaller than their box, so they stay centred in it.
-  const glyph = Math.round(size * ICON_SCALE)
   if (forceWhite) {
     return (
       <span
         aria-hidden
-        className={cn("inline-flex shrink-0 items-center justify-center", className)}
+        className={cn("inline-flex shrink-0", className)}
         style={{ width: size, height: size }}
       >
         <Image
           src={`/icons/white/${name}.png`}
           alt=""
-          width={glyph}
-          height={glyph}
+          width={size}
+          height={size}
           unoptimized
         />
       </span>
@@ -118,22 +104,22 @@ export function SheetIcon({
   return (
     <span
       aria-hidden
-      className={cn("inline-flex shrink-0 items-center justify-center", className)}
+      className={cn("inline-flex shrink-0", className)}
       style={{ width: size, height: size }}
     >
       <Image
         src={`/icons/${light}/${name}.png`}
         alt=""
-        width={glyph}
-        height={glyph}
+        width={size}
+        height={size}
         unoptimized
         className="dark:hidden"
       />
       <Image
         src={`/icons/${dark}/${name}.png`}
         alt=""
-        width={glyph}
-        height={glyph}
+        width={size}
+        height={size}
         unoptimized
         className="hidden dark:block"
       />

@@ -16,7 +16,7 @@ import { API_ROUTE_CHAT } from "@/lib/routes"
 import { useUser } from "@/lib/user-store/provider"
 import { cn } from "@/lib/utils"
 import { useChat } from "@ai-sdk/react"
-import { ChatCircleIcon } from "@/components/icons"
+import { ChatCircleIcon } from "@phosphor-icons/react"
 import { useQuery } from "@tanstack/react-query"
 import { AnimatePresence, motion } from "motion/react"
 import { usePathname } from "next/navigation"
@@ -336,12 +336,14 @@ export function ProjectView({ projectId }: ProjectViewProps) {
   const chatInputProps = useMemo(
     () => ({
       value: input,
+      onSuggestion: () => {},
       onValueChange: handleInputChange,
       onSend: submit,
       isSubmitting,
       files,
       onFileUpload: handleFileUpload,
       onFileRemove: handleFileRemove,
+      hasSuggestions: false,
       onSelectModel: handleModelChange,
       selectedModel,
       isUserAuthenticated: isAuthenticated,
@@ -443,7 +445,7 @@ export function ProjectView({ projectId }: ProjectViewProps) {
       ) : showOnboarding && chats.length === 0 ? (
         <div className="mx-auto w-full max-w-3xl px-4 pt-6 pb-20">
           <h2 className="text-muted-foreground mb-3 text-sm font-medium">
-            Nenhuma conversa ainda
+            No chats yet
           </h2>
         </div>
       ) : null}

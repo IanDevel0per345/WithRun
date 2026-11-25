@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button"
 import { APP_NAME } from "@/lib/config"
 import { useUserPreferences } from "@/lib/user-preference-store/provider"
 import { useUser } from "@/lib/user-store/provider"
-import { Info } from "@/components/icons"
+import { Info } from "@phosphor-icons/react"
 import Link from "next/link"
 import { DialogPublish } from "./dialog-publish"
 import { HeaderSidebarTrigger } from "./header-sidebar-trigger"
@@ -53,7 +53,7 @@ export function Header({ hasSidebar }: { hasSidebar: boolean }) {
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="bg-background hover:bg-muted text-foreground h-8 w-8 rounded-full"
+                    className="bg-background hover:bg-muted text-muted-foreground h-8 w-8 rounded-full"
                     aria-label={`About ${APP_NAME}`}
                   >
                     <Info className="size-4" />

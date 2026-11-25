@@ -8,7 +8,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { cn } from "@/lib/utils"
-import { MagnifyingGlass } from "@/components/icons"
+import { MagnifyingGlass } from "@phosphor-icons/react"
 import { Command as CommandPrimitive } from "cmdk"
 import * as React from "react"
 

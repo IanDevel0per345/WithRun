@@ -1,15 +1,59 @@
 import { FREE_MODELS_IDS } from "../config"
-import { meteorModels } from "./data/meteor"
+import { claudeModels } from "./data/claude"
+import { deepseekModels } from "./data/deepseek"
+import { geminiModels } from "./data/gemini"
+import { grokModels } from "./data/grok"
+import { mistralModels } from "./data/mistral"
+import { getOllamaModels, ollamaModels } from "./data/ollama"
+import { openaiModels } from "./data/openai"
+import { openrouterModels } from "./data/openrouter"
+import { perplexityModels } from "./data/perplexity"
 import { ModelConfig } from "./types"
 
 // Static models (always available)
-// A Meteor AI só tem um modelo próprio. Os arquivos dos outros provedores
-// continuam no repositório, mas não são carregados.
-const STATIC_MODELS: ModelConfig[] = [...meteorModels]
+const STATIC_MODELS: ModelConfig[] = [
+  ...openaiModels,
+  ...mistralModels,
+  ...deepseekModels,
+  ...claudeModels,
+  ...grokModels,
+  ...perplexityModels,
+  ...geminiModels,
+  ...ollamaModels, // Static fallback Ollama models
+  ...openrouterModels,
+]
 
-// Function to get all models including dynamically detected ones
+// Dynamic models cache
+let dynamicModelsCache: ModelConfig[] | null = null
+let lastFetchTime = 0
+const CACHE_DURATION = 5 * 60 * 1000 // 5 minutes
+
+// // Function to get all models including dynamically detected ones
 export async function getAllModels(): Promise<ModelConfig[]> {
-  return STATIC_MODELS
+  const now = Date.now()
+
+  // Use cache if it's still valid
+  if (dynamicModelsCache && now - lastFetchTime < CACHE_DURATION) {
+    return dynamicModelsCache
+  }
+
+  try {
+    // Get dynamically detected Ollama models (includes enabled check internally)
+    const detectedOllamaModels = await getOllamaModels()
+
+    // Combine static models (excluding static Ollama models) with detected ones
+    const staticModelsWithoutOllama = STATIC_MODELS.filter(
+      (model) => model.providerId !== "ollama"
+    )
+
+    dynamicModelsCache = [...staticModelsWithoutOllama, ...detectedOllamaModels]
+
+    lastFetchTime = now
+    return dynamicModelsCache
+  } catch (error) {
+    console.warn("Failed to load dynamic models, using static models:", error)
+    return STATIC_MODELS
+  }
 }
 
 export async function getModelsWithAccessFlags(): Promise<ModelConfig[]> {
@@ -64,7 +108,14 @@ export async function getModelsForUserProviders(
 }
 
 // Synchronous function to get model info for simple lookups
+// This uses cached data if available, otherwise falls back to static models
 export function getModelInfo(modelId: string): ModelConfig | undefined {
+  // First check the cache if it exists
+  if (dynamicModelsCache) {
+    return dynamicModelsCache.find((model) => model.id === modelId)
+  }
+
+  // Fall back to static models for immediate lookup
   return STATIC_MODELS.find((model) => model.id === modelId)
 }
 
@@ -73,5 +124,6 @@ export const MODELS: ModelConfig[] = STATIC_MODELS
 
 // Function to refresh the models cache
 export function refreshModelsCache(): void {
-  // Sem cache dinâmico: só existe o modelo da Meteor.
+  dynamicModelsCache = null
+  lastFetchTime = 0
 }

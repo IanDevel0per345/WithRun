@@ -1,7 +1,7 @@
 "use client"
 
 import { cn } from "@/lib/utils"
-import { X } from "@/components/icons"
+import { X } from "@phosphor-icons/react"
 import * as DialogPrimitive from "@animate-ui/react/primitives/radix-ui/dialog"
 import * as React from "react"
 

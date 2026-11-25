@@ -30,7 +30,7 @@ export async function generateMetadata({
     .single()
 
   const title = chat?.title || "Chat"
-  const description = "A chat in Meteor"
+  const description = "A chat in Zola"
 
   return {
     title,
@@ -90,7 +90,7 @@ export default async function ShareChat({
       messages={messagesData}
       date={chatData.created_at || ""}
       title={chatData.title || ""}
-      subtitle={"A conversation in Meteor"}
+      subtitle={"A conversation in Zola"}
     />
   )
 }

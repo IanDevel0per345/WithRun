@@ -7,7 +7,7 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer"
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu"
 import { isSupabaseEnabled } from "@/lib/supabase/config"
-import { Question } from "@/components/icons"
+import { Question } from "@phosphor-icons/react"
 import { useState } from "react"
 
 export function FeedbackTrigger() {
